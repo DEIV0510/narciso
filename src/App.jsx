@@ -4,6 +4,7 @@ import Header from './components/Header'
 import Hero from './components/Hero'
 import Benefits from './components/Benefits'
 import ProductSpotlight from './components/ProductSpotlight'
+import CraftProcess from './components/CraftProcess'
 import FindYourFragrance from './components/FindYourFragrance'
 import BrandSection from './components/BrandSection'
 import Location from './components/Location'
@@ -23,6 +24,7 @@ export default function App() {
         <Hero />
         <Benefits />
         <ProductSpotlight />
+        <CraftProcess />
         <FindYourFragrance />
         <BrandSection />
         <Location />

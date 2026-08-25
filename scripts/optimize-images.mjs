@@ -14,6 +14,7 @@ mkdirSync(PUBLIC, { recursive: true })
 
 const bottleSrc = path.join(SRC, 'botella.png')
 const logoSrc = path.join(SRC, 'LOGO2.png')
+const craftPosterSrc = path.join(SRC, 'craft-poster-raw.jpg')
 
 async function emit(pipeline, outBase) {
   await pipeline.clone().webp({ quality: 82 }).toFile(path.join(OUT, `${outBase}.webp`))
@@ -77,6 +78,10 @@ async function run() {
     .toBuffer()
   await sharp(crownBuf).resize(32, 32, { fit: 'contain', background: '#f8f3ea' }).png().toFile(path.join(PUBLIC, 'favicon-32.png'))
   await sharp(crownBuf).resize(180, 180, { fit: 'contain', background: '#f8f3ea' }).png().toFile(path.join(PUBLIC, 'favicon-180.png'))
+
+  // 7. Craft poster — still frame from the real crafting video, used as the
+  // click-to-play poster for the "Detrás de la fragancia" section.
+  await emit(sharp(craftPosterSrc).resize({ width: 1000, withoutEnlargement: true }), 'craft-poster')
 
   console.log('Image optimization complete.')
 }
