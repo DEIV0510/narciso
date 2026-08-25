@@ -31,8 +31,13 @@ No existen fotos individuales por fragancia en el material entregado; si el
 cliente las agrega más adelante, basta con cambiar el campo `image` de cada
 producto (hoy vale `'catalog-bottle'` para los 48).
 
+El catálogo se muestra como **lista numerada compacta** (`ProductListItem.jsx`,
+~68px por fila) en vez de grilla de tarjetas grandes, para que se vean varias
+fragancias por pantalla sin scroll excesivo — la numeración se recalcula según
+el filtro/búsqueda activos.
+
 Para agregar más productos (nueva carga, categoría, promo, etc.): añadir
-objetos al arreglo en `products.js` — `Catalog.jsx`, `ProductCard.jsx`, el
+objetos al arreglo en `products.js` — `Catalog.jsx`, `ProductListItem.jsx`, el
 buscador y los filtros ya funcionan sobre cualquier tamaño de catálogo sin
 tocarse. Carpetas `Desktop\DMPERFUMES` y `Desktop\perfumeria` son de otros
 proyectos del cliente (marcas "DM Essence" y "Perfumes Peralta") — **no se
@@ -42,7 +47,7 @@ usaron**, confirmado explícitamente por el cliente.
 
 ```
 src/
-  components/   Header, Hero, Benefits, Catalog, ProductCard, ProductSpotlight,
+  components/   Header, Hero, Benefits, Catalog, ProductListItem, ProductSpotlight,
                 ProductModal, CraftProcess, FindYourFragrance, BrandSection,
                 Location, Socials, FinalCTA, Footer, WhatsAppButton, LoadingScreen
   data/site.js      marca, WhatsApp, enlaces

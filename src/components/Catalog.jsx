@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { CATEGORIES, brands, products, searchProducts } from '../data/products'
-import ProductCard from './ProductCard'
+import ProductListItem from './ProductListItem'
 import Reveal from './Reveal'
 import { IconSearch } from './icons'
 
@@ -121,11 +121,11 @@ export default function Catalog() {
             No encontramos fragancias con ese criterio. Prueba con otro nombre o marca.
           </p>
         ) : (
-          <div className="mt-10 grid grid-cols-2 gap-4 sm:mt-12 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
+          <ul className="mx-auto mt-10 max-w-3xl divide-y divide-ink-100 rounded-2xl border border-ink-100 bg-white px-4 sm:mt-12 sm:px-6">
             {filtered.map((product, i) => (
-              <ProductCard key={product.id} product={product} eager={i < 4} />
+              <ProductListItem key={product.id} product={product} number={i + 1} eager={i < 6} />
             ))}
-          </div>
+          </ul>
         )}
       </div>
     </section>
