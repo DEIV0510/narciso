@@ -140,6 +140,37 @@ export function IconPlay({ className = 'h-6 w-6' }) {
   )
 }
 
+export function IconSearch({ className = 'h-5 w-5' }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
+      <circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" strokeWidth="1.6" />
+      <path d="m20 20-4.6-4.6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+export function IconChevronDown({ className = 'h-4 w-4' }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
+      <path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+export function IconBottle({ className = 'h-6 w-6' }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
+      <path
+        d="M10 2h4v3.2l1.6 2.1c.4.5.6 1.1.6 1.7V20a2 2 0 0 1-2 2h-4.4a2 2 0 0 1-2-2V9c0-.6.2-1.2.6-1.7L10 5.2V2Z"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+      />
+      <path d="M8.6 12h6.8" stroke="currentColor" strokeWidth="1.4" />
+    </svg>
+  )
+}
+
 export function IconX({ className = 'h-5 w-5' }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">

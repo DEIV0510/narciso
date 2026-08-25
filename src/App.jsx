@@ -3,6 +3,7 @@ import LoadingScreen from './components/LoadingScreen'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import Benefits from './components/Benefits'
+import Catalog from './components/Catalog'
 import ProductSpotlight from './components/ProductSpotlight'
 import CraftProcess from './components/CraftProcess'
 import FindYourFragrance from './components/FindYourFragrance'
@@ -23,6 +24,7 @@ export default function App() {
       <main>
         <Hero />
         <Benefits />
+        <Catalog />
         <ProductSpotlight />
         <CraftProcess />
         <FindYourFragrance />

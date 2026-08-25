@@ -13,6 +13,7 @@ mkdirSync(OUT, { recursive: true })
 mkdirSync(PUBLIC, { recursive: true })
 
 const bottleSrc = path.join(SRC, 'botella.png')
+const bottleCleanSrc = path.join(SRC, 'botellabien.png')
 const logoSrc = path.join(SRC, 'LOGO2.png')
 const craftPosterSrc = path.join(SRC, 'craft-poster-raw.jpg')
 const lifestylePosterSrc = path.join(SRC, 'lifestyle-poster-raw.jpg')
@@ -110,6 +111,12 @@ async function run() {
   const crownTransparentBuf = await (await makeTransparent(logoTrim)).extract({ left: 0, top: 0, width: logoMeta.width, height: crownH }).png().toBuffer()
   await sharp(crownTransparentBuf).resize({ height: 480, withoutEnlargement: true }).png({ compressionLevel: 9 }).toFile(path.join(OUT, 'crown-mark.png'))
   await sharp(crownTransparentBuf).resize({ height: 480, withoutEnlargement: true }).webp({ lossless: true }).toFile(path.join(OUT, 'crown-mark.webp'))
+
+  // 6c. Catalog bottle — the clean studio shot on white, real photo of the same
+  // real Narciso bottle/label used for every fragrance in the catalog (the
+  // business sells one bottle format across all "inspired by" scents).
+  const catalogTrim = await sharp(bottleCleanSrc).trim({ threshold: 8 }).toBuffer()
+  await emit(sharp(catalogTrim).resize({ width: 900, withoutEnlargement: true }), 'catalog-bottle')
 
   // 7. Video posters — real still frames from the 3 real videos, used as
   // click-to-play posters for the "Detrás de la fragancia" gallery.

@@ -23,7 +23,7 @@ export default function Hero() {
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row animate-fadeUp [animation-delay:300ms]">
             <a
-              href="#fragancia"
+              href="#catalogo"
               className="inline-flex items-center justify-center gap-2 rounded-full bg-gold-500 px-7 py-3.5 font-body text-sm uppercase tracking-wide text-ink-900 transition-transform duration-200 hover:scale-[1.03] hover:bg-gold-400"
             >
               Ver Perfumes

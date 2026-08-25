@@ -46,6 +46,7 @@ export const waMessages = {
 
 export const navLinks = [
   { label: 'Inicio', href: '#inicio' },
+  { label: 'Catálogo', href: '#catalogo' },
   { label: 'Nuestra Fragancia', href: '#fragancia' },
   { label: 'Proceso', href: '#proceso' },
   { label: 'Encuentra tu Aroma', href: '#encuentra' },

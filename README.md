@@ -20,13 +20,32 @@ npm run optimize-images   # regenera src/assets/img a partir de source-material/
 - El logo (`logo.png/webp`, `crown-mark.png/webp`) se procesa quitándole el fondo blanco original (chroma-key por luminancia en `scripts/optimize-images.mjs`, función `makeTransparent`) para que se vea limpio sobre cualquier fondo, claro u oscuro.
 - Número de WhatsApp: `3229282884`. Dirección: Urbanización Santa Ana, Manzana 34 Casa 2, Ibagué, Tolima.
 
+## Catálogo (48 productos)
+
+`src/data/products.js` es la única fuente de verdad del catálogo — 24 fragancias
+"Perfumería Caballero" + 24 "Perfumería Dama", con los nombres, precio
+($60.000 COP c/u) y categoría exactos que dio el cliente. **Todas comparten la
+misma foto real** (`source-material/botellabien.png` → `catalog-bottle.*`):
+así se vende realmente — un solo frasco/etiqueta, distinta esencia por dentro.
+No existen fotos individuales por fragancia en el material entregado; si el
+cliente las agrega más adelante, basta con cambiar el campo `image` de cada
+producto (hoy vale `'catalog-bottle'` para los 48).
+
+Para agregar más productos (nueva carga, categoría, promo, etc.): añadir
+objetos al arreglo en `products.js` — `Catalog.jsx`, `ProductCard.jsx`, el
+buscador y los filtros ya funcionan sobre cualquier tamaño de catálogo sin
+tocarse. Carpetas `Desktop\DMPERFUMES` y `Desktop\perfumeria` son de otros
+proyectos del cliente (marcas "DM Essence" y "Perfumes Peralta") — **no se
+usaron**, confirmado explícitamente por el cliente.
+
 ## Estructura
 
 ```
 src/
-  components/   Header, Hero, Benefits, ProductSpotlight, ProductModal,
-                CraftProcess, FindYourFragrance, BrandSection, Location,
-                Socials, FinalCTA, Footer, WhatsAppButton, LoadingScreen
-  data/site.js  única fuente de verdad (marca, WhatsApp, enlaces)
-  hooks/        useReveal (scroll reveal con IntersectionObserver)
+  components/   Header, Hero, Benefits, Catalog, ProductCard, ProductSpotlight,
+                ProductModal, CraftProcess, FindYourFragrance, BrandSection,
+                Location, Socials, FinalCTA, Footer, WhatsAppButton, LoadingScreen
+  data/site.js      marca, WhatsApp, enlaces
+  data/products.js  catálogo (48 productos), formatCOP, searchProducts
+  hooks/            useReveal (scroll reveal con IntersectionObserver)
 ```
