@@ -13,7 +13,7 @@ export default function ProductGridItem({ product, eager = false }) {
     <article className="group flex flex-col overflow-hidden rounded-xl border border-ink-100 bg-white transition-shadow duration-200 hover:shadow-md">
       <div className="relative aspect-square w-full overflow-hidden bg-cream-50">
         <span
-          className={`absolute left-1.5 top-1.5 z-10 rounded-full px-1.5 py-0.5 font-body text-[8px] uppercase tracking-wide shadow-sm sm:text-[9px] ${
+          className={`absolute left-1 top-1 z-10 rounded-full px-1 py-0.5 font-body text-[7px] uppercase tracking-wide shadow-sm sm:left-1.5 sm:top-1.5 sm:px-1.5 sm:text-[8px] ${
             isDama ? 'bg-white/90 text-ink-500' : 'bg-ink-900/85 text-cream-50'
           }`}
         >
@@ -27,7 +27,7 @@ export default function ProductGridItem({ product, eager = false }) {
             <img
               src={catalogJpg}
               alt={`Narciso Parfum — ${product.fullName}`}
-              className="h-full w-full object-contain p-2 transition-transform duration-300 ease-out group-hover:scale-[1.04]"
+              className="h-full w-full object-contain p-1.5 transition-transform duration-300 ease-out group-hover:scale-[1.04] sm:p-2"
               loading={eager ? 'eager' : 'lazy'}
               width={300}
               height={300}
@@ -40,9 +40,9 @@ export default function ProductGridItem({ product, eager = false }) {
         )}
       </div>
 
-      <div className="flex flex-1 flex-col p-2 sm:p-2.5">
-        <p className="line-clamp-2 font-display text-[11px] leading-tight text-ink-900 sm:text-xs">{product.title}</p>
-        <p className="mt-1 font-display text-xs text-gold-600 sm:text-sm">{formatCOP(product.price)}</p>
+      <div className="flex flex-1 flex-col p-1.5 sm:p-2.5">
+        <p className="line-clamp-2 font-display text-[10px] leading-tight text-ink-900 sm:text-xs">{product.title}</p>
+        <p className="mt-1 font-display text-[11px] text-gold-600 sm:text-sm">{formatCOP(product.price)}</p>
 
         <a
           href={waLink(message)}

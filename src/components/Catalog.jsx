@@ -121,9 +121,9 @@ export default function Catalog() {
             No encontramos fragancias con ese criterio. Prueba con otro nombre o marca.
           </p>
         ) : (
-          <div className="mt-10 grid grid-cols-3 gap-2 sm:mt-12 sm:grid-cols-4 sm:gap-3 md:grid-cols-5 lg:grid-cols-6">
+          <div className="mt-10 grid grid-cols-4 gap-2 sm:mt-12 sm:gap-3">
             {filtered.map((product, i) => (
-              <ProductGridItem key={product.id} product={product} eager={i < 6} />
+              <ProductGridItem key={product.id} product={product} eager={i < 8} />
             ))}
           </div>
         )}
