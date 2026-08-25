@@ -46,6 +46,66 @@ async function makeTransparent(buffer, { threshold = 242, feather = 18 } = {}) {
   return sharp(data, { raw: { width, height, channels } })
 }
 
+// Quita SOLO el fondo blanco de estudio (conectado al borde de la foto) y lo
+// vuelve transparente, sin tocar el blanco de la etiqueta del frasco (que
+// está rodeado de vidrio oscuro, nunca conectado al borde). A diferencia de
+// makeTransparent() (umbral global), esto usa flood-fill desde los bordes.
+async function removeStudioBackground(buffer, { threshold = 232 } = {}) {
+  const img = sharp(buffer).ensureAlpha()
+  const { data, info } = await img.raw().toBuffer({ resolveWithObject: true })
+  const { width, height, channels } = info
+  const total = width * height
+  const visited = new Uint8Array(total)
+  const isBg = (p) => {
+    const i = p * channels
+    return (data[i] + data[i + 1] + data[i + 2]) / 3 >= threshold
+  }
+
+  const queue = new Int32Array(total)
+  let qHead = 0
+  let qTail = 0
+  const pushSeed = (p) => {
+    if (!visited[p]) {
+      visited[p] = 1
+      queue[qTail++] = p
+    }
+  }
+  for (let x = 0; x < width; x++) {
+    pushSeed(x)
+    pushSeed((height - 1) * width + x)
+  }
+  for (let y = 0; y < height; y++) {
+    pushSeed(y * width)
+    pushSeed(y * width + (width - 1))
+  }
+
+  while (qHead < qTail) {
+    const p = queue[qHead++]
+    if (!isBg(p)) continue
+    data[p * channels + 3] = 0
+    const x = p % width
+    const y = (p / width) | 0
+    if (x > 0 && !visited[p - 1]) {
+      visited[p - 1] = 1
+      queue[qTail++] = p - 1
+    }
+    if (x < width - 1 && !visited[p + 1]) {
+      visited[p + 1] = 1
+      queue[qTail++] = p + 1
+    }
+    if (y > 0 && !visited[p - width]) {
+      visited[p - width] = 1
+      queue[qTail++] = p - width
+    }
+    if (y < height - 1 && !visited[p + width]) {
+      visited[p + width] = 1
+      queue[qTail++] = p + width
+    }
+  }
+
+  return sharp(data, { raw: { width, height, channels } })
+}
+
 async function run() {
   const meta = await sharp(bottleSrc).metadata()
   console.log('botella.png', meta.width, 'x', meta.height)
@@ -114,9 +174,16 @@ async function run() {
 
   // 6c. Catalog bottle — the clean studio shot on white, real photo of the same
   // real Narciso bottle/label used for every fragrance in the catalog (the
-  // business sells one bottle format across all "inspired by" scents).
+  // business sells one bottle format across all "inspired by" scents). The
+  // studio white background is keyed out to real transparency (flood-fill
+  // from the edges, so the label's own white stays intact) so it sits
+  // cleanly on the dark catalog cards instead of showing a white box.
   const catalogTrim = await sharp(bottleCleanSrc).trim({ threshold: 8 }).toBuffer()
-  await emit(sharp(catalogTrim).resize({ width: 900, withoutEnlargement: true }), 'catalog-bottle')
+  const catalogTransparent = await (await removeStudioBackground(catalogTrim)).resize({ width: 900, withoutEnlargement: true }).png().toBuffer()
+  await sharp(catalogTransparent).webp({ quality: 90, alphaQuality: 90 }).toFile(path.join(OUT, 'catalog-bottle.webp'))
+  await sharp(catalogTransparent).avif({ quality: 60 }).toFile(path.join(OUT, 'catalog-bottle.avif'))
+  // Fallback JPG (no alpha support): flatten onto the same ink-900 the cards use, so it still blends.
+  await sharp(catalogTransparent).flatten({ background: '#0e0c0a' }).jpeg({ quality: 88, mozjpeg: true }).toFile(path.join(OUT, 'catalog-bottle.jpg'))
 
   // 7. Video posters — real still frames from the 3 real videos, used as
   // click-to-play posters for the "Detrás de la fragancia" gallery.
