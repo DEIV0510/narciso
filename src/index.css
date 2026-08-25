@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::selection {
+  background-color: #b4863a;
+  color: #f8f3ea;
+}
+
+:focus-visible {
+  outline: 2px solid #b4863a;
+  outline-offset: 3px;
+}
+
+body {
+  overflow-x: clip;
+}
+
+.reveal {
+  opacity: 0;
+}
+
+.reveal-in {
+  animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.section-eyebrow {
+  @apply font-body text-[11px] sm:text-xs uppercase tracking-widest2;
+}
+
+@keyframes loadbar {
+  0% {
+    transform: translateX(-100%);
+  }
+  60% {
+    transform: translateX(120%);
+  }
+  100% {
+    transform: translateX(260%);
+  }
+}
+

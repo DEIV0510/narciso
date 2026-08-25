@@ -1,0 +1,59 @@
+// Única fuente de verdad para los datos reales de la marca.
+// No se inventan precios, nombres de fragancias ni categorías: solo se usa
+// la información que existe realmente (etiqueta del frasco, logo, datos de contacto).
+
+export const brand = {
+  name: 'Narciso Parfum',
+  tagline: 'Perfumería de alta calidad',
+  subtagline: 'Perfumería inspirada para quienes quieren dejar huella.',
+  specialists: 'Especialistas en inspiración',
+  city: 'Ibagué, Tolima',
+  whatsapp: '573229282884',
+  whatsappDisplay: '322 928 2884',
+  instagramUrl:
+    'https://www.instagram.com/narcisoparfumoficial?igsi=MWFndjc4ZWs1N3J6dA%3D%3D&utm_source=qr',
+  instagramHandle: '@narcisoparfumoficial',
+  tiktokUrl: 'https://www.tiktok.com/@narciso.parfum.of?_r=1&_t=ZS-996dMDNbOGi',
+  tiktokHandle: '@narciso.parfum.of',
+  address: {
+    line1: 'Urbanización Santa Ana, Manzana 34 Casa 2',
+    line2: 'Ibagué, Tolima, Colombia',
+    full: 'Urbanización Santa Ana, Manzana 34 Casa 2, Ibagué, Tolima, Colombia',
+  },
+}
+
+export const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+  brand.address.full
+)}`
+
+export function waLink(message) {
+  return `https://wa.me/${brand.whatsapp}?text=${encodeURIComponent(message)}`
+}
+
+export const waMessages = {
+  catalog: 'Hola, Narciso Parfum. Quiero conocer su catálogo de fragancias y precios.',
+  product:
+    'Hola, Narciso Parfum. Estoy interesado/a en el perfume Narciso Parfum. ¿Me pueden dar información y precio?',
+  feminine:
+    'Hola, Narciso Parfum. Estoy buscando una fragancia femenina. ¿Me pueden recomendar opciones y precios?',
+  masculine:
+    'Hola, Narciso Parfum. Estoy buscando una fragancia masculina. ¿Me pueden recomendar opciones y precios?',
+  unisex:
+    'Hola, Narciso Parfum. Estoy buscando una fragancia unisex. ¿Me pueden recomendar opciones y precios?',
+  availability: 'Hola, Narciso Parfum. Quiero consultar disponibilidad de sus fragancias.',
+  order: 'Hola, Narciso Parfum. Quiero hacer mi pedido. ¿Me ayudan con el proceso?',
+}
+
+export const navLinks = [
+  { label: 'Inicio', href: '#inicio' },
+  { label: 'Nuestra Fragancia', href: '#fragancia' },
+  { label: 'Encuentra tu Aroma', href: '#encuentra' },
+  { label: 'Ubicación', href: '#ubicacion' },
+]
+
+export const benefits = [
+  { title: 'Perfumería de alta calidad', desc: 'Fórmulas cuidadas para una fijación duradera.' },
+  { title: 'Perfumería inspirada', desc: 'Aromas inspirados en las grandes casas del mundo.' },
+  { title: 'Atención personalizada', desc: 'Te asesoramos para encontrar tu aroma ideal.' },
+  { title: 'Compra fácil por WhatsApp', desc: 'Sin formularios. Escribe y listo.' },
+]

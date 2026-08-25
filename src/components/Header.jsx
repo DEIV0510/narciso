@@ -1,0 +1,136 @@
+import { useEffect, useState } from 'react'
+import logo from '../assets/img/logo.webp'
+import { brand, navLinks, waLink, waMessages } from '../data/site'
+import { IconInstagram, IconTikTok, IconMenu, IconClose, IconWhatsApp } from './icons'
+
+export default function Header({ open, onOpenChange }) {
+  const [localOpen, setLocalOpen] = useState(false)
+  const isOpen = open ?? localOpen
+  const setOpen = onOpenChange ?? setLocalOpen
+
+  useEffect(() => {
+    if (!isOpen) return
+    const onKey = (e) => e.key === 'Escape' && setOpen(false)
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [isOpen, setOpen])
+
+  return (
+    <header className="sticky top-0 z-50 border-b border-ink-100 bg-cream-50/95 backdrop-blur-sm">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:h-20 sm:px-6 lg:px-8">
+        <a href="#inicio" className="flex items-center gap-2" aria-label="Narciso Parfum, inicio">
+          <img src={logo} alt="Narciso Parfum" className="h-9 w-auto sm:h-11" width={220} height={110} />
+        </a>
+
+        <nav className="hidden items-center gap-8 lg:flex" aria-label="Navegación principal">
+          {navLinks.map((l) => (
+            <a
+              key={l.href}
+              href={l.href}
+              className="font-body text-sm uppercase tracking-wide text-ink-600 transition-colors hover:text-gold-600"
+            >
+              {l.label}
+            </a>
+          ))}
+        </nav>
+
+        <div className="hidden items-center gap-5 lg:flex">
+          <a
+            href={brand.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram de Narciso Parfum"
+            className="text-ink-500 transition-colors hover:text-gold-600"
+          >
+            <IconInstagram />
+          </a>
+          <a
+            href={brand.tiktokUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="TikTok de Narciso Parfum"
+            className="text-ink-500 transition-colors hover:text-gold-600"
+          >
+            <IconTikTok />
+          </a>
+          <a
+            href={waLink(waMessages.catalog)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-full bg-ink-900 px-5 py-2.5 font-body text-xs uppercase tracking-wide text-cream-50 transition-colors hover:bg-gold-600"
+          >
+            Comprar por WhatsApp
+          </a>
+        </div>
+
+        <div className="flex items-center gap-2.5 lg:hidden">
+          <a
+            href={waLink(waMessages.catalog)}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Comprar por WhatsApp"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-[#25D366] text-ink-900"
+          >
+            <IconWhatsApp className="h-5 w-5" />
+          </a>
+          <button
+            type="button"
+            onClick={() => setOpen(!isOpen)}
+            aria-expanded={isOpen}
+            aria-controls="mobile-nav"
+            aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-ink-200 text-ink-700"
+          >
+            {isOpen ? <IconClose className="h-5 w-5" /> : <IconMenu className="h-5 w-5" />}
+          </button>
+        </div>
+      </div>
+
+      <div
+        id="mobile-nav"
+        {...(isOpen ? {} : { inert: '' })}
+        className={`grid overflow-hidden transition-[grid-template-rows] duration-300 ease-out lg:hidden ${
+          isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+        }`}
+      >
+        <nav
+          className="min-h-0 overflow-hidden border-t border-ink-100 bg-cream-50 px-4"
+          aria-label="Navegación móvil"
+        >
+          <div className="flex flex-col gap-1 py-4">
+            {navLinks.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                onClick={() => setOpen(false)}
+                className="rounded-lg px-3 py-3 font-body text-sm uppercase tracking-wide text-ink-700 hover:bg-cream-200"
+              >
+                {l.label}
+              </a>
+            ))}
+            <div className="mt-2 flex items-center gap-3 px-1 py-2">
+              <a
+                href={brand.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="flex h-11 w-11 items-center justify-center text-ink-500"
+              >
+                <IconInstagram />
+              </a>
+              <a
+                href={brand.tiktokUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="TikTok"
+                className="flex h-11 w-11 items-center justify-center text-ink-500"
+              >
+                <IconTikTok />
+              </a>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+  )
+}
