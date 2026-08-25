@@ -1,23 +1,18 @@
 import catalogAvif from '../assets/img/catalog-bottle.avif'
 import catalogWebp from '../assets/img/catalog-bottle.webp'
 import catalogJpg from '../assets/img/catalog-bottle.jpg'
-import { CATEGORIES, formatCOP } from '../data/products'
+import { formatCOP } from '../data/products'
 import { waLink } from '../data/site'
 import { IconBottle, IconWhatsApp } from './icons'
 
-export default function ProductGridItem({ product, eager = false }) {
-  const isDama = product.category === CATEGORIES.DAMA
+export default function ProductGridItem({ product, number, eager = false }) {
   const message = `Hola, Narciso Parfum. Estoy interesado/a en comprar el perfume ${product.fullName} por $${product.price.toLocaleString('es-CO')}. ¿Me pueden confirmar disponibilidad?`
 
   return (
     <article className="group flex flex-col overflow-hidden rounded-xl border border-ink-100 bg-white transition-shadow duration-200 hover:shadow-md">
       <div className="relative aspect-square w-full overflow-hidden bg-cream-50">
-        <span
-          className={`absolute left-1 top-1 z-10 rounded-full px-1 py-0.5 font-body text-[7px] uppercase tracking-wide shadow-sm sm:left-1.5 sm:top-1.5 sm:px-1.5 sm:text-[8px] ${
-            isDama ? 'bg-white/90 text-ink-500' : 'bg-ink-900/85 text-cream-50'
-          }`}
-        >
-          {isDama ? 'Dama' : 'Cab.'}
+        <span className="absolute left-1 top-1 z-10 flex h-4 min-w-4 items-center justify-center rounded-full bg-ink-900/80 px-1 font-display text-[9px] text-cream-50 shadow-sm sm:left-1.5 sm:top-1.5 sm:h-5 sm:min-w-5 sm:text-[10px]">
+          {number}
         </span>
 
         {product.image ? (

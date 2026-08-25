@@ -17,26 +17,33 @@ const SORTS = [
   { key: 'az', label: 'Nombre A–Z' },
 ]
 
+const SECTION_DEFS = [
+  { key: CATEGORIES.CABALLERO, label: 'Perfumería Caballero', filterKey: 'caballero' },
+  { key: CATEGORIES.DAMA, label: 'Perfumería Dama', filterKey: 'dama' },
+]
+
 export default function Catalog() {
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState('todos')
   const [brand, setBrand] = useState('todas')
   const [sort, setSort] = useState('orden')
 
-  const filtered = useMemo(() => {
-    let list = products
+  const sections = useMemo(() => {
+    return SECTION_DEFS.filter((def) => category === 'todos' || category === def.filterKey).map((def) => {
+      let list = products.filter((p) => p.category === def.key)
+      if (brand !== 'todas') list = list.filter((p) => p.brand === brand)
+      if (query.trim()) list = searchProducts(list, query)
 
-    if (category === 'caballero') list = list.filter((p) => p.category === CATEGORIES.CABALLERO)
-    if (category === 'dama') list = list.filter((p) => p.category === CATEGORIES.DAMA)
-    if (brand !== 'todas') list = list.filter((p) => p.brand === brand)
-    if (query.trim()) list = searchProducts(list, query)
+      if (sort === 'precio-asc') list = [...list].sort((a, b) => a.price - b.price)
+      if (sort === 'precio-desc') list = [...list].sort((a, b) => b.price - a.price)
+      if (sort === 'az') list = [...list].sort((a, b) => a.title.localeCompare(b.title, 'es'))
 
-    if (sort === 'precio-asc') list = [...list].sort((a, b) => a.price - b.price)
-    if (sort === 'precio-desc') list = [...list].sort((a, b) => b.price - a.price)
-    if (sort === 'az') list = [...list].sort((a, b) => a.title.localeCompare(b.title, 'es'))
-
-    return list
+      return { ...def, items: list }
+    })
   }, [query, category, brand, sort])
+
+  const totalCount = sections.reduce((sum, s) => sum + s.items.length, 0)
+  const firstNonEmpty = sections.find((s) => s.items.length > 0)?.key
 
   return (
     <section id="catalogo" className="scroll-mt-20 bg-cream-50 py-16 sm:scroll-mt-24 sm:py-24">
@@ -116,15 +123,37 @@ export default function Catalog() {
           </div>
         </Reveal>
 
-        {filtered.length === 0 ? (
+        {totalCount === 0 ? (
           <p className="mt-16 text-center font-body text-sm text-ink-400">
             No encontramos fragancias con ese criterio. Prueba con otro nombre o marca.
           </p>
         ) : (
-          <div className="mt-10 grid grid-cols-4 gap-2 sm:mt-12 sm:gap-3">
-            {filtered.map((product, i) => (
-              <ProductGridItem key={product.id} product={product} eager={i < 8} />
-            ))}
+          <div className="mt-10 space-y-10 sm:mt-12 sm:space-y-14">
+            {sections.map(
+              (section) =>
+                section.items.length > 0 && (
+                  <div key={section.key}>
+                    <div className="mb-4 flex items-center gap-3 sm:mb-6">
+                      <h3 className="whitespace-nowrap font-display text-lg text-ink-900 sm:text-xl">
+                        {section.label}
+                      </h3>
+                      <span className="h-px flex-1 bg-ink-200" />
+                      <span className="font-body text-xs text-ink-400">{section.items.length}</span>
+                    </div>
+
+                    <div className="grid grid-cols-4 gap-2 sm:gap-3">
+                      {section.items.map((product, i) => (
+                        <ProductGridItem
+                          key={product.id}
+                          product={product}
+                          number={i + 1}
+                          eager={section.key === firstNonEmpty && i < 8}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )
+            )}
           </div>
         )}
       </div>
