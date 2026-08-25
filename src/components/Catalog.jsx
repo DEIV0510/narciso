@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { CATEGORIES, brands, products, searchProducts } from '../data/products'
-import ProductGridItem from './ProductGridItem'
+import ProductCard from './ProductCard'
+import ProductRow from './ProductRow'
 import Reveal from './Reveal'
 import { IconSearch } from './icons'
 
@@ -43,31 +44,33 @@ export default function Catalog() {
   }, [query, category, brand, sort])
 
   const totalCount = sections.reduce((sum, s) => sum + s.items.length, 0)
-  const firstNonEmpty = sections.find((s) => s.items.length > 0)?.key
 
   return (
-    <section id="catalogo" className="scroll-mt-20 bg-cream-50 py-16 sm:scroll-mt-24 sm:py-24">
+    <section
+      id="catalogo"
+      className="scroll-mt-20 border-b border-cream-50/10 bg-ink-900 py-16 sm:scroll-mt-24 sm:py-24"
+    >
       <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-8">
         <Reveal className="mx-auto max-w-xl text-center">
-          <p className="section-eyebrow text-gold-600">Catálogo completo</p>
-          <h2 className="mt-3 font-display text-3xl text-balance text-ink-900 sm:text-4xl">
+          <p className="section-eyebrow text-gold-400">Catálogo completo</p>
+          <h2 className="mt-3 font-display text-3xl text-balance text-cream-50 sm:text-4xl">
             Descubre tu fragancia
           </h2>
-          <p className="mt-3 font-body text-sm text-ink-500 sm:text-base">
+          <p className="mt-3 font-body text-sm text-ink-300 sm:text-base">
             {products.length} fragancias inspiradas, mismo frasco Narciso. $60.000 COP cada una.
           </p>
         </Reveal>
 
         <Reveal delay={80} className="mt-8 space-y-4 sm:mt-10">
           <div className="relative mx-auto max-w-md">
-            <IconSearch className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-300" />
+            <IconSearch className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400" />
             <input
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Buscar por nombre o marca…"
               aria-label="Buscar perfume por nombre o marca"
-              className="w-full rounded-full border border-ink-100 bg-white py-3 pl-11 pr-4 font-body text-sm text-ink-900 placeholder:text-ink-300 focus:border-gold-400"
+              className="w-full rounded-full border border-cream-50/15 bg-ink-800 py-3 pl-11 pr-4 font-body text-sm text-cream-50 placeholder:text-ink-400 focus:border-gold-400"
             />
           </div>
 
@@ -80,8 +83,8 @@ export default function Catalog() {
                 aria-pressed={category === f.key}
                 className={`min-h-11 rounded-full border px-4 font-body text-xs uppercase tracking-wide transition-colors sm:text-sm ${
                   category === f.key
-                    ? 'border-ink-900 bg-ink-900 text-cream-50'
-                    : 'border-ink-100 bg-white text-ink-600 hover:border-ink-300'
+                    ? 'border-gold-500 bg-gold-500 text-ink-900'
+                    : 'border-cream-50/15 bg-ink-800 text-ink-200 hover:border-cream-50/30'
                 }`}
               >
                 {f.label}
@@ -90,12 +93,12 @@ export default function Catalog() {
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-3">
-            <label className="flex items-center gap-2 font-body text-xs text-ink-500">
+            <label className="flex items-center gap-2 font-body text-xs text-ink-300">
               Marca
               <select
                 value={brand}
                 onChange={(e) => setBrand(e.target.value)}
-                className="min-h-11 rounded-full border border-ink-100 bg-white px-3 font-body text-xs text-ink-900 sm:text-sm"
+                className="min-h-11 rounded-full border border-cream-50/15 bg-ink-800 px-3 font-body text-xs text-cream-50 sm:text-sm"
               >
                 <option value="todas">Todas</option>
                 {brands.map((b) => (
@@ -106,12 +109,12 @@ export default function Catalog() {
               </select>
             </label>
 
-            <label className="flex items-center gap-2 font-body text-xs text-ink-500">
+            <label className="flex items-center gap-2 font-body text-xs text-ink-300">
               Ordenar
               <select
                 value={sort}
                 onChange={(e) => setSort(e.target.value)}
-                className="min-h-11 rounded-full border border-ink-100 bg-white px-3 font-body text-xs text-ink-900 sm:text-sm"
+                className="min-h-11 rounded-full border border-cream-50/15 bg-ink-800 px-3 font-body text-xs text-cream-50 sm:text-sm"
               >
                 {SORTS.map((s) => (
                   <option key={s.key} value={s.key}>
@@ -133,24 +136,18 @@ export default function Catalog() {
               (section) =>
                 section.items.length > 0 && (
                   <div key={section.key}>
-                    <div className="mb-4 flex items-center gap-3 sm:mb-6">
-                      <h3 className="whitespace-nowrap font-display text-lg text-ink-900 sm:text-xl">
+                    <div className="mb-4 flex items-baseline gap-3 sm:mb-6">
+                      <h3 className="whitespace-nowrap font-display text-xl text-cream-50 sm:text-2xl">
                         {section.label}
                       </h3>
-                      <span className="h-px flex-1 bg-ink-200" />
                       <span className="font-body text-xs text-ink-400">{section.items.length}</span>
                     </div>
 
-                    <div className="grid grid-cols-4 gap-2 sm:gap-3">
+                    <ProductRow>
                       {section.items.map((product, i) => (
-                        <ProductGridItem
-                          key={product.id}
-                          product={product}
-                          number={i + 1}
-                          eager={section.key === firstNonEmpty && i < 8}
-                        />
+                        <ProductCard key={product.id} product={product} eager={i < 4} />
                       ))}
-                    </div>
+                    </ProductRow>
                   </div>
                 )
             )}
