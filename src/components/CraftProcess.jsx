@@ -1,34 +1,75 @@
 import { useState } from 'react'
-import posterAvif from '../assets/img/craft-poster.avif'
-import posterWebp from '../assets/img/craft-poster.webp'
-import posterJpg from '../assets/img/craft-poster.jpg'
+import craftPosterAvif from '../assets/img/craft-poster.avif'
+import craftPosterWebp from '../assets/img/craft-poster.webp'
+import craftPosterJpg from '../assets/img/craft-poster.jpg'
 import craftVideo from '../assets/video/craft-process.mp4'
+import lifestylePosterAvif from '../assets/img/lifestyle-poster.avif'
+import lifestylePosterWebp from '../assets/img/lifestyle-poster.webp'
+import lifestylePosterJpg from '../assets/img/lifestyle-poster.jpg'
+import lifestyleVideo from '../assets/video/lifestyle.mp4'
+import studioPosterAvif from '../assets/img/studio-poster.avif'
+import studioPosterWebp from '../assets/img/studio-poster.webp'
+import studioPosterJpg from '../assets/img/studio-poster.jpg'
+import studioVideo from '../assets/video/studio.mp4'
 import Reveal from './Reveal'
 import { IconPlay } from './icons'
 
+const clips = [
+  {
+    key: 'proceso',
+    label: 'El proceso',
+    video: craftVideo,
+    poster: { avif: craftPosterAvif, webp: craftPosterWebp, jpg: craftPosterJpg },
+    alt: 'Elaborando una fragancia Narciso Parfum: dosificación de esencias en el taller',
+  },
+  {
+    key: 'fragancia',
+    label: 'La fragancia',
+    video: lifestyleVideo,
+    poster: { avif: lifestylePosterAvif, webp: lifestylePosterWebp, jpg: lifestylePosterJpg },
+    alt: 'Frasco de Narciso Parfum en la mano, con la fragancia dorada a contraluz',
+  },
+  {
+    key: 'taller',
+    label: 'Nuestro taller',
+    video: studioVideo,
+    poster: { avif: studioPosterAvif, webp: studioPosterWebp, jpg: studioPosterJpg },
+    alt: 'Frascos de Narciso Parfum recién envasados en el taller',
+  },
+]
+
 export default function CraftProcess() {
+  const [active, setActive] = useState(0)
   const [playing, setPlaying] = useState(false)
+  const current = clips[active]
+
+  function selectClip(i) {
+    setActive(i)
+    setPlaying(false)
+  }
 
   return (
     <section id="proceso" className="scroll-mt-20 bg-cream-100 py-16 sm:scroll-mt-24 sm:py-24">
-      <div className="mx-auto grid max-w-6xl items-center gap-10 px-6 sm:px-8 lg:grid-cols-2 lg:gap-16 lg:px-8">
+      <div className="mx-auto max-w-2xl px-6 text-center sm:px-8">
         <Reveal>
           <p className="section-eyebrow text-gold-600">Hecho a mano</p>
           <h2 className="mt-3 font-display text-3xl text-balance text-ink-900 sm:text-4xl">
             Así nace cada fragancia
           </h2>
-          <p className="mt-5 font-body text-base leading-relaxed text-ink-500 sm:text-lg">
-            Cada frasco se dosifica, diluye y envasa a mano en Ibagué, con precisión
-            y el mismo cuidado de siempre. Así se ve el proceso real, de principio a
-            fin.
+          <p className="mt-4 font-body text-base leading-relaxed text-ink-500 sm:text-lg">
+            Cada frasco se dosifica, diluye y envasa a mano en Ibagué. Así se ve el
+            proceso real, de principio a fin.
           </p>
         </Reveal>
+      </div>
 
-        <Reveal delay={100} className="overflow-hidden rounded-3xl shadow-lg">
-          <div className="relative aspect-[4/5] w-full bg-ink-900">
+      <Reveal delay={100} className="mx-auto mt-10 max-w-sm px-6 sm:mt-12 sm:px-8">
+        <div className="overflow-hidden rounded-3xl bg-ink-900 shadow-lg">
+          <div className="relative aspect-[4/5] w-full">
             {playing ? (
               <video
-                src={craftVideo}
+                key={current.key}
+                src={current.video}
                 controls
                 autoPlay
                 playsInline
@@ -41,19 +82,17 @@ export default function CraftProcess() {
               <button
                 type="button"
                 onClick={() => setPlaying(true)}
-                aria-label="Reproducir video: así se elabora Narciso Parfum"
+                aria-label={`Reproducir video: ${current.label}`}
                 className="group relative block h-full w-full"
               >
                 <picture>
-                  <source srcSet={posterAvif} type="image/avif" />
-                  <source srcSet={posterWebp} type="image/webp" />
+                  <source srcSet={current.poster.avif} type="image/avif" />
+                  <source srcSet={current.poster.webp} type="image/webp" />
                   <img
-                    src={posterJpg}
-                    alt="Elaborando una fragancia Narciso Parfum: dosificación de esencias en el taller"
+                    src={current.poster.jpg}
+                    alt={current.alt}
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
-                    width={1000}
-                    height={1340}
                   />
                 </picture>
                 <span className="absolute inset-0 bg-ink-900/20 transition-colors group-hover:bg-ink-900/35" />
@@ -63,13 +102,39 @@ export default function CraftProcess() {
                   </span>
                 </span>
                 <span className="absolute bottom-4 left-4 rounded-full bg-ink-900/70 px-3 py-1.5 font-body text-[11px] uppercase tracking-wide text-cream-50">
-                  Ver el proceso
+                  {current.label}
                 </span>
               </button>
             )}
           </div>
-        </Reveal>
-      </div>
+        </div>
+
+        <div className="mt-4 flex justify-center gap-3" role="tablist" aria-label="Videos de Narciso Parfum">
+          {clips.map((clip, i) => (
+            <button
+              key={clip.key}
+              type="button"
+              role="tab"
+              aria-selected={active === i}
+              onClick={() => selectClip(i)}
+              className={`group flex flex-col items-center gap-1.5 rounded-xl p-1 transition-colors ${
+                active === i ? '' : 'opacity-70 hover:opacity-100'
+              }`}
+            >
+              <span
+                className={`h-12 w-12 overflow-hidden rounded-full border-2 transition-colors ${
+                  active === i ? 'border-gold-500' : 'border-transparent'
+                }`}
+              >
+                <img src={clip.poster.jpg} alt="" className="h-full w-full object-cover" loading="lazy" />
+              </span>
+              <span className="font-body text-[10px] uppercase tracking-wide text-ink-500 group-hover:text-ink-900">
+                {clip.label}
+              </span>
+            </button>
+          ))}
+        </div>
+      </Reveal>
     </section>
   )
 }

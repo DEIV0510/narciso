@@ -7,17 +7,17 @@ export default function BrandSection() {
   return (
     <section aria-labelledby="brand-heading" className="bg-cream-100 py-16 sm:py-24">
       <div className="mx-auto grid max-w-6xl items-center gap-10 px-6 sm:px-8 lg:grid-cols-2 lg:gap-16 lg:px-8">
-        <Reveal className="order-2 overflow-hidden rounded-3xl shadow-lg lg:order-1">
+        <Reveal className="order-2 mx-auto w-full max-w-sm overflow-hidden rounded-3xl shadow-lg lg:order-1 lg:max-w-md">
           <picture>
             <source srcSet={labelAvif} type="image/avif" />
             <source srcSet={labelWebp} type="image/webp" />
             <img
               src={labelJpg}
               alt="Detalle de la etiqueta de Narciso Parfum con la corona y laureles dorados"
-              className="h-full w-full object-cover"
+              className="aspect-[4/5] h-full w-full object-cover"
               loading="lazy"
-              width={1100}
-              height={1477}
+              width={800}
+              height={1000}
             />
           </picture>
         </Reveal>

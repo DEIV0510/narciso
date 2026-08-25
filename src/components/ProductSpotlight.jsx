@@ -33,8 +33,8 @@ export default function ProductSpotlight() {
                   alt="Narciso Parfum, frasco negro con tapa dorada y etiqueta con corona"
                   className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
                   loading="lazy"
-                  width={1200}
-                  height={1610}
+                  width={800}
+                  height={1483}
                 />
               </picture>
             </div>
