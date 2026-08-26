@@ -179,6 +179,15 @@ export function IconChevronRight({ className = 'h-5 w-5' }) {
   )
 }
 
+export function IconCheck({ className = 'h-4 w-4' }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
+      <circle cx="12" cy="12" r="9.5" stroke="currentColor" strokeWidth="1.4" />
+      <path d="m7.5 12.3 3 3 6-6.6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
 export function IconX({ className = 'h-5 w-5' }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">

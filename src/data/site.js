@@ -53,9 +53,11 @@ export const navLinks = [
   { label: 'Ubicación', href: '#ubicacion' },
 ]
 
-export const benefits = [
-  { title: 'Perfumería de alta calidad', desc: 'Fórmulas cuidadas para una fijación duradera.' },
-  { title: 'Perfumería inspirada', desc: 'Aromas inspirados en las grandes casas del mundo.' },
-  { title: 'Atención personalizada', desc: 'Te asesoramos para encontrar tu aroma ideal.' },
-  { title: 'Compra fácil por WhatsApp', desc: 'Sin formularios. Escribe y listo.' },
+export const whyNarciso = [
+  'Perfumería de alta calidad',
+  'Perfumería inspirada',
+  'Presentación premium',
+  'Atención personalizada',
+  'Compra fácil por WhatsApp',
+  'Elaborado en Ibagué, Tolima',
 ]

@@ -44,14 +44,43 @@ tocarse. Carpetas `Desktop\DMPERFUMES` y `Desktop\perfumeria` son de otros
 proyectos del cliente (marcas "DM Essence" y "Perfumes Peralta") — **no se
 usaron**, confirmado explícitamente por el cliente.
 
+## Rediseño editorial (referencia externa)
+
+El cliente pasó capturas de una tienda de perfumería ajena como **referencia de
+principios de diseño** (espaciado editorial, tarjetas grandes, jerarquía
+tipográfica) — explícitamente NO para copiar su marca/logo/textos/colores.
+Cambios aplicados, todos con datos y fotos reales de Narciso:
+
+- **Hero**: pasó a una tarjeta oscura de esquinas redondeadas con margen
+  (estilo "inset card"), pills de beneficios reales, y una fila de confianza
+  con hechos verificados (Ibagué/Tolima, atención personalizada). No se
+  agregaron rating ni cifras de clientes ni envíos nacionales — no hay dato
+  real que lo respalde.
+- **`GenderFinder.jsx`** ("Tu fragancia empieza aquí"): 3 tarjetas grandes
+  Hombre/Mujer/Unisex con fotos reales (recortes distintos de la misma
+  fotografía real). Hombre/Mujer filtran el catálogo en vivo (evento
+  `narciso:filter-category` que Catalog.jsx escucha); Unisex va directo a
+  WhatsApp porque no existen productos unisex reales en el catálogo — no se
+  inventó ninguno.
+- **`WhyNarciso.jsx`** ("¿Por qué Narciso?", reemplaza a `Benefits.jsx`):
+  checklist con los 6 hechos reales confirmados por el cliente.
+- **`Experience.jsx`** ("Tu aroma. Tu presencia."): foto real (fotograma del
+  video "La fragancia") en tarjeta oscura grande.
+- **`FindYourFragrance.jsx`** ahora es un mini-quiz de 2 pasos (género +
+  estilo olfativo) que muestra hasta 4 productos reales del catálogo que
+  calzan. El campo `style` en `products.js` (Fresco/Dulce/Intenso/Elegante)
+  es una clasificación orientativa de conocimiento público sobre estas
+  fragancias reales — no una característica inventada del producto ni un dato
+  provisto por el cliente.
+
 ## Estructura
 
 ```
 src/
-  components/   Header, Hero, Benefits, Catalog, ProductCard, ProductRow,
-                ProductSpotlight, ProductModal, CraftProcess, FindYourFragrance,
-                BrandSection, Location, Socials, FinalCTA, Footer,
-                WhatsAppButton, LoadingScreen
+  components/   Header, Hero, GenderFinder, Catalog, ProductCard, ProductRow,
+                WhyNarciso, ProductSpotlight, ProductModal, CraftProcess,
+                Experience, FindYourFragrance, BrandSection, Location,
+                Socials, FinalCTA, Footer, WhatsAppButton, LoadingScreen
   data/site.js      marca, WhatsApp, enlaces
   data/products.js  catálogo (48 productos), formatCOP, searchProducts
   hooks/            useReveal (scroll reveal con IntersectionObserver)

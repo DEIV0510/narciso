@@ -1,43 +1,178 @@
+import { useMemo, useState } from 'react'
+import catalogAvif from '../assets/img/catalog-bottle.avif'
+import catalogWebp from '../assets/img/catalog-bottle.webp'
+import catalogJpg from '../assets/img/catalog-bottle.jpg'
 import Reveal from './Reveal'
-import { waLink, waMessages } from '../data/site'
-import { IconArrowRight } from './icons'
+import { products, formatCOP } from '../data/products'
+import { waLink } from '../data/site'
+import { IconArrowRight, IconWhatsApp } from './icons'
 
-const options = [
-  { label: 'Femenina', message: waMessages.feminine },
-  { label: 'Masculina', message: waMessages.masculine },
-  { label: 'Unisex', message: waMessages.unisex },
+const GENDERS = [
+  { key: 'hombre', label: 'Hombre' },
+  { key: 'mujer', label: 'Mujer' },
+]
+
+const STYLES = [
+  { key: 'Fresco', label: 'Fresco' },
+  { key: 'Dulce', label: 'Dulce' },
+  { key: 'Intenso', label: 'Intenso' },
+  { key: 'Elegante', label: 'Elegante' },
 ]
 
 export default function FindYourFragrance() {
+  const [step, setStep] = useState(0)
+  const [gender, setGender] = useState(null)
+  const [style, setStyle] = useState(null)
+
+  const results = useMemo(() => {
+    if (!gender || !style) return []
+    return products.filter((p) => p.gender === gender && p.style === style).slice(0, 4)
+  }, [gender, style])
+
+  function restart() {
+    setStep(0)
+    setGender(null)
+    setStyle(null)
+  }
+
   return (
     <section id="encuentra" className="scroll-mt-20 bg-cream-50 py-16 sm:scroll-mt-24 sm:py-24">
-      <div className="mx-auto max-w-4xl px-6 text-center sm:px-8">
-        <Reveal>
+      <div className="mx-auto max-w-2xl px-6 sm:px-8">
+        <Reveal className="text-center">
           <p className="section-eyebrow text-gold-600">Encuentra tu fragancia</p>
-          <h2 className="mt-3 font-display text-3xl text-ink-900 sm:text-4xl text-balance">
+          <h2 className="mt-3 font-display text-3xl text-balance text-ink-900 sm:text-4xl">
             ¿Buscas una fragancia para ti?
           </h2>
           <p className="mt-3 font-body text-sm text-ink-400 sm:text-base">
-            Elige una opción y te recomendamos por WhatsApp.
+            Responde 2 preguntas rápidas y te mostramos opciones reales de nuestro catálogo.
           </p>
         </Reveal>
 
-        <Reveal delay={120} className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          {options.map((opt) => (
-            <a
-              key={opt.label}
-              href={waLink(opt.message)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center justify-between rounded-2xl border border-ink-100 bg-white px-6 py-5 font-display text-lg text-ink-900 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-gold-400 hover:shadow-md sm:flex-col sm:items-center sm:gap-3 sm:py-8 sm:text-center"
-            >
-              <span>{opt.label}</span>
-              <span className="flex items-center gap-1 font-body text-xs uppercase tracking-wide text-gold-600">
-                Consultar
-                <IconArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-              </span>
-            </a>
-          ))}
+        <Reveal delay={100} className="mt-8 rounded-3xl border border-ink-100 bg-white p-6 shadow-sm sm:mt-10 sm:p-10">
+          <div className="mx-auto flex max-w-[10rem] items-center gap-2">
+            <span className={`h-1 flex-1 rounded-full ${step >= 0 ? 'bg-gold-500' : 'bg-ink-100'}`} />
+            <span className={`h-1 flex-1 rounded-full ${step >= 1 ? 'bg-gold-500' : 'bg-ink-100'}`} />
+            <span className={`h-1 flex-1 rounded-full ${step >= 2 ? 'bg-gold-500' : 'bg-ink-100'}`} />
+          </div>
+
+          {step === 0 && (
+            <div className="mt-6 text-center">
+              <p className="font-display text-lg text-ink-900">¿Para quién buscas la fragancia?</p>
+              <div className="mt-5 grid grid-cols-2 gap-3">
+                {GENDERS.map((g) => (
+                  <button
+                    key={g.key}
+                    type="button"
+                    onClick={() => {
+                      setGender(g.key)
+                      setStep(1)
+                    }}
+                    className="rounded-2xl border border-ink-100 py-5 font-body text-sm uppercase tracking-wide text-ink-700 transition-colors hover:border-gold-400 hover:text-ink-900"
+                  >
+                    {g.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {step === 1 && (
+            <div className="mt-6 text-center">
+              <p className="font-display text-lg text-ink-900">¿Qué estilo prefieres?</p>
+              <div className="mt-5 grid grid-cols-2 gap-3">
+                {STYLES.map((s) => (
+                  <button
+                    key={s.key}
+                    type="button"
+                    onClick={() => {
+                      setStyle(s.key)
+                      setStep(2)
+                    }}
+                    className="rounded-2xl border border-ink-100 py-5 font-body text-sm uppercase tracking-wide text-ink-700 transition-colors hover:border-gold-400 hover:text-ink-900"
+                  >
+                    {s.label}
+                  </button>
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={() => setStep(0)}
+                className="mt-5 font-body text-xs uppercase tracking-wide text-ink-400 hover:text-ink-700"
+              >
+                ← Volver
+              </button>
+            </div>
+          )}
+
+          {step === 2 && (
+            <div className="mt-6">
+              <p className="text-center font-display text-lg text-ink-900">
+                Estilo {style} · Para {gender === 'hombre' ? 'hombre' : 'mujer'}
+              </p>
+
+              {results.length === 0 ? (
+                <p className="mt-4 text-center font-body text-sm text-ink-400">
+                  No encontramos una combinación exacta — escríbenos por WhatsApp y te ayudamos a elegir.
+                </p>
+              ) : (
+                <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                  {results.map((p) => {
+                    const message = `Hola, Narciso Parfum. Estoy interesado/a en comprar el perfume ${p.fullName} por $${p.price.toLocaleString('es-CO')}. ¿Me pueden confirmar disponibilidad?`
+                    return (
+                      <a
+                        key={p.id}
+                        href={waLink(message)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group overflow-hidden rounded-2xl border border-ink-100 bg-cream-50 transition-shadow hover:shadow-md"
+                      >
+                        <span className="block aspect-square w-full overflow-hidden bg-white">
+                          <picture>
+                            <source srcSet={catalogAvif} type="image/avif" />
+                            <source srcSet={catalogWebp} type="image/webp" />
+                            <img
+                              src={catalogJpg}
+                              alt={`Narciso Parfum — ${p.fullName}`}
+                              className="h-full w-full object-contain p-2 transition-transform duration-300 group-hover:scale-105"
+                              loading="lazy"
+                              width={200}
+                              height={200}
+                            />
+                          </picture>
+                        </span>
+                        <span className="block p-2.5">
+                          <span className="line-clamp-2 block font-display text-xs leading-tight text-ink-900">
+                            {p.title}
+                          </span>
+                          <span className="mt-1 flex items-center justify-between">
+                            <span className="font-display text-xs text-gold-600">{formatCOP(p.price)}</span>
+                            <IconWhatsApp className="h-3.5 w-3.5 text-[#25D366]" />
+                          </span>
+                        </span>
+                      </a>
+                    )
+                  })}
+                </div>
+              )}
+
+              <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+                <a
+                  href="#catalogo"
+                  className="inline-flex items-center gap-1.5 font-body text-xs uppercase tracking-wide text-ink-600 hover:text-ink-900"
+                >
+                  Ver catálogo completo
+                  <IconArrowRight className="h-3.5 w-3.5" />
+                </a>
+                <button
+                  type="button"
+                  onClick={restart}
+                  className="font-body text-xs uppercase tracking-wide text-ink-400 hover:text-ink-700"
+                >
+                  Volver a empezar
+                </button>
+              </div>
+            </div>
+          )}
         </Reveal>
       </div>
     </section>

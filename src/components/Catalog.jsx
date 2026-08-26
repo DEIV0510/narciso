@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { CATEGORIES, brands, products, searchProducts } from '../data/products'
 import ProductCard from './ProductCard'
 import ProductRow from './ProductRow'
@@ -28,6 +28,15 @@ export default function Catalog() {
   const [category, setCategory] = useState('todos')
   const [brand, setBrand] = useState('todas')
   const [sort, setSort] = useState('orden')
+
+  useEffect(() => {
+    function handler(e) {
+      setCategory(e.detail)
+      setQuery('')
+    }
+    window.addEventListener('narciso:filter-category', handler)
+    return () => window.removeEventListener('narciso:filter-category', handler)
+  }, [])
 
   const sections = useMemo(() => {
     return SECTION_DEFS.filter((def) => category === 'todos' || category === def.filterKey).map((def) => {
