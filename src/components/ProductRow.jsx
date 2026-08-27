@@ -19,12 +19,12 @@ export default function ProductRow({ children }) {
       >
         {children}
       </div>
-      <span className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-ink-900 to-transparent sm:w-16" />
+      <span className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-cream-50 to-transparent sm:w-16" />
       <button
         type="button"
         onClick={scrollNext}
         aria-label="Ver más fragancias"
-        className="absolute right-1 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-cream-50 text-ink-900 shadow-lg transition-transform hover:scale-105 sm:flex"
+        className="absolute right-1 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-ink-900 text-cream-50 shadow-lg transition-transform hover:scale-105 sm:flex"
       >
         <IconChevronRight className="h-5 w-5" />
       </button>

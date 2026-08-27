@@ -19,9 +19,9 @@ export default function ProductCard({ product, eager = false }) {
   }
 
   return (
-    <article className="group w-44 shrink-0 snap-start overflow-hidden rounded-2xl border border-cream-50/10 bg-ink-800 sm:w-52 lg:w-56">
-      <Link to={href} className="relative block aspect-square w-full overflow-hidden bg-ink-900">
-        <span className="absolute left-2.5 top-2.5 z-10 rounded-full border border-cream-50/15 bg-ink-900/70 px-2.5 py-1 font-body text-[10px] uppercase tracking-wide text-cream-100">
+    <article className="group w-44 shrink-0 snap-start overflow-hidden rounded-2xl border border-ink-100 bg-white sm:w-52 lg:w-56">
+      <Link to={href} className="relative block aspect-square w-full overflow-hidden bg-cream-50">
+        <span className="absolute left-2.5 top-2.5 z-10 rounded-full border border-ink-900/10 bg-ink-900/85 px-2.5 py-1 font-body text-[10px] uppercase tracking-wide text-cream-50">
           {isDama ? 'Dama' : 'Caballero'}
         </span>
 
@@ -46,13 +46,13 @@ export default function ProductCard({ product, eager = false }) {
       </Link>
 
       <div className="flex flex-col gap-1.5 p-4">
-        <p className="truncate font-body text-[11px] uppercase tracking-wide text-ink-300">{product.brand}</p>
-        <h3 className="line-clamp-2 min-h-[2.4em] font-display text-base leading-snug text-cream-50">
-          <Link to={href} className="hover:text-gold-400">
+        <p className="truncate font-body text-[11px] uppercase tracking-wide text-ink-400">{product.brand}</p>
+        <h3 className="line-clamp-2 min-h-[2.4em] font-display text-base leading-snug text-ink-900">
+          <Link to={href} className="hover:text-gold-600">
             {product.title}
           </Link>
         </h3>
-        <p className="font-display text-lg text-gold-400">{formatCOP(product.price)}</p>
+        <p className="font-display text-lg text-gold-600">{formatCOP(product.price)}</p>
 
         <div className="mt-1.5 flex items-center gap-2">
           <a
@@ -67,7 +67,7 @@ export default function ProductCard({ product, eager = false }) {
             type="button"
             onClick={handleAddToCart}
             aria-label={`Agregar ${product.fullName} al carrito`}
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-cream-50/15 text-cream-50 transition-colors duration-200 hover:border-gold-400 hover:bg-gold-500 hover:text-ink-900"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-ink-200 text-ink-600 transition-colors duration-200 hover:border-gold-400 hover:bg-gold-500 hover:text-ink-900"
           >
             <IconBagPlus className="h-4 w-4" />
           </button>
