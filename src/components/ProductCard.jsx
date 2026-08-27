@@ -4,13 +4,19 @@ import catalogWebp from '../assets/img/catalog-bottle.webp'
 import catalogJpg from '../assets/img/catalog-bottle.jpg'
 import { CATEGORIES, formatCOP } from '../data/products'
 import { waLink } from '../data/site'
-import { IconBottle, IconWhatsApp } from './icons'
+import { useCart, DEFAULT_SIZE_LABEL } from '../context/CartContext'
+import { IconBottle, IconBagPlus } from './icons'
 
 export default function ProductCard({ product, eager = false }) {
+  const { addItem } = useCart()
   const isDama = product.category === CATEGORIES.DAMA
   const message = `Hola, Narciso Parfum. Estoy interesado/a en comprar el perfume ${product.fullName} por $${product.price.toLocaleString('es-CO')}. ¿Me pueden confirmar disponibilidad?`
   const wa = waLink(message)
   const href = `/perfumes/${product.id}`
+
+  const handleAddToCart = () => {
+    addItem(product, { label: product.sizes?.[0]?.label || DEFAULT_SIZE_LABEL, price: product.sizes?.[0]?.price ?? product.price })
+  }
 
   return (
     <article className="group w-44 shrink-0 snap-start overflow-hidden rounded-2xl border border-cream-50/10 bg-ink-800 sm:w-52 lg:w-56">
@@ -57,15 +63,14 @@ export default function ProductCard({ product, eager = false }) {
           >
             Comprar
           </a>
-          <a
-            href={wa}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Comprar ${product.fullName} por WhatsApp`}
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-ink-900 transition-transform duration-200 hover:scale-105"
+          <button
+            type="button"
+            onClick={handleAddToCart}
+            aria-label={`Agregar ${product.fullName} al carrito`}
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-cream-50/15 text-cream-50 transition-colors duration-200 hover:border-gold-400 hover:bg-gold-500 hover:text-ink-900"
           >
-            <IconWhatsApp className="h-4 w-4" />
-          </a>
+            <IconBagPlus className="h-4 w-4" />
+          </button>
         </div>
       </div>
     </article>

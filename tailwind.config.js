@@ -59,11 +59,17 @@ export default {
           '80%': { transform: 'scale(1.6)', opacity: 0 },
           '100%': { transform: 'scale(1.6)', opacity: 0 },
         },
+        bump: {
+          '0%': { transform: 'scale(0.6)' },
+          '60%': { transform: 'scale(1.25)' },
+          '100%': { transform: 'scale(1)' },
+        },
       },
       animation: {
         fadeUp: 'fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) forwards',
         fadeIn: 'fadeIn 0.6s ease forwards',
         pulseRing: 'pulseRing 2.4s cubic-bezier(0.4,0,0.6,1) infinite',
+        bump: 'bump 0.4s cubic-bezier(0.34,1.56,0.64,1)',
       },
     },
   },

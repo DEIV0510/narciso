@@ -17,8 +17,9 @@ import Reveal from '../components/Reveal'
 import { CATEGORIES, formatCOP, getProductById, getRelatedProducts } from '../data/products'
 import { getFragranceInfo } from '../data/fragranceInfo'
 import { waLink } from '../data/site'
+import { useCart, DEFAULT_SIZE_LABEL } from '../context/CartContext'
 import useDocumentMeta from '../hooks/useDocumentMeta'
-import { IconWhatsApp } from '../components/icons'
+import { IconWhatsApp, IconBagPlus } from '../components/icons'
 
 const gallery = [
   { key: 'principal', avif: catalogAvif, webp: catalogWebp, jpg: catalogJpg, alt: 'Frasco de Narciso Parfum' },
@@ -31,6 +32,8 @@ export default function ProductDetailPage() {
   const { slug } = useParams()
   const product = getProductById(slug)
   const [active, setActive] = useState(0)
+  const [selectedSize, setSelectedSize] = useState(null)
+  const { addItem } = useCart()
 
   if (!product) {
     return <Navigate to="/" replace />
@@ -39,8 +42,13 @@ export default function ProductDetailPage() {
   const info = getFragranceInfo(product.id)
   const isDama = product.category === CATEGORIES.DAMA
   const related = getRelatedProducts(product, 4)
-  const sizes = product.sizes || [{ label: 'Presentación', price: product.price }]
-  const message = `Hola, Narciso Parfum. Estoy interesado/a en ${product.fullName} por $${product.price.toLocaleString('es-CO')} COP. ¿Me pueden confirmar disponibilidad?`
+  const sizes = product.sizes || [{ label: DEFAULT_SIZE_LABEL, price: product.price }]
+  const size = selectedSize || sizes[0]
+  const message = `Hola, Narciso Parfum. Estoy interesado/a en ${product.fullName}${
+    size.label !== DEFAULT_SIZE_LABEL ? ` (${size.label})` : ''
+  } por $${size.price.toLocaleString('es-CO')} COP. ¿Me pueden confirmar disponibilidad?`
+
+  const handleAddToCart = () => addItem(product, size)
 
   useDocumentMeta({
     title: `${product.title} | Narciso Parfum`,
@@ -138,12 +146,19 @@ export default function ProductDetailPage() {
                   <p className="font-body text-xs uppercase tracking-wide text-ink-400">Elige tu presentación</p>
                   <div className="mt-2 flex flex-wrap gap-2">
                     {sizes.map((s) => (
-                      <span
+                      <button
                         key={s.label}
-                        className="rounded-full border border-ink-200 px-4 py-2 font-body text-sm text-ink-700"
+                        type="button"
+                        onClick={() => setSelectedSize(s)}
+                        aria-pressed={size.label === s.label}
+                        className={`rounded-full border px-4 py-2 font-body text-sm transition-colors ${
+                          size.label === s.label
+                            ? 'border-gold-500 bg-gold-50 text-gold-700'
+                            : 'border-ink-200 text-ink-700 hover:border-ink-300'
+                        }`}
                       >
                         {s.label} · {formatCOP(s.price)}
-                      </span>
+                      </button>
                     ))}
                   </div>
                 </>
@@ -151,15 +166,26 @@ export default function ProductDetailPage() {
                 <p className="font-display text-3xl text-gold-600">{formatCOP(product.price)}</p>
               )}
 
-              <a
-                href={waLink(message)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] py-4 font-body text-sm uppercase tracking-wide text-ink-900 transition-transform duration-200 hover:scale-[1.01] sm:w-fit sm:px-10"
-              >
-                <IconWhatsApp className="h-4 w-4" />
-                Comprar por WhatsApp
-              </a>
+              <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                <button
+                  type="button"
+                  onClick={handleAddToCart}
+                  className="flex w-full items-center justify-center gap-2 rounded-full bg-gold-500 py-4 font-body text-sm uppercase tracking-wide text-ink-900 transition-transform duration-200 hover:scale-[1.01] hover:bg-gold-400 sm:w-fit sm:px-10"
+                >
+                  <IconBagPlus className="h-4 w-4" />
+                  Agregar al carrito
+                </button>
+
+                <a
+                  href={waLink(message)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] py-4 font-body text-sm uppercase tracking-wide text-ink-900 transition-transform duration-200 hover:scale-[1.01] sm:w-fit sm:px-10"
+                >
+                  <IconWhatsApp className="h-4 w-4" />
+                  Comprar por WhatsApp
+                </a>
+              </div>
             </div>
 
             {(info?.topNotes?.length || info?.heartNotes?.length || info?.baseNotes?.length) && (

@@ -1,8 +1,31 @@
 import { useEffect, useState } from 'react'
 import logo from '../assets/img/logo.webp'
 import { brand, navLinks, waLink, waMessages } from '../data/site'
-import { IconInstagram, IconTikTok, IconMenu, IconClose, IconWhatsApp } from './icons'
+import { IconInstagram, IconTikTok, IconMenu, IconClose, IconWhatsApp, IconBag } from './icons'
 import SectionLink from './SectionLink'
+import { useCart } from '../context/CartContext'
+
+function CartButton({ className = '' }) {
+  const { totalItems, openCart } = useCart()
+  return (
+    <button
+      type="button"
+      onClick={openCart}
+      aria-label={totalItems > 0 ? `Ver carrito, ${totalItems} productos` : 'Ver carrito'}
+      className={`relative flex items-center justify-center text-ink-600 transition-colors hover:text-gold-600 ${className}`}
+    >
+      <IconBag className="h-5 w-5" />
+      {totalItems > 0 && (
+        <span
+          key={totalItems}
+          className="absolute -right-1.5 -top-1.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-gold-500 px-1 font-body text-[10px] font-medium leading-none text-ink-900 motion-safe:animate-bump"
+        >
+          {totalItems}
+        </span>
+      )}
+    </button>
+  )
+}
 
 export default function Header({ open, onOpenChange }) {
   const [localOpen, setLocalOpen] = useState(false)
@@ -54,6 +77,7 @@ export default function Header({ open, onOpenChange }) {
           >
             <IconTikTok />
           </a>
+          <CartButton />
           <a
             href={waLink(waMessages.catalog)}
             target="_blank"
@@ -65,6 +89,7 @@ export default function Header({ open, onOpenChange }) {
         </div>
 
         <div className="flex items-center gap-2.5 lg:hidden">
+          <CartButton className="h-11 w-11 rounded-full border border-ink-200" />
           <a
             href={waLink(waMessages.catalog)}
             target="_blank"

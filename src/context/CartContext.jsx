@@ -1,0 +1,166 @@
+import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useRef, useState } from 'react'
+
+const STORAGE_KEY = 'narciso-cart-v1'
+
+// Tamaño por defecto para productos sin variantes reales (los 48 del
+// catálogo actual venden una sola presentación). No se muestra esta
+// etiqueta en el carrito ni en el mensaje de WhatsApp: solo existe para que
+// la arquitectura ya soporte tamaños reales el día que el cliente los tenga.
+export const DEFAULT_SIZE_LABEL = 'Presentación'
+
+function lineId(productId, sizeLabel) {
+  return `${productId}__${sizeLabel}`
+}
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'HYDRATE':
+      return Array.isArray(action.items) ? action.items : state
+    case 'ADD': {
+      const { product, size, qty } = action
+      const id = lineId(product.id, size.label)
+      const existing = state.find((i) => i.lineId === id)
+      if (existing) {
+        return state.map((i) => (i.lineId === id ? { ...i, qty: i.qty + qty } : i))
+      }
+      return [
+        ...state,
+        {
+          lineId: id,
+          productId: product.id,
+          title: product.title,
+          brand: product.brand,
+          fullName: product.fullName,
+          category: product.category,
+          sizeLabel: size.label,
+          price: size.price,
+          qty,
+        },
+      ]
+    }
+    case 'INCREMENT':
+      return state.map((i) => (i.lineId === action.lineId ? { ...i, qty: i.qty + 1 } : i))
+    case 'DECREMENT':
+      return state
+        .map((i) => (i.lineId === action.lineId ? { ...i, qty: i.qty - 1 } : i))
+        .filter((i) => i.qty > 0)
+    case 'REMOVE':
+      return state.filter((i) => i.lineId !== action.lineId)
+    case 'CLEAR':
+      return []
+    default:
+      return state
+  }
+}
+
+const CartContext = createContext(null)
+
+export function CartProvider({ children }) {
+  const [items, dispatch] = useReducer(reducer, [])
+  const [hydrated, setHydrated] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [checkoutOpen, setCheckoutOpen] = useState(false)
+  const [toast, setToast] = useState(null)
+  const toastTimer = useRef(0)
+
+  // Se hidrata UNA vez desde localStorage. El guardado (efecto de abajo) solo
+  // se activa después de que `hydrated` sea true — si no, un primer render
+  // con items=[] pisaría el carrito guardado antes de leerlo (más notorio en
+  // StrictMode, que monta/desmonta el árbol dos veces en desarrollo).
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY)
+      if (raw) dispatch({ type: 'HYDRATE', items: JSON.parse(raw) })
+    } catch {
+      // localStorage no disponible o JSON corrupto: seguir con carrito vacío
+    }
+    setHydrated(true)
+  }, [])
+
+  useEffect(() => {
+    if (!hydrated) return
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(items))
+    } catch {
+      // almacenamiento lleno o no disponible: no interrumpe la compra
+    }
+  }, [items, hydrated])
+
+  const showToast = useCallback((message) => {
+    clearTimeout(toastTimer.current)
+    setToast({ id: Date.now(), message })
+    toastTimer.current = setTimeout(() => setToast(null), 2600)
+  }, [])
+
+  const addItem = useCallback(
+    (product, size, qty = 1) => {
+      const resolvedSize = size || { label: DEFAULT_SIZE_LABEL, price: product.price }
+      dispatch({ type: 'ADD', product, size: resolvedSize, qty })
+      showToast(`${product.title} se agregó al carrito`)
+    },
+    [showToast]
+  )
+
+  const incrementItem = useCallback((id) => dispatch({ type: 'INCREMENT', lineId: id }), [])
+  const decrementItem = useCallback((id) => dispatch({ type: 'DECREMENT', lineId: id }), [])
+  const removeItem = useCallback((id) => dispatch({ type: 'REMOVE', lineId: id }), [])
+  const clearCart = useCallback(() => dispatch({ type: 'CLEAR' }), [])
+
+  const openCart = useCallback(() => setDrawerOpen(true), [])
+  const closeCart = useCallback(() => setDrawerOpen(false), [])
+  const openCheckout = useCallback(() => {
+    setDrawerOpen(false)
+    setCheckoutOpen(true)
+  }, [])
+  const closeCheckout = useCallback(() => setCheckoutOpen(false), [])
+
+  const totalItems = useMemo(() => items.reduce((sum, i) => sum + i.qty, 0), [items])
+  const subtotal = useMemo(() => items.reduce((sum, i) => sum + i.price * i.qty, 0), [items])
+
+  const value = useMemo(
+    () => ({
+      items,
+      totalItems,
+      subtotal,
+      drawerOpen,
+      checkoutOpen,
+      toast,
+      addItem,
+      incrementItem,
+      decrementItem,
+      removeItem,
+      clearCart,
+      openCart,
+      closeCart,
+      openCheckout,
+      closeCheckout,
+      notify: showToast,
+    }),
+    [
+      items,
+      totalItems,
+      subtotal,
+      drawerOpen,
+      checkoutOpen,
+      toast,
+      addItem,
+      incrementItem,
+      decrementItem,
+      removeItem,
+      clearCart,
+      openCart,
+      closeCart,
+      openCheckout,
+      closeCheckout,
+      showToast,
+    ]
+  )
+
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>
+}
+
+export function useCart() {
+  const ctx = useContext(CartContext)
+  if (!ctx) throw new Error('useCart debe usarse dentro de <CartProvider>')
+  return ctx
+}
