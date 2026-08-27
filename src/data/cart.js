@@ -1,7 +1,9 @@
 import { formatCOP } from './products'
 import { DEFAULT_SIZE_LABEL } from '../context/CartContext'
 
-export const paymentMethods = ['Pago contra entrega', 'Transferencia bancaria']
+// Narciso Parfum no maneja pago contra entrega — solo transferencia. Si el
+// negocio agrega otro método real más adelante, basta con añadirlo aquí.
+export const paymentMethods = ['Transferencia bancaria']
 
 // Arma el mensaje estructurado de pedido para WhatsApp a partir del carrito
 // y los datos del cliente. El envío no se suma al total porque se calcula
