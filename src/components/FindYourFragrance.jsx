@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import catalogAvif from '../assets/img/catalog-bottle.avif'
 import catalogWebp from '../assets/img/catalog-bottle.webp'
 import catalogJpg from '../assets/img/catalog-bottle.jpg'
@@ -119,37 +120,42 @@ export default function FindYourFragrance() {
                   {results.map((p) => {
                     const message = `Hola, Narciso Parfum. Estoy interesado/a en comprar el perfume ${p.fullName} por $${p.price.toLocaleString('es-CO')}. ¿Me pueden confirmar disponibilidad?`
                     return (
-                      <a
+                      <div
                         key={p.id}
-                        href={waLink(message)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group overflow-hidden rounded-2xl border border-ink-100 bg-cream-50 transition-shadow hover:shadow-md"
+                        className="group relative overflow-hidden rounded-2xl border border-ink-100 bg-cream-50 transition-shadow hover:shadow-md"
                       >
-                        <span className="block aspect-square w-full overflow-hidden bg-white">
-                          <picture>
-                            <source srcSet={catalogAvif} type="image/avif" />
-                            <source srcSet={catalogWebp} type="image/webp" />
-                            <img
-                              src={catalogJpg}
-                              alt={`Narciso Parfum — ${p.fullName}`}
-                              className="h-full w-full object-contain p-2 transition-transform duration-300 group-hover:scale-105"
-                              loading="lazy"
-                              width={200}
-                              height={200}
-                            />
-                          </picture>
-                        </span>
-                        <span className="block p-2.5">
-                          <span className="line-clamp-2 block font-display text-xs leading-tight text-ink-900">
-                            {p.title}
+                        <Link to={`/perfumes/${p.id}`} className="block">
+                          <span className="block aspect-square w-full overflow-hidden bg-white">
+                            <picture>
+                              <source srcSet={catalogAvif} type="image/avif" />
+                              <source srcSet={catalogWebp} type="image/webp" />
+                              <img
+                                src={catalogJpg}
+                                alt={`Narciso Parfum — ${p.fullName}`}
+                                className="h-full w-full object-contain p-2 transition-transform duration-300 group-hover:scale-105"
+                                loading="lazy"
+                                width={200}
+                                height={200}
+                              />
+                            </picture>
                           </span>
-                          <span className="mt-1 flex items-center justify-between">
-                            <span className="font-display text-xs text-gold-600">{formatCOP(p.price)}</span>
-                            <IconWhatsApp className="h-3.5 w-3.5 text-[#25D366]" />
+                          <span className="block p-2.5">
+                            <span className="line-clamp-2 block font-display text-xs leading-tight text-ink-900">
+                              {p.title}
+                            </span>
+                            <span className="mt-1 block font-display text-xs text-gold-600">{formatCOP(p.price)}</span>
                           </span>
-                        </span>
-                      </a>
+                        </Link>
+                        <a
+                          href={waLink(message)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Comprar ${p.fullName} por WhatsApp`}
+                          className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-[#25D366] text-ink-900 shadow-sm transition-transform duration-200 hover:scale-105"
+                        >
+                          <IconWhatsApp className="h-3.5 w-3.5" />
+                        </a>
+                      </div>
                     )
                   })}
                 </div>

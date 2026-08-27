@@ -73,6 +73,59 @@ Cambios aplicados, todos con datos y fotos reales de Narciso:
   fragancias reales — no una característica inventada del producto ni un dato
   provisto por el cliente.
 
+## Fichas individuales de producto (`/perfumes/:slug`)
+
+Cada uno de los 48 perfumes del catálogo tiene su propia página
+(`src/pages/ProductDetailPage.jsx`, un solo componente reutilizable
+alimentado por `product.id` vía `react-router-dom`) con breadcrumbs, galería
+(reutiliza las fotos reales ya existentes del sitio), precio, CTA de
+WhatsApp con mensaje específico del producto, perfil olfativo (salida /
+corazón / fondo), "¿cuándo usarlo?" y una sección "también podría gustarte"
+con hasta 4 productos reales relacionados (`getRelatedProducts` en
+`products.js`: prioriza mismo género, luego mismo estilo/marca — nunca
+mezcla Caballero/Dama ni recomienda al azar).
+
+**Investigación real por fragancia** (`src/data/fragranceInfo.js`): familia
+olfativa, notas de salida/corazón/fondo, año de lanzamiento, concentración,
+ocasión, estación y momento del día para cada una de las 48 fragancias en
+las que Narciso se inspira, investigados con búsqueda web contra fuentes
+públicas (Fragrantica, Basenotes, sitios oficiales de cada marca, retailers
+establecidos como Sephora/Douglas) mediante un workflow de 8 agentes en
+paralelo. Reglas seguidas estrictamente:
+
+- **Nunca se muestra un dato que no se pudo verificar.** De 48 fragancias,
+  47 tienen ficha completa. La única excepción es **"Good Girl Glam" de
+  Carolina Herrera** (dama): no existe un producto con ese nombre exacto en
+  el catálogo oficial de la marca ni en las bases de datos consultadas (el
+  producto real más cercano es "Very Good Girl Glam", de la línea "Very Good
+  Girl", distinta a "Good Girl") — para no arriesgar un dato falso, esa
+  ficha no muestra familia/notas/ocasión y usa el texto genérico de
+  respaldo. Sigue teniendo precio, WhatsApp y productos relacionados
+  normalmente.
+- **Nunca se afirma una duración exacta** ("dura 12 horas") — no se incluyó
+  ningún dato de rendimiento/duración por marca por no encontrarse fuentes
+  confiables y consistentes entre sí para las 47 fragancias verificadas.
+- **"Inspirado en [marca]" en todas partes**, nunca se implica que Narciso
+  vende el producto original — el texto de descripción, los `<meta>` y el
+  JSON-LD describen siempre el perfil de la fragancia en la que Narciso se
+  inspira, no el producto de la marca original. No se usa ningún logo de
+  marca ajena.
+- El campo `profile` ("¿A qué huele?") de cada ficha es un texto corto
+  escrito a partir de las notas investigadas — no una plantilla genérica
+  repetida: cada una de las 47 fichas tiene su propia redacción.
+
+**SEO por página** (`src/hooks/useDocumentMeta.js`, sin dependencias): título,
+meta description, Open Graph, canonical y JSON-LD (`schema.org/Product`) se
+generan automáticamente a partir de los datos del producto y se limpian al
+salir de la página. Es una solución client-side (esta es una SPA, no
+SSR/prerender) — funciona para compartir enlaces y para crawlers que
+ejecutan JS; si en el futuro se necesita SEO a nivel de servidor habría que
+migrar a Next.js o añadir prerender.
+
+`vercel.json` incluye un rewrite catch-all a `index.html` para que
+`/perfumes/<slug>` funcione al entrar directo o recargar (necesario para
+cualquier host estático con `react-router-dom` en modo `BrowserRouter`).
+
 ## Estructura
 
 ```
@@ -80,8 +133,12 @@ src/
   components/   Header, Hero, GenderFinder, Catalog, ProductCard, ProductRow,
                 WhyNarciso, ProductSpotlight, ProductModal, CraftProcess,
                 Experience, FindYourFragrance, BrandSection, Location,
-                Socials, FinalCTA, Footer, WhatsAppButton, LoadingScreen
+                Socials, FinalCTA, Footer, WhatsAppButton, LoadingScreen,
+                Breadcrumbs
+  pages/            HomePage, ProductDetailPage (ficha individual /perfumes/:slug)
   data/site.js      marca, WhatsApp, enlaces
-  data/products.js  catálogo (48 productos), formatCOP, searchProducts
-  hooks/            useReveal (scroll reveal con IntersectionObserver)
+  data/products.js  catálogo (48 productos), formatCOP, searchProducts,
+                    getProductById, getRelatedProducts
+  data/fragranceInfo.js  perfil olfativo real investigado por fragancia
+  hooks/            useReveal (scroll reveal), useDocumentMeta (SEO por página)
 ```

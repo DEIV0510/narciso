@@ -118,3 +118,33 @@ export function searchProducts(list, query) {
   if (!q) return list
   return list.filter((p) => normalize(`${p.title} ${p.brand} ${p.fullName}`).includes(q))
 }
+
+export function getProductById(id) {
+  return products.find((p) => p.id === id) || null
+}
+
+// Recomienda hasta `limit` productos reales del catálogo relacionados por
+// familia olfativa, marca de inspiración o género — nunca aleatorio y nunca
+// fuera del catálogo real.
+export function getRelatedProducts(product, limit = 4) {
+  if (!product) return []
+  const others = products.filter((p) => p.id !== product.id)
+
+  // El género pesa más que estilo/marca para que nunca se recomiende un
+  // producto de la sección contraria (Caballero/Dama) antes que uno real del
+  // mismo género.
+  const score = (p) => {
+    let s = 0
+    if (p.gender === product.gender) s += 4
+    if (p.style && product.style && p.style === product.style) s += 2
+    if (p.brand === product.brand) s += 2
+    return s
+  }
+
+  return others
+    .map((p) => ({ p, s: score(p) }))
+    .filter(({ s }) => s > 0)
+    .sort((a, b) => b.s - a.s)
+    .slice(0, limit)
+    .map(({ p }) => p)
+}
