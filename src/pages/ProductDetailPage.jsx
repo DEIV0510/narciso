@@ -189,9 +189,9 @@ export default function ProductDetailPage() {
               <div className="mt-8 border-t border-ink-100 pt-6">
                 <p className="font-display text-lg text-ink-900">¿Cuándo usarlo?</p>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {[...(info.occasions || []), ...(info.timeOfDay || []), ...(info.season || [])].map((tag) => (
+                  {[...(info.occasions || []), ...(info.timeOfDay || []), ...(info.season || [])].map((tag, i) => (
                     <span
-                      key={tag}
+                      key={`${tag}-${i}`}
                       className="rounded-full border border-ink-100 bg-white px-3 py-1.5 font-body text-xs text-ink-600"
                     >
                       {tag}

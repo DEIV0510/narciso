@@ -14,7 +14,7 @@ mkdirSync(PUBLIC, { recursive: true })
 
 const bottleSrc = path.join(SRC, 'botella.png')
 const bottleCleanSrc = path.join(SRC, 'botellabien.png')
-const logoSrc = path.join(SRC, 'LOGO2.png')
+const logoSrc = path.join(SRC, 'logo-oficial.png')
 const craftPosterSrc = path.join(SRC, 'craft-poster-raw.jpg')
 const lifestylePosterSrc = path.join(SRC, 'lifestyle-poster-raw.jpg')
 const studioPosterSrc = path.join(SRC, 'studio-poster-raw.jpg')
@@ -152,14 +152,20 @@ async function run() {
 
   // 5. Logo — trim the whitespace margin, then key out the white background for
   // real transparency (not just a cropped white box) so it sits cleanly on any surface.
+  // El logo oficial tiene degradados/biseles (no colores planos como el logo
+  // anterior), así que lossless/truecolor pesa mucho para un asset tan
+  // pequeño en pantalla — se usa lossy de alta calidad + PNG con paleta
+  // (visualmente idéntico, ~70% más liviano).
   const logoTrim = await sharp(logoSrc).trim({ threshold: 8 }).toBuffer()
   const logoTransparentBuf = await (await makeTransparent(logoTrim)).png().toBuffer()
-  await sharp(logoTransparentBuf).resize({ height: 440, withoutEnlargement: true }).png({ compressionLevel: 9 }).toFile(path.join(OUT, 'logo.png'))
-  await sharp(logoTransparentBuf).resize({ height: 440, withoutEnlargement: true }).webp({ lossless: true }).toFile(path.join(OUT, 'logo.webp'))
+  await sharp(logoTransparentBuf).resize({ height: 440, withoutEnlargement: true }).png({ compressionLevel: 9, palette: true, quality: 95 }).toFile(path.join(OUT, 'logo.png'))
+  await sharp(logoTransparentBuf).resize({ height: 440, withoutEnlargement: true }).webp({ quality: 90, alphaQuality: 90 }).toFile(path.join(OUT, 'logo.webp'))
 
   // 6. Favicon — crop just the crown+laurel mark from the top of the trimmed logo (opaque background needed here).
+  // 0.70 mide el hueco real entre el emblema y la palabra "NARCISO" en el
+  // logo oficial (medido con un scan fila-por-fila del PNG fuente).
   const logoMeta = await sharp(logoTrim).metadata()
-  const crownH = Math.round(logoMeta.height * 0.52)
+  const crownH = Math.round(logoMeta.height * 0.7)
   const crownBuf = await sharp(logoTrim)
     .extract({ left: 0, top: 0, width: logoMeta.width, height: crownH })
     .flatten({ background: '#f8f3ea' })
@@ -168,9 +174,11 @@ async function run() {
   await sharp(crownBuf).resize(180, 180, { fit: 'contain', background: '#f8f3ea' }).png().toFile(path.join(PUBLIC, 'favicon-180.png'))
 
   // 6b. Crown mark, transparent and large — real artwork (not hand-drawn) for the loading screen.
+  // Este asset carga en el primer paint de CADA página (pantalla de carga),
+  // así que el peso importa más que en cualquier otra imagen del sitio.
   const crownTransparentBuf = await (await makeTransparent(logoTrim)).extract({ left: 0, top: 0, width: logoMeta.width, height: crownH }).png().toBuffer()
-  await sharp(crownTransparentBuf).resize({ height: 480, withoutEnlargement: true }).png({ compressionLevel: 9 }).toFile(path.join(OUT, 'crown-mark.png'))
-  await sharp(crownTransparentBuf).resize({ height: 480, withoutEnlargement: true }).webp({ lossless: true }).toFile(path.join(OUT, 'crown-mark.webp'))
+  await sharp(crownTransparentBuf).resize({ height: 480, withoutEnlargement: true }).png({ compressionLevel: 9, palette: true, quality: 95 }).toFile(path.join(OUT, 'crown-mark.png'))
+  await sharp(crownTransparentBuf).resize({ height: 480, withoutEnlargement: true }).webp({ quality: 90, alphaQuality: 90 }).toFile(path.join(OUT, 'crown-mark.webp'))
 
   // 6c. Catalog bottle — the clean studio shot on white, real photo of the same
   // real Narciso bottle/label used for every fragrance in the catalog (the
