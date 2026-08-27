@@ -126,6 +126,37 @@ migrar a Next.js o añadir prerender.
 `/perfumes/<slug>` funcione al entrar directo o recargar (necesario para
 cualquier host estático con `react-router-dom` en modo `BrowserRouter`).
 
+## Carrito de compras y checkout
+
+`src/context/CartContext.jsx` es el estado global del carrito (React
+Context + `useReducer`, sin librerías externas), persistido en
+`localStorage` (`narciso-cart-v1`) con una bandera `hydrated` para evitar
+que StrictMode borre el carrito guardado al montar dos veces en desarrollo
+(ver [[feedback_carrito_localstorage_strictmode]]). Se agrega desde la
+tarjeta del catálogo (`ProductCard.jsx`) o la ficha individual
+(`ProductDetailPage.jsx`) — ambas mantienen intacto el botón directo de
+"Comprar por WhatsApp" ya existente; el carrito es una vía adicional, no un
+reemplazo.
+
+- **`CartDrawer.jsx`** — panel lateral desde la derecha (overlay +
+  `backdrop-blur`, trampa de foco, Escape para cerrar, igual que
+  `ProductModal.jsx`). Estado vacío ilustrado con botón a `/#catalogo`.
+- **`CartItemRow.jsx`** — selector de cantidad, subtotal en vivo, y
+  eliminación (manual o automática al llegar a 0) con una animación de
+  salida antes de quitar la línea.
+- **`CheckoutModal.jsx`** — formulario (nombre, teléfono, ciudad,
+  dirección, barrio, indicaciones, método de pago) con validación de
+  campos obligatorios y resumen del pedido.
+- **`data/cart.js`** (`buildOrderMessage`) — arma el mensaje estructurado
+  de WhatsApp al confirmar; se abre `wa.me/3229282884` y el carrito se
+  vacía tras el envío.
+- **Tamaños/presentaciones**: la arquitectura ya soporta `product.sizes`
+  (cada producto podría tener 30/50/100 ML a precios distintos como
+  líneas separadas en el carrito), pero como los 48 productos reales de
+  hoy venden una sola presentación a $60.000, no se inventó ningún
+  selector de tallas — sencillamente no aparece hasta que el cliente
+  tenga tallas reales que cargar en `products.js`.
+
 ## Estructura
 
 ```
@@ -134,9 +165,11 @@ src/
                 WhyNarciso, ProductSpotlight, ProductModal, CraftProcess,
                 Experience, FindYourFragrance, BrandSection, Location,
                 Socials, FinalCTA, Footer, WhatsAppButton, LoadingScreen,
-                Breadcrumbs
+                Breadcrumbs, CartDrawer, CartItemRow, CartToast, CheckoutModal
+  context/CartContext.jsx  estado global del carrito (persistido en localStorage)
   pages/            HomePage, ProductDetailPage (ficha individual /perfumes/:slug)
   data/site.js      marca, WhatsApp, enlaces
+  data/cart.js      buildOrderMessage (mensaje de pedido estructurado para WhatsApp)
   data/products.js  catálogo (48 productos), formatCOP, searchProducts,
                     getProductById, getRelatedProducts
   data/fragranceInfo.js  perfil olfativo real investigado por fragancia
