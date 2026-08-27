@@ -214,14 +214,18 @@ export default function ProductDetailPage() {
                   className="group overflow-hidden rounded-2xl border border-ink-100 bg-white transition-shadow hover:shadow-md"
                 >
                   <span className="block aspect-square w-full bg-cream-50">
-                    <img
-                      src={catalogJpg}
-                      alt={p.fullName}
-                      className="h-full w-full object-contain p-3 transition-transform duration-300 group-hover:scale-105"
-                      loading="lazy"
-                      width={200}
-                      height={200}
-                    />
+                    <picture>
+                      <source srcSet={catalogAvif} type="image/avif" />
+                      <source srcSet={catalogWebp} type="image/webp" />
+                      <img
+                        src={catalogJpg}
+                        alt={p.fullName}
+                        className="h-full w-full object-contain p-3 transition-transform duration-300 group-hover:scale-105"
+                        loading="lazy"
+                        width={200}
+                        height={200}
+                      />
+                    </picture>
                   </span>
                   <span className="block p-3">
                     <span className="line-clamp-2 block font-display text-sm text-ink-900">{p.title}</span>

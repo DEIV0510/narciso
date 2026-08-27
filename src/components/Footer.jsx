@@ -1,5 +1,6 @@
 import { brand, navLinks, waLink, waMessages } from '../data/site'
 import { IconInstagram, IconTikTok } from './icons'
+import SectionLink from './SectionLink'
 
 export default function Footer() {
   const year = new Date().getFullYear()
@@ -58,9 +59,9 @@ export default function Footer() {
             <ul className="mt-3 space-y-2">
               {navLinks.map((l) => (
                 <li key={l.href}>
-                  <a href={l.href} className="font-body text-sm text-ink-300 hover:text-gold-300">
+                  <SectionLink href={l.href} className="font-body text-sm text-ink-300 hover:text-gold-300">
                     {l.label}
-                  </a>
+                  </SectionLink>
                 </li>
               ))}
               <li>

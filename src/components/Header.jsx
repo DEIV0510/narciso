@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import logo from '../assets/img/logo.webp'
 import { brand, navLinks, waLink, waMessages } from '../data/site'
 import { IconInstagram, IconTikTok, IconMenu, IconClose, IconWhatsApp } from './icons'
+import SectionLink from './SectionLink'
 
 export default function Header({ open, onOpenChange }) {
   const [localOpen, setLocalOpen] = useState(false)
@@ -18,19 +19,19 @@ export default function Header({ open, onOpenChange }) {
   return (
     <header className="sticky top-0 z-50 border-b border-ink-100 bg-cream-50/95 backdrop-blur-sm">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:h-20 sm:px-6 lg:px-8">
-        <a href="#inicio" className="flex items-center gap-2" aria-label="Narciso Parfum, inicio">
+        <SectionLink href="#inicio" className="flex items-center gap-2" aria-label="Narciso Parfum, inicio">
           <img src={logo} alt="Narciso Parfum" className="h-9 w-auto sm:h-11" width={220} height={110} />
-        </a>
+        </SectionLink>
 
         <nav className="hidden items-center gap-8 lg:flex" aria-label="Navegación principal">
           {navLinks.map((l) => (
-            <a
+            <SectionLink
               key={l.href}
               href={l.href}
               className="font-body text-sm uppercase tracking-wide text-ink-600 transition-colors hover:text-gold-600"
             >
               {l.label}
-            </a>
+            </SectionLink>
           ))}
         </nav>
 
@@ -99,14 +100,14 @@ export default function Header({ open, onOpenChange }) {
         >
           <div className="flex flex-col gap-1 py-4">
             {navLinks.map((l) => (
-              <a
+              <SectionLink
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
                 className="rounded-lg px-3 py-3 font-body text-sm uppercase tracking-wide text-ink-700 hover:bg-cream-200"
               >
                 {l.label}
-              </a>
+              </SectionLink>
             ))}
             <div className="mt-2 flex items-center gap-3 px-1 py-2">
               <a
