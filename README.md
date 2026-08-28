@@ -25,11 +25,30 @@ npm run optimize-images   # regenera src/assets/img a partir de source-material/
 `src/data/products.js` es la única fuente de verdad del catálogo — 24 fragancias
 "Perfumería Caballero" + 24 "Perfumería Dama", con los nombres, precio
 ($60.000 COP c/u) y categoría exactos que dio el cliente. **Todas comparten la
-misma foto real** (`source-material/botellabien.png` → `catalog-bottle.*`):
+misma foto real** (`source-material/botella-oficial.png` → `catalog-bottle.*`):
 así se vende realmente — un solo frasco/etiqueta, distinta esencia por dentro.
 No existen fotos individuales por fragancia en el material entregado; si el
 cliente las agrega más adelante, basta con cambiar el campo `image` de cada
 producto (hoy vale `'catalog-bottle'` para los 48).
+
+`botella-oficial.png` es una foto de ambiente (mostrador de madera,
+estantería de botellas desenfocada de fondo) del frasco real actual —
+reemplazó a una foto anterior de estudio (`botellabien.png`, ya no se usa
+pero se deja en `source-material/` por si sirve de referencia) porque el
+cliente cambió la tapa física del frasco (de tapa esférica a la tapa tipo
+rociador/pico que se ve hoy) y actualizó la etiqueta al logo oficial. Al no
+tener un fondo de estudio parejo, no se pudo recortar con flood-fill como
+antes — `catalog-bottle.*` se genera con una **silueta trazada a mano**
+(`BOTTLE_OFICIAL_SILHOUETTE` + `maskWithSilhouette()` en
+`scripts/optimize-images.mjs`): la zona del rociador (traslúcida/reflectante,
+sin borde definido) se midió con un escaneo de luminancia píxel por píxel
+contra la foto fuente, y el cuerpo/hombro se trazó contra una cuadrícula de
+coordenadas superpuesta a recortes ampliados — con cuidado adicional en el
+hombro/cuerpo porque hay otras botellas oscuras desenfocadas justo detrás en
+la foto original. Si el cliente manda otra foto del frasco a futuro, lo más
+simple es pedirle fondo plano (como era `botellabien.png`): así se puede
+usar de nuevo `removeStudioBackground()` (flood-fill, ya en el script pero
+sin uso actualmente) en vez de tener que trazar otra silueta a mano.
 
 El catálogo se agrupa en dos secciones (Perfumería Caballero / Perfumería
 Dama, cada una con su encabezado) y cada sección es un **carrusel horizontal**
