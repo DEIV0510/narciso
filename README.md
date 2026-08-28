@@ -31,24 +31,23 @@ No existen fotos individuales por fragancia en el material entregado; si el
 cliente las agrega más adelante, basta con cambiar el campo `image` de cada
 producto (hoy vale `'catalog-bottle'` para los 48).
 
-`botella-oficial.png` es una foto de ambiente (mostrador de madera,
-estantería de botellas desenfocada de fondo) del frasco real actual —
-reemplazó a una foto anterior de estudio (`botellabien.png`, ya no se usa
-pero se deja en `source-material/` por si sirve de referencia) porque el
-cliente cambió la tapa física del frasco (de tapa esférica a la tapa tipo
-rociador/pico que se ve hoy) y actualizó la etiqueta al logo oficial. Al no
-tener un fondo de estudio parejo, no se pudo recortar con flood-fill como
-antes — `catalog-bottle.*` se genera con una **silueta trazada a mano**
-(`BOTTLE_OFICIAL_SILHOUETTE` + `maskWithSilhouette()` en
-`scripts/optimize-images.mjs`): la zona del rociador (traslúcida/reflectante,
-sin borde definido) se midió con un escaneo de luminancia píxel por píxel
-contra la foto fuente, y el cuerpo/hombro se trazó contra una cuadrícula de
-coordenadas superpuesta a recortes ampliados — con cuidado adicional en el
-hombro/cuerpo porque hay otras botellas oscuras desenfocadas justo detrás en
-la foto original. Si el cliente manda otra foto del frasco a futuro, lo más
-simple es pedirle fondo plano (como era `botellabien.png`): así se puede
-usar de nuevo `removeStudioBackground()` (flood-fill, ya en el script pero
-sin uso actualmente) en vez de tener que trazar otra silueta a mano.
+`botella-oficial.png` es la foto real del frasco actual — reemplazó a una
+foto anterior de estudio (`botellabien.png`, ya no se usa pero se deja en
+`source-material/` por si sirve de referencia) porque el cliente cambió la
+tapa física del frasco (de tapa esférica a la tapa tipo rociador/pico que se
+ve hoy) y actualizó la etiqueta al logo oficial. El cliente mandó dos
+versiones de esta foto: la primera era de ambiente (mostrador de madera,
+estantería desenfocada de fondo, sin recortar) — para esa se llegó a probar
+tanto flood-fill como una silueta trazada a mano (medida con un escaneo de
+luminancia píxel por píxel en la zona del rociador, traslúcido/reflectante y
+sin borde definido) antes de que el cliente subiera una segunda versión ya
+recortada, **con canal alfa real** (fondo transparente de verdad, no solo
+visualmente negro). `catalog-bottle.*` usa esa versión final directamente
+— `sharp(bottleOficialSrc).trim()` y ya, sin ninguna técnica de recorte, el
+alfa real de origen resuelve las zonas difíciles (rociador, hombro) sin el
+riesgo de trazarlas a mano. `removeStudioBackground()` (flood-fill) queda
+sin uso en el script por si el cliente manda una foto de estudio con fondo
+plano a futuro.
 
 El catálogo se agrupa en dos secciones (Perfumería Caballero / Perfumería
 Dama, cada una con su encabezado) y cada sección es un **carrusel horizontal**

@@ -109,130 +109,6 @@ async function removeStudioBackground(buffer, { threshold = 232 } = {}) {
   return sharp(data, { raw: { width, height, channels } })
 }
 
-// Recorta un objeto de una foto real usando una silueta trazada a mano
-// (lista de puntos [x,y]) en vez de flood-fill: `botella-oficial.png` es una
-// foto de ambiente (mostrador de madera, estantería de botellas desenfocada
-// de fondo), no un fondo de estudio uniforme, así que removeStudioBackground()
-// no sirve aquí — no hay un solo color de fondo que quitar.
-async function maskWithSilhouette(src, points, { feather = 1.2 } = {}) {
-  const meta = await sharp(src).metadata()
-  const { width, height } = meta
-  const d = 'M ' + points.map((p) => p.join(',')).join(' L ') + ' Z'
-  const maskSvg = Buffer.from(
-    `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg"><path d="${d}" fill="white" /></svg>`
-  )
-  const maskFeathered = await sharp(maskSvg).png().toBuffer().then((b) => sharp(b).blur(feather).toBuffer())
-  const photo = await sharp(src).ensureAlpha().toBuffer()
-  // Materializado a buffer aquí mismo (no se retorna el pipeline sharp()
-  // sin resolver): encadenar .trim()/.resize() sobre un composite() todavía
-  // sin ejecutar hacía que sharp calculara mal las dimensiones del insumo
-  // ("Image to composite must have same dimensions or smaller") pese a que
-  // ambas imágenes ya coincidían en tamaño.
-  const composited = await sharp(photo).composite([{ input: maskFeathered, blend: 'dest-in' }]).png().toBuffer()
-  return sharp(composited)
-}
-
-// Silueta de botella-oficial.png (1086x1448), medida en dos pasadas:
-// 1. Rociador/tapa (y 358-619): escaneo de luminancia píxel por píxel contra
-//    la foto fuente (el fondo ahí es oscuro y parejo, así que un umbral
-//    funciona bien) — NO a ojo: la tapa es traslúcida/reflectante y trazarla
-//    a mano dejaba sistemáticamente una cuña oscura de más en la punta.
-// 2. Cuello/hombro/cuerpo/base (y 619+): trazado a mano contra una cuadrícula
-//    de coordenadas superpuesta a recortes ampliados de la foto. En la zona
-//    del hombro/cuerpo hay otras botellas oscuras desenfocadas justo detrás
-//    de la nuestra en la foto original, indistinguibles de la nuestra por
-//    color — se usó una curva más conservadora (un poco más adentro) en vez
-//    de perseguir esa lectura ambigua, para no dejar un pedazo de la botella
-//    vecina en el recorte.
-const BOTTLE_OFICIAL_SILHOUETTE = [
-  [645, 358],
-  [648, 364],
-  [650, 373],
-  [650, 385],
-  [649, 394],
-  [648, 403],
-  [647, 412],
-  [646, 418],
-  [645, 424],
-  [643, 433],
-  [641, 439],
-  [640, 445],
-  [639, 451],
-  [637, 460],
-  [635, 466],
-  [660, 478],
-  [677, 487],
-  [685, 499],
-  [686, 511],
-  [685, 523],
-  [687, 535],
-  [616, 538],
-  [610, 556],
-  [604, 574],
-  [599, 592],
-  [602, 601],
-  [606, 610],
-  [606, 619],
-  [575, 625],
-  [598, 645],
-  [620, 670],
-  [638, 700],
-  [648, 740],
-  [652, 790],
-  [648, 850],
-  [640, 950],
-  [635, 1050],
-  [645, 1110],
-  [672, 1150],
-  [672, 1180],
-  [668, 1195],
-  [655, 1207],
-  [630, 1217],
-  [600, 1224],
-  [550, 1228],
-  [515, 1229],
-  [480, 1228],
-  [430, 1224],
-  [400, 1217],
-  [375, 1207],
-  [362, 1195],
-  [358, 1180],
-  [358, 1150],
-  [369, 790],
-  [369, 775],
-  [369, 760],
-  [370, 745],
-  [378, 720],
-  [390, 705],
-  [410, 692],
-  [430, 682],
-  [443, 675],
-  [455, 670],
-  [463, 619],
-  [463, 607],
-  [468, 589],
-  [469, 583],
-  [469, 568],
-  [468, 559],
-  [465, 535],
-  [464, 529],
-  [461, 520],
-  [461, 514],
-  [459, 496],
-  [458, 478],
-  [456, 469],
-  [467, 463],
-  [506, 457],
-  [553, 451],
-  [576, 445],
-  [590, 433],
-  [604, 415],
-  [615, 400],
-  [624, 388],
-  [631, 379],
-  [638, 370],
-]
-
 async function run() {
   const meta = await sharp(bottleSrc).metadata()
   console.log('botella.png', meta.width, 'x', meta.height)
@@ -312,10 +188,10 @@ async function run() {
   // format across all "inspired by" scents). This replaces an older photo
   // of the same bottle: the real hardware changed from a round ball cap to
   // the angular spray-nozzle cap seen here, and the label now matches the
-  // official gold crown+laurel logo. Isolated with a hand-traced silhouette
-  // mask (see maskWithSilhouette above) since this is a lifestyle photo
-  // with no plain background to flood-fill.
-  const catalogTransparent = await (await maskWithSilhouette(bottleOficialSrc, BOTTLE_OFICIAL_SILHOUETTE))
+  // official gold crown+laurel logo. botella-oficial.png already ships with
+  // a clean real alpha channel (the client sent it pre-cut-out) — no
+  // flood-fill or masking needed, just trim the transparent margin.
+  const catalogTransparent = await sharp(bottleOficialSrc)
     .trim({ threshold: 5 })
     .resize({ width: 900, withoutEnlargement: true })
     .png()
