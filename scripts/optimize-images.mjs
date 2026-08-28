@@ -12,7 +12,7 @@ const PUBLIC = path.join(ROOT, 'public')
 mkdirSync(OUT, { recursive: true })
 mkdirSync(PUBLIC, { recursive: true })
 
-const bottleSrc = path.join(SRC, 'botella.png')
+const bottleSrc = path.join(SRC, 'botella-oficial-ambiente.png')
 const bottleOficialSrc = path.join(SRC, 'botella-oficial.png')
 const logoSrc = path.join(SRC, 'logo-oficial.png')
 const craftPosterSrc = path.join(SRC, 'craft-poster-raw.jpg')
@@ -111,9 +111,14 @@ async function removeStudioBackground(buffer, { threshold = 232 } = {}) {
 
 async function run() {
   const meta = await sharp(bottleSrc).metadata()
-  console.log('botella.png', meta.width, 'x', meta.height)
+  console.log('botella-oficial-ambiente.png', meta.width, 'x', meta.height)
 
-  // 1. HERO — full real photograph, trimmed of the thin black letterbox bars, large size for the protagonist hero shot.
+  // 1. HERO — full real lifestyle photograph (mostrador de madera, estantería
+  // de botellas desenfocada de fondo — la misma foto de ambiente que
+  // botella-oficial.png antes de que el cliente mandara la versión ya
+  // recortada), trimmed of any letterbox bars, large size for the
+  // protagonist hero shot. Reemplaza la foto vieja del frasco con tapa
+  // esférica (botella.png, ya no se usa).
   const heroBase = sharp(bottleSrc).rotate()
   const heroTrim = await heroBase.clone().trim({ threshold: 12 }).toBuffer()
   await emit(sharp(heroTrim).resize({ width: 1600, withoutEnlargement: true }), 'hero-bottle')
@@ -123,14 +128,14 @@ async function run() {
   const trimmedMeta = await sharp(heroTrim).metadata()
   const tw = trimmedMeta.width
   const th = trimmedMeta.height
-  const cropW = Math.round(tw * 0.68)
-  const cropH = Math.round(th * 0.94)
+  const cropW = Math.round(tw * 0.755)
+  const cropH = Math.round(th * 0.898)
   const spotlightBuf = await sharp(heroTrim)
     .extract({
-      left: Math.round((tw - cropW) / 2),
-      top: Math.round(th * 0.02),
+      left: Math.round(tw * 0.138),
+      top: 0,
       width: cropW,
-      height: Math.min(cropH, th - Math.round(th * 0.02)),
+      height: Math.min(cropH, th),
     })
     .toBuffer()
   await emit(sharp(spotlightBuf).resize({ width: 1200, withoutEnlargement: true }), 'spotlight-bottle')
@@ -139,10 +144,10 @@ async function run() {
   // Más amplio que un close-up extremo para conservar resolución nativa decente.
   const labelBuf = await sharp(heroTrim)
     .extract({
-      left: Math.round(tw * 0.16),
-      top: Math.round(th * 0.24),
-      width: Math.round(tw * 0.68),
-      height: Math.round(th * 0.74),
+      left: Math.round(tw * 0.239),
+      top: Math.round(th * 0.47),
+      width: Math.round(tw * 0.552),
+      height: Math.round(th * 0.414),
     })
     .toBuffer()
   await emit(sharp(labelBuf).resize({ width: 1100, withoutEnlargement: true }), 'label-detail')

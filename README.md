@@ -13,7 +13,7 @@ npm run optimize-images   # regenera src/assets/img a partir de source-material/
 
 ## Notas de contenido
 
-- Todas las fotografías del sitio (`src/assets/img`) son recortes reales generados con `sharp` a partir de las fotografías/video originales de la marca en `source-material/` (`botella.png`, foto real del frasco; `logo-oficial.png`, logo oficial real de la marca; `craft-poster-raw.jpg`, fotograma real extraído de uno de los videos de proceso). No se usó ninguna imagen genérica ni de bancos de imágenes.
+- Todas las fotografías del sitio (`src/assets/img`) son recortes reales generados con `sharp` a partir de las fotografías/video originales de la marca en `source-material/` (`botella-oficial-ambiente.png`, foto real del frasco actual; `logo-oficial.png`, logo oficial real de la marca; `craft-poster-raw.jpg`, fotograma real extraído de uno de los videos de proceso). No se usó ninguna imagen genérica ni de bancos de imágenes. (`botella.png`, la foto original del frasco con tapa esférica, ya no se usa pero se deja en `source-material/` como referencia histórica.)
 - La carpeta de origen (`Desktop\NARCISO`) no contenía un catálogo con nombres de fragancias individuales, precios ni categorías — solo una foto genérica del frasco insignia. Por eso el sitio presenta la marca y el frasco insignia real, y dirige cualquier consulta de catálogo/precio/disponibilidad a WhatsApp en vez de inventar datos.
 - Las 4 imágenes "inspiracion*.png" de la carpeta de origen son fotografías de otras marcas de lujo (Parfums de Marly, Bond No. 9, Valentino, Tom Ford) — por decisión del cliente, **no se usaron** en el sitio.
 - La carpeta también traía 3 videos reales de proceso — los 3 están en el sitio, en la sección "Hecho a mano" (`CraftProcess.jsx`), como galería con pestañas (El proceso / La fragancia / Nuestro taller), cada uno click-to-play con su propio fotograma real como poster (no autoplay, no bloquean la carga). El primero se recortó a los momentos clave (medir/mezclar y envasar, ~50s) y se comprimió de 39MB a ~2MB con `ffmpeg`; los otros dos ya eran cortos y se comprimieron a ~1.5-1.9MB cada uno. Se omitió deliberadamente el fragmento inicial del primer video que menciona el nombre de una fragancia de otra marca, para no hacer un señalamiento directo a un competidor en una web comercial permanente.
@@ -31,23 +31,32 @@ No existen fotos individuales por fragancia en el material entregado; si el
 cliente las agrega más adelante, basta con cambiar el campo `image` de cada
 producto (hoy vale `'catalog-bottle'` para los 48).
 
-`botella-oficial.png` es la foto real del frasco actual — reemplazó a una
-foto anterior de estudio (`botellabien.png`, ya no se usa pero se deja en
-`source-material/` por si sirve de referencia) porque el cliente cambió la
-tapa física del frasco (de tapa esférica a la tapa tipo rociador/pico que se
-ve hoy) y actualizó la etiqueta al logo oficial. El cliente mandó dos
-versiones de esta foto: la primera era de ambiente (mostrador de madera,
-estantería desenfocada de fondo, sin recortar) — para esa se llegó a probar
-tanto flood-fill como una silueta trazada a mano (medida con un escaneo de
-luminancia píxel por píxel en la zona del rociador, traslúcido/reflectante y
-sin borde definido) antes de que el cliente subiera una segunda versión ya
-recortada, **con canal alfa real** (fondo transparente de verdad, no solo
-visualmente negro). `catalog-bottle.*` usa esa versión final directamente
-— `sharp(bottleOficialSrc).trim()` y ya, sin ninguna técnica de recorte, el
-alfa real de origen resuelve las zonas difíciles (rociador, hombro) sin el
-riesgo de trazarlas a mano. `removeStudioBackground()` (flood-fill) queda
-sin uso en el script por si el cliente manda una foto de estudio con fondo
-plano a futuro.
+La foto del frasco actual reemplazó a una foto anterior de estudio
+(`botellabien.png`, ya no se usa pero se deja en `source-material/` por si
+sirve de referencia) porque el cliente cambió la tapa física del frasco (de
+tapa esférica a la tapa tipo rociador/pico que se ve hoy) y actualizó la
+etiqueta al logo oficial. El cliente mandó **la misma foto en dos
+versiones**, y el sitio usa AMBAS, cada una para lo que sirve mejor:
+
+- **`botella-oficial.png`** — versión ya recortada por el cliente, con
+  **canal alfa real** (fondo transparente de verdad, no solo visualmente
+  negro). Se usa tal cual (`sharp(bottleOficialSrc).trim()`, sin ninguna
+  técnica de recorte) para `catalog-bottle.*` — el frasco solo, sobre las
+  tarjetas del catálogo y "también podría gustarte".
+- **`botella-oficial-ambiente.png`** — la foto de ambiente original (mismo
+  frasco, mostrador de madera y estantería de botellas desenfocada de
+  fondo, sin recortar). Se usa para `hero-bottle.*`, `spotlight-bottle.*`,
+  `label-detail.*` (los recortes reales de la ficha de producto y la
+  sección "Nuestra Fragancia") y `og-image.jpg` — ahí es donde tiene
+  sentido mostrar el fondo real, no un recorte transparente.
+
+(Antes de que llegara la versión recortada, se llegó a probar tanto
+flood-fill como una silueta trazada a mano sobre la foto de ambiente —
+medida con un escaneo de luminancia píxel por píxel en la zona del
+rociador, traslúcido/reflectante y sin borde definido — pero quedó obsoleto
+en cuanto el cliente subió la versión con alfa real.) `removeStudioBackground()`
+(flood-fill) queda sin uso en el script por si el cliente manda una foto de
+estudio con fondo plano a futuro.
 
 El catálogo se agrupa en dos secciones (Perfumería Caballero / Perfumería
 Dama, cada una con su encabezado) y cada sección es un **carrusel horizontal**
