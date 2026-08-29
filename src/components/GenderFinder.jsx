@@ -8,7 +8,6 @@ import lifestyleAvif from '../assets/img/lifestyle-poster.avif'
 import lifestyleWebp from '../assets/img/lifestyle-poster.webp'
 import lifestyleJpg from '../assets/img/lifestyle-poster.jpg'
 import Reveal from './Reveal'
-import { waLink, waMessages } from '../data/site'
 import { IconArrowRight } from './icons'
 
 const cards = [
@@ -28,7 +27,7 @@ const cards = [
     label: 'Unisex',
     alt: 'Frasco de Narciso Parfum a contraluz',
     picture: { avif: lifestyleAvif, webp: lifestyleWebp, jpg: lifestyleJpg },
-    whatsapp: true,
+    category: 'unisex',
   },
 ]
 
@@ -48,28 +47,16 @@ export default function GenderFinder() {
         </Reveal>
 
         <Reveal delay={100} className="mt-8 grid grid-cols-1 gap-4 sm:mt-10 sm:grid-cols-3 sm:gap-5">
-          {cards.map((card) =>
-            card.whatsapp ? (
-              <a
-                key={card.label}
-                href={waLink(waMessages.unisex)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative block aspect-[4/5] overflow-hidden rounded-3xl"
-              >
-                <CardImage card={card} />
-              </a>
-            ) : (
-              <button
-                key={card.label}
-                type="button"
-                onClick={() => goToCategory(card.category)}
-                className="group relative block aspect-[4/5] w-full overflow-hidden rounded-3xl text-left"
-              >
-                <CardImage card={card} />
-              </button>
-            )
-          )}
+          {cards.map((card) => (
+            <button
+              key={card.label}
+              type="button"
+              onClick={() => goToCategory(card.category)}
+              className="group relative block aspect-[4/5] w-full overflow-hidden rounded-3xl text-left"
+            >
+              <CardImage card={card} />
+            </button>
+          ))}
         </Reveal>
       </div>
     </section>

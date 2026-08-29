@@ -9,6 +9,7 @@ const CATEGORY_FILTERS = [
   { key: 'todos', label: 'Todos' },
   { key: 'caballero', label: 'Caballeros' },
   { key: 'dama', label: 'Damas' },
+  { key: 'unisex', label: 'Unisex' },
 ]
 
 const SORTS = [
@@ -21,6 +22,7 @@ const SORTS = [
 const SECTION_DEFS = [
   { key: CATEGORIES.CABALLERO, label: 'Perfumería Caballero', filterKey: 'caballero' },
   { key: CATEGORIES.DAMA, label: 'Perfumería Dama', filterKey: 'dama' },
+  { key: CATEGORIES.UNISEX, label: 'Perfumería Unisex', filterKey: 'unisex' },
 ]
 
 export default function Catalog() {

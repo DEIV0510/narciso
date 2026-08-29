@@ -40,7 +40,8 @@ export default function ProductDetailPage() {
   }
 
   const info = getFragranceInfo(product.id)
-  const isDama = product.category === CATEGORIES.DAMA
+  const categoryLabel =
+    product.category === CATEGORIES.DAMA ? 'Dama' : product.category === CATEGORIES.UNISEX ? 'Unisex' : 'Caballero'
   const related = getRelatedProducts(product, 4)
   const sizes = product.sizes || [{ label: DEFAULT_SIZE_LABEL, price: product.price }]
   const size = selectedSize || sizes[0]
@@ -79,7 +80,7 @@ export default function ProductDetailPage() {
           items={[
             { label: 'Inicio', to: '/' },
             { label: 'Perfumería', to: '/#catalogo' },
-            { label: isDama ? 'Dama' : 'Caballero', to: '/#catalogo' },
+            { label: categoryLabel, to: '/#catalogo' },
             { label: product.title },
           ]}
         />

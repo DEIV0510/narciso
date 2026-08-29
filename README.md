@@ -20,16 +20,62 @@ npm run optimize-images   # regenera src/assets/img a partir de source-material/
 - El logo (`logo.png/webp`, `crown-mark.png/webp`, `favicon-32/180.png`) sale de `source-material/logo-oficial.png` — el logo oficial real de la marca (reemplazó a un `LOGO2.png` de menor calidad usado antes de que el cliente entregara el definitivo). Se procesa quitándole el fondo blanco original (chroma-key por luminancia en `scripts/optimize-images.mjs`, función `makeTransparent`) para que se vea limpio sobre cualquier fondo, claro u oscuro; `crown-mark` (el emblema de corona+laurel solo, sin la palabra "NARCISO") se recorta del 70% superior del logo — ese punto de corte se midió fila por fila sobre el PNG fuente para que caiga justo en el espacio entre el emblema y el texto. El logo oficial usa degradados/biseles dorados (no colores planos como el anterior), así que sus PNG/WebP se generan con paleta + compresión lossy de alta calidad en vez de lossless — mismo resultado visual, ~70% más liviano (importa especialmente en `crown-mark`, que carga en el primer paint de cada página vía la pantalla de carga).
 - Número de WhatsApp: `3229282884`. Dirección: Urbanización Santa Ana, Manzana 34 Casa 2, Ibagué, Tolima.
 
-## Catálogo (48 productos)
+## Catálogo (243 productos)
 
-`src/data/products.js` es la única fuente de verdad del catálogo — 24 fragancias
-"Perfumería Caballero" + 24 "Perfumería Dama", con los nombres, precio
-($60.000 COP c/u) y categoría exactos que dio el cliente. **Todas comparten la
+`src/data/products.js` es la única fuente de verdad del catálogo. Arranca con
+el catálogo original — 24 fragancias "Perfumería Caballero" + 24 "Perfumería
+Dama", con los nombres, precio ($60.000 COP c/u) y categoría exactos que dio
+el cliente — y se amplió en agosto de 2026 (ver más abajo) con 75 Caballero +
+59 Dama + 61 Unisex adicionales, mismo precio plano. **Todas comparten la
 misma foto real** (`source-material/botella-oficial.png` → `catalog-bottle.*`):
 así se vende realmente — un solo frasco/etiqueta, distinta esencia por dentro.
 No existen fotos individuales por fragancia en el material entregado; si el
 cliente las agrega más adelante, basta con cambiar el campo `image` de cada
-producto (hoy vale `'catalog-bottle'` para los 48).
+producto (hoy vale `'catalog-bottle'` para los 243).
+
+### Ampliación de catálogo (agosto 2026)
+
+El cliente compartió una hoja de cálculo con 259 referencias de códigos
+(DAMA/CABALLERO/UNISEX), muchas más que el catálogo de 48 ya existente.
+Alcance confirmado explícitamente por el cliente: **solo agregar lo nuevo**
+(no tocar los 48 originales) con **el mismo precio plano $60.000**.
+
+Proceso seguido, por disciplina de no inventar datos:
+
+1. **Deduplicación** contra el catálogo existente con un script de
+   coincidencia difusa por tokens (normaliza texto, compara contra productos
+   del mismo género) más revisión manual de los casos límite — de 259
+   referencias, 50 ya estaban en el catálogo, 2 venían sin nombre (filas
+   vacías, se descartaron) y 207 eran nuevas.
+2. **Verificación de marca/título real** de las 207 referencias nuevas con 11
+   agentes de investigación en paralelo (WebSearch) — el texto crudo del
+   cliente venía abreviado o con errores de tipeo ("CK IN2U" → Calvin Klein,
+   "Escada Sorbeto Roso" → Escada Sorbetto Rosso, etc.), así que cada marca y
+   título se confirmó contra fuentes reales antes de publicarse. **12 de las
+   207 quedaron fuera** por no poder confirmarse con confianza (marca sin
+   producto especificado, como "Issey Miyake" o "Yves Saint Laurent" solos;
+   nombres que no corresponden a ningún producto real verificable, como "212
+   Gris NYC", "Creed Silver" o "ARRURU"; o casos ambiguos como "Paris Hilton
+   Passport", que solo existe como variantes por ciudad) — quedan pendientes
+   de que el cliente aclare el producto exacto antes de agregarse.
+3. Las 195 confirmadas se agregaron como tres arreglos nuevos en
+   `products.js` (`caballeroAgosto2026`, `damaAgosto2026`, `unisex`) que se
+   suman por spread al arreglo `products` final — el patrón de extensión que
+   ya documentaba este archivo.
+4. Como el catálogo nunca había tenido productos unisex reales, se agregó
+   `CATEGORIES.UNISEX` y se conectó como una tercera categoría real en
+   `Catalog.jsx` (filtro), `GenderFinder.jsx` (la tarjeta "Unisex" ahora
+   filtra el catálogo en vivo en vez de ir directo a WhatsApp) y
+   `FindYourFragrance.jsx` (el quiz ahora ofrece Hombre/Mujer/Unisex).
+
+**Nota importante:** la investigación profunda de perfil olfativo
+(`fragranceInfo.js` — familia, notas de salida/corazón/fondo, ocasión,
+estación) solo existe para los 48 productos originales. Los 195 productos
+nuevos de agosto 2026 sí tienen `style` (Fresco/Dulce/Intenso/Elegante,
+verificado igual que marca/título) para que funcionen en el quiz y los
+filtros, pero su ficha individual muestra el texto genérico de respaldo
+hasta que se investigue su perfil detallado — es un trabajo pendiente
+distinto, no iniciado en esta ampliación.
 
 La foto del frasco actual reemplazó a una foto anterior de estudio
 (`botellabien.png`, ya no se usa pero se deja en `source-material/` por si
@@ -58,8 +104,8 @@ en cuanto el cliente subió la versión con alfa real.) `removeStudioBackground(
 (flood-fill) queda sin uso en el script por si el cliente manda una foto de
 estudio con fondo plano a futuro.
 
-El catálogo se agrupa en dos secciones (Perfumería Caballero / Perfumería
-Dama, cada una con su encabezado) y cada sección es un **carrusel horizontal**
+El catálogo se agrupa en tres secciones (Perfumería Caballero / Perfumería
+Dama / Perfumería Unisex, cada una con su encabezado) y cada sección es un **carrusel horizontal**
 (`ProductRow.jsx` + `ProductCard.jsx`, tema oscuro ink-900/gold, flecha de
 scroll en desktop, swipe en móvil) — sin numeración, sin scroll vertical
 largo.
@@ -85,10 +131,10 @@ Cambios aplicados, todos con datos y fotos reales de Narciso:
   real que lo respalde.
 - **`GenderFinder.jsx`** ("Tu fragancia empieza aquí"): 3 tarjetas grandes
   Hombre/Mujer/Unisex con fotos reales (recortes distintos de la misma
-  fotografía real). Hombre/Mujer filtran el catálogo en vivo (evento
-  `narciso:filter-category` que Catalog.jsx escucha); Unisex va directo a
-  WhatsApp porque no existen productos unisex reales en el catálogo — no se
-  inventó ninguno.
+  fotografía real). Las 3 filtran el catálogo en vivo (evento
+  `narciso:filter-category` que Catalog.jsx escucha). Unisex era WhatsApp-only
+  originalmente porque no existían productos unisex reales en el catálogo —
+  pasó a filtro real en la ampliación de agosto 2026, ver arriba.
 - **`WhyNarciso.jsx`** ("¿Por qué Narciso?", reemplaza a `Benefits.jsx`):
   checklist con los 6 hechos reales confirmados por el cliente.
 - **`Experience.jsx`** ("Tu aroma. Tu presencia."): foto real (fotograma del
@@ -102,7 +148,7 @@ Cambios aplicados, todos con datos y fotos reales de Narciso:
 
 ## Fichas individuales de producto (`/perfumes/:slug`)
 
-Cada uno de los 48 perfumes del catálogo tiene su propia página
+Cada uno de los 243 perfumes del catálogo tiene su propia página
 (`src/pages/ProductDetailPage.jsx`, un solo componente reutilizable
 alimentado por `product.id` vía `react-router-dom`) con breadcrumbs, galería
 (reutiliza las fotos reales ya existentes del sitio), precio, CTA de
@@ -197,8 +243,9 @@ src/
   pages/            HomePage, ProductDetailPage (ficha individual /perfumes/:slug)
   data/site.js      marca, WhatsApp, enlaces
   data/cart.js      buildOrderMessage (mensaje de pedido estructurado para WhatsApp)
-  data/products.js  catálogo (48 productos), formatCOP, searchProducts,
+  data/products.js  catálogo (243 productos), formatCOP, searchProducts,
                     getProductById, getRelatedProducts
-  data/fragranceInfo.js  perfil olfativo real investigado por fragancia
+  data/fragranceInfo.js  perfil olfativo real investigado por fragancia (solo
+                    los 48 productos originales, ver Ampliación agosto 2026)
   hooks/            useReveal (scroll reveal), useDocumentMeta (SEO por página)
 ```

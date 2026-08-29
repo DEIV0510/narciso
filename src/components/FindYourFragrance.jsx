@@ -11,6 +11,7 @@ import { IconArrowRight, IconWhatsApp } from './icons'
 const GENDERS = [
   { key: 'hombre', label: 'Hombre' },
   { key: 'mujer', label: 'Mujer' },
+  { key: 'unisex', label: 'Unisex' },
 ]
 
 const STYLES = [
@@ -59,7 +60,7 @@ export default function FindYourFragrance() {
           {step === 0 && (
             <div className="mt-6 text-center">
               <p className="font-display text-lg text-ink-900">¿Para quién buscas la fragancia?</p>
-              <div className="mt-5 grid grid-cols-2 gap-3">
+              <div className="mt-5 grid grid-cols-3 gap-2 sm:gap-3">
                 {GENDERS.map((g) => (
                   <button
                     key={g.key}
@@ -108,7 +109,7 @@ export default function FindYourFragrance() {
           {step === 2 && (
             <div className="mt-6">
               <p className="text-center font-display text-lg text-ink-900">
-                Estilo {style} · Para {gender === 'hombre' ? 'hombre' : 'mujer'}
+                Estilo {style} · Para {GENDERS.find((g) => g.key === gender)?.label.toLowerCase()}
               </p>
 
               {results.length === 0 ? (

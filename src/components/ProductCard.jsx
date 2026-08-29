@@ -9,7 +9,8 @@ import { IconBottle, IconBagPlus } from './icons'
 
 export default function ProductCard({ product, eager = false }) {
   const { addItem } = useCart()
-  const isDama = product.category === CATEGORIES.DAMA
+  const categoryLabel =
+    product.category === CATEGORIES.DAMA ? 'Dama' : product.category === CATEGORIES.UNISEX ? 'Unisex' : 'Caballero'
   const message = `Hola, Narciso Parfum. Estoy interesado/a en comprar el perfume ${product.fullName} por $${product.price.toLocaleString('es-CO')}. ¿Me pueden confirmar disponibilidad?`
   const wa = waLink(message)
   const href = `/perfumes/${product.id}`
@@ -22,7 +23,7 @@ export default function ProductCard({ product, eager = false }) {
     <article className="group w-44 shrink-0 snap-start overflow-hidden rounded-2xl border border-ink-100 bg-white sm:w-52 lg:w-56">
       <Link to={href} className="relative block aspect-square w-full overflow-hidden bg-cream-50">
         <span className="absolute left-2.5 top-2.5 z-10 rounded-full border border-ink-900/10 bg-ink-900/85 px-2.5 py-1 font-body text-[10px] uppercase tracking-wide text-cream-50">
-          {isDama ? 'Dama' : 'Caballero'}
+          {categoryLabel}
         </span>
 
         {product.image ? (
