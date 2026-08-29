@@ -160,6 +160,13 @@ const caballeroAgosto2026 = [
   { title: 'L\'Eau d\'Issey Pour Homme', brand: 'Issey Miyake', style: 'Fresco' },
   { title: 'Pure XS', brand: 'Paco Rabanne', style: 'Fresco' },
   { title: 'Y', brand: 'Yves Saint Laurent', style: 'Fresco' },
+  // Lote adicional (mismo mes) con investigación olfativa completa: el
+  // cliente dio él mismo las notas de salida/corazón/fondo de cada una, así
+  // que sí tienen ficha en fragranceInfo.js (a diferencia del resto de esta
+  // ampliación, que solo tiene `style`).
+  { title: 'Hawas Ice', brand: 'Rasasi', style: 'Fresco' },
+  { title: 'Supremacy Collector\'s Edition', brand: 'Afnan', style: 'Intenso' },
+  { title: 'Odyssey Mandarin Sky', brand: 'Armaf', style: 'Fresco' },
 ].map((p) => toProduct(p, CATEGORIES.CABALLERO, 'hombre'))
 
 const damaAgosto2026 = [
@@ -303,6 +310,13 @@ const unisex = [
   { title: 'Khamrah Dukhan', brand: 'Lattafa', style: 'Dulce' },
   { title: 'Summer Hammer', brand: 'Lorenzo Pazzaglia', style: 'Fresco' },
   { title: 'Arrurrú', brand: 'Arrurrú', style: 'Dulce' },
+  // Lote adicional (mismo mes) con investigación olfativa completa: el
+  // cliente dio él mismo las notas de salida/corazón/fondo de cada una, así
+  // que sí tienen ficha en fragranceInfo.js (a diferencia del resto de esta
+  // ampliación, que solo tiene `style`).
+  { title: '9 PM Rebel', brand: 'Afnan', style: 'Intenso' },
+  { title: 'Hawas Fire', brand: 'Rasasi', style: 'Fresco' },
+  { title: 'Club de Nuit Precieux I', brand: 'Armaf', style: 'Intenso' },
 ].map((p) => toProduct(p, CATEGORIES.UNISEX, 'unisex'))
 
 function slugify(...parts) {

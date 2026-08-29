@@ -5,12 +5,16 @@
 // producto original de esa marca. Investigación asistida por IA con búsqueda
 // web sobre fuentes públicas (ago. 2026).
 //
-// Solo se incluyen los 47 productos cuyo perfil se pudo verificar con
-// confianza razonable. "Good Girl Glam" (Carolina Herrera, dama) no aparece
-// aquí a propósito: no existe con ese nombre exacto en el catálogo oficial de
-// la marca ni en bases de datos de perfumería, así que no se muestra ninguna
-// nota/familia/ocasión inventada para ese producto — su ficha usa el texto
-// genérico de respaldo. Llave = product.id (ver products.js).
+// Solo se incluyen los 47 productos originales cuyo perfil se pudo verificar
+// con confianza razonable. "Good Girl Glam" (Carolina Herrera, dama) no
+// aparece aquí a propósito: no existe con ese nombre exacto en el catálogo
+// oficial de la marca ni en bases de datos de perfumería, así que no se
+// muestra ninguna nota/familia/ocasión inventada para ese producto — su
+// ficha usa el texto genérico de respaldo. Llave = product.id (ver
+// products.js). Al final del archivo hay 6 fichas más (agosto 2026) cuyas
+// notas dio directamente el cliente en vez de investigarse — ver el
+// comentario junto a ellas. El resto de los productos agregados en la
+// ampliación de agosto 2026 (ver README) no tiene ficha aquí todavía.
 export const fragranceInfo = {
   'king-of-seduction-antonio-banderas-hombre': {
     family: "Amaderada Aromática",
@@ -574,6 +578,73 @@ export const fragranceInfo = {
     season: ["Otoño", "Invierno", "Primavera"],
     timeOfDay: ["Tarde", "Noche"],
     profile: "Un fougère reinventado en clave femenina: lavanda y cítricos al abrir, azahar y jazmín en el corazón, y un fondo cálido de vainilla de Madagascar.",
+  },
+
+  // Estas 6 fichas (agosto 2026) son distintas de las de arriba: las notas de
+  // salida/corazón/fondo y el perfil olfativo los dio directamente el
+  // cliente (no investigación propia sobre fuentes públicas) — se usaron tal
+  // cual, sin agregar ni corregir ninguna nota. `family`, `occasions`,
+  // `season`, `timeOfDay` y el texto de `profile` sí son una clasificación
+  // propia a partir de esas notas, igual que en el resto del archivo.
+  '9-pm-rebel-afnan-unisex': {
+    family: "Afrutada Amaderada",
+    topNotes: ["Mandarina", "Piña", "Manzana Granny Smith"],
+    heartNotes: ["Madera de Cedro", "Musgo de Roble", "Vainilla"],
+    baseNotes: ["Caramelo", "Maderas Secas", "Ámbar Gris", "Almizcle"],
+    occasions: ["Salida", "Noche", "Evento"],
+    season: ["Otoño", "Invierno"],
+    timeOfDay: ["Noche"],
+    profile: "Una entrada frutal y traviesa de mandarina y manzana verde da paso a un corazón amaderado con un toque dulce de vainilla, y cierra en una base ambarada y almizclada con carácter. Juvenil, llamativa y con personalidad propia.",
+  },
+  'hawas-ice-rasasi-hombre': {
+    family: "Cítrica Afrutada",
+    topNotes: ["Manzana", "Limón Italiano", "Bergamota Siciliana", "Anís Estrellado"],
+    heartNotes: ["Ciruela", "Flor de Azahar", "Cardamomo"],
+    baseNotes: ["Almizcle", "Ámbar", "Madera Flotante", "Musgo"],
+    occasions: ["Día a día", "Trabajo", "Salida"],
+    season: ["Primavera", "Verano"],
+    timeOfDay: ["Día", "Tarde"],
+    profile: "Un golpe helado de cítricos italianos y manzana verde que se funde en un corazón frutal y floral, y cierra en una base amaderada y almizclada suave. Fresco, con energía y muy buena presencia.",
+  },
+  'hawas-fire-rasasi-unisex': {
+    family: "Aromática Acuática",
+    topNotes: ["Salvia Esclarea"],
+    heartNotes: ["Notas Marinas", "Jazmín Egipcio"],
+    baseNotes: ["Ámbar", "Notas Minerales", "Ámbar Gris"],
+    occasions: ["Día a día", "Trabajo", "Cita", "Salida"],
+    season: ["Primavera", "Verano"],
+    timeOfDay: ["Día", "Tarde"],
+    profile: "Abre con salvia esclarea y se adentra en un corazón marino y floral de jazmín egipcio, para cerrar en una base mineral y ambarada envolvente. Fresco pero con profundidad — un acuático con carácter propio.",
+  },
+  'club-de-nuit-precieux-i-armaf-unisex': {
+    family: "Amaderada Oriental",
+    topNotes: ["Piña", "Limón", "Bergamota", "Caramelo", "Pimienta Rosa", "Pera", "Pimienta Negra"],
+    heartNotes: ["Musgo de Roble", "Maderas Blancas", "Jazmín", "Lirio de los Valles", "Anís"],
+    baseNotes: ["Ambroxan", "Almizcle Blanco", "Cedro", "Pachulí", "Ámbar", "Cuero", "Vainilla"],
+    occasions: ["Cita", "Salida", "Noche", "Evento"],
+    season: ["Otoño", "Invierno"],
+    timeOfDay: ["Tarde", "Noche"],
+    profile: "Un inicio jugoso de piña y cítricos con un toque especiado de pimienta, que evoluciona hacia un corazón floral y amaderado, y cierra en una base ambarada, de cuero y vainilla que se siente lujosa y envolvente. Elegante y con una evolución profunda.",
+  },
+  'supremacy-collector-s-edition-afnan-hombre': {
+    family: "Afrutada Ambarada",
+    topNotes: ["Piña", "Bergamota", "Manzana", "Flores Blancas"],
+    heartNotes: ["Flor de Azahar", "Abedul", "Ámbar"],
+    baseNotes: ["Musgo de Roble", "Almizcle", "Ámbar Gris"],
+    occasions: ["Trabajo", "Cita", "Salida", "Evento"],
+    season: ["Otoño", "Invierno"],
+    timeOfDay: ["Tarde", "Noche"],
+    profile: "Piña y flores blancas abren paso a un corazón floral y ambarado de azahar y abedul, sobre una base de musgo de roble y almizcle con carácter. Elegante y versátil, con una presencia que se nota.",
+  },
+  'odyssey-mandarin-sky-armaf-hombre': {
+    family: "Cítrica Amaderada",
+    topNotes: ["Mandarina", "Naranja", "Azafrán", "Salvia"],
+    heartNotes: ["Caramelo", "Haba Tonka", "Tagete"],
+    baseNotes: ["Ambroxan", "Cedro", "Vetiver"],
+    occasions: ["Día a día", "Trabajo", "Salida"],
+    season: ["Primavera", "Verano"],
+    timeOfDay: ["Día", "Tarde"],
+    profile: "Un despertar cítrico de mandarina y naranja con un toque especiado de azafrán, que se abre en un corazón dulce y cálido de caramelo y haba tonka, y cierra en una base amaderada de cedro y vetiver. El contraste entre fresco y dulce lo hace moderno y fácil de llevar.",
   },
 }
 

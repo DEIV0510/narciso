@@ -20,19 +20,19 @@ npm run optimize-images   # regenera src/assets/img a partir de source-material/
 - El logo (`logo.png/webp`, `crown-mark.png/webp`, `favicon-32/180.png`) sale de `source-material/logo-oficial.png` — el logo oficial real de la marca (reemplazó a un `LOGO2.png` de menor calidad usado antes de que el cliente entregara el definitivo). Se procesa quitándole el fondo blanco original (chroma-key por luminancia en `scripts/optimize-images.mjs`, función `makeTransparent`) para que se vea limpio sobre cualquier fondo, claro u oscuro; `crown-mark` (el emblema de corona+laurel solo, sin la palabra "NARCISO") se recorta del 70% superior del logo — ese punto de corte se midió fila por fila sobre el PNG fuente para que caiga justo en el espacio entre el emblema y el texto. El logo oficial usa degradados/biseles dorados (no colores planos como el anterior), así que sus PNG/WebP se generan con paleta + compresión lossy de alta calidad en vez de lossless — mismo resultado visual, ~70% más liviano (importa especialmente en `crown-mark`, que carga en el primer paint de cada página vía la pantalla de carga).
 - Número de WhatsApp: `3229282884`. Dirección: Urbanización Santa Ana, Manzana 34 Casa 2, Ibagué, Tolima.
 
-## Catálogo (255 productos)
+## Catálogo (261 productos)
 
 `src/data/products.js` es la única fuente de verdad del catálogo. Arranca con
 el catálogo original — 24 fragancias "Perfumería Caballero" + 24 "Perfumería
 Dama", con los nombres, precio ($60.000 COP c/u) y categoría exactos que dio
-el cliente — y se amplió en agosto de 2026 (ver más abajo) con 207
-fragancias adicionales (78 Caballero + 63 Dama + 66 Unisex), mismo precio
+el cliente — y se amplió en agosto de 2026 (ver más abajo) con 213
+fragancias adicionales (81 Caballero + 63 Dama + 69 Unisex), mismo precio
 plano. **Todas comparten la misma foto real**
 (`source-material/botella-oficial.png` → `catalog-bottle.*`): así se vende
 realmente — un solo frasco/etiqueta, distinta esencia por dentro. No existen
 fotos individuales por fragancia en el material entregado; si el cliente las
 agrega más adelante, basta con cambiar el campo `image` de cada producto
-(hoy vale `'catalog-bottle'` para los 255).
+(hoy vale `'catalog-bottle'` para los 261).
 
 ### Ampliación de catálogo (agosto 2026)
 
@@ -79,12 +79,29 @@ Proceso seguido, por disciplina de no inventar datos:
 
 **Nota importante:** la investigación profunda de perfil olfativo
 (`fragranceInfo.js` — familia, notas de salida/corazón/fondo, ocasión,
-estación) solo existe para los 48 productos originales. Los 207 productos
-nuevos de agosto 2026 sí tienen `style` (Fresco/Dulce/Intenso/Elegante,
-verificado igual que marca/título) para que funcionen en el quiz y los
-filtros, pero su ficha individual muestra el texto genérico de respaldo
-hasta que se investigue su perfil detallado — es un trabajo pendiente
-distinto, no iniciado en esta ampliación.
+estación) solo existe para los 48 productos originales **más 6 excepciones**
+(ver abajo). El resto de los 207 productos nuevos de agosto 2026 sí tienen
+`style` (Fresco/Dulce/Intenso/Elegante, verificado igual que marca/título)
+para que funcionen en el quiz y los filtros, pero su ficha individual
+muestra el texto genérico de respaldo hasta que se investigue su perfil
+detallado — es un trabajo pendiente distinto, no iniciado en esta
+ampliación.
+
+**6 productos con ficha completa desde el día uno (mismo mes, pedido
+aparte):** el cliente pidió agregar "9 PM Rebel" (Afnan), "Hawas Ice" y
+"Hawas Fire" (Rasasi), "Club de Nuit Precieux I" y "Odyssey Mandarin Sky"
+(Armaf) y "Supremacy Collector's Edition" (Afnan) — esta vez dando él mismo
+las notas de salida/corazón/fondo y el perfil olfativo de cada uno en el
+mensaje. Se verificó marca/título/género real de cada uno con un workflow
+de investigación + verificación adversarial en paralelo (11 agentes:
+investigación + segunda opinión escéptica por producto) antes de agregarlos,
+pero las notas olfativas en sí se usaron tal cual las dio el cliente, sin
+investigarlas de nuevo ni agregar nada que él no mencionó — por eso sí tienen
+ficha completa en `fragranceInfo.js` (con un comentario ahí mismo que lo deja
+explícito) aunque llegaron después que el resto de la ampliación de agosto
+2026. "Odyssey Mandarin Sky" es un producto real DISTINTO de "Odyssey
+Mandarin Sky Elixir" (ya en el catálogo, con "Elixir" en el nombre) — la
+versión original está clasificada como masculina, la "Elixir" como unisex.
 
 La foto del frasco actual reemplazó a una foto anterior de estudio
 (`botellabien.png`, ya no se usa pero se deja en `source-material/` por si
@@ -157,7 +174,7 @@ Cambios aplicados, todos con datos y fotos reales de Narciso:
 
 ## Fichas individuales de producto (`/perfumes/:slug`)
 
-Cada uno de los 255 perfumes del catálogo tiene su propia página
+Cada uno de los 261 perfumes del catálogo tiene su propia página
 (`src/pages/ProductDetailPage.jsx`, un solo componente reutilizable
 alimentado por `product.id` vía `react-router-dom`) con breadcrumbs, galería
 (reutiliza las fotos reales ya existentes del sitio), precio, CTA de
@@ -252,9 +269,11 @@ src/
   pages/            HomePage, ProductDetailPage (ficha individual /perfumes/:slug)
   data/site.js      marca, WhatsApp, enlaces
   data/cart.js      buildOrderMessage (mensaje de pedido estructurado para WhatsApp)
-  data/products.js  catálogo (255 productos), formatCOP, searchProducts,
+  data/products.js  catálogo (261 productos), formatCOP, searchProducts,
                     getProductById, getRelatedProducts
-  data/fragranceInfo.js  perfil olfativo real investigado por fragancia (solo
-                    los 48 productos originales, ver Ampliación agosto 2026)
+  data/fragranceInfo.js  perfil olfativo real por fragancia — los 48
+                    productos originales (investigado) + 6 más de la
+                    ampliación de agosto 2026 (notas dadas por el cliente),
+                    ver Ampliación agosto 2026
   hooks/            useReveal (scroll reveal), useDocumentMeta (SEO por página)
 ```
