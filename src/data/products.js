@@ -153,6 +153,13 @@ const caballeroAgosto2026 = [
   { title: 'MYSLF Le Parfum', brand: 'Yves Saint Laurent', style: 'Intenso' },
   { title: '9PM Night Out', brand: 'Afnan', style: 'Intenso' },
   { title: 'Fahrenheit', brand: 'Dior', style: 'Intenso' },
+  // El cliente pidió agregar estas igual aunque su texto original no
+  // permitía confirmar el producto exacto sin ambigüedad (marca sola, o
+  // varias variantes posibles) — se usó el producto real más representativo
+  // de esa marca/línea en cada caso.
+  { title: 'L\'Eau d\'Issey Pour Homme', brand: 'Issey Miyake', style: 'Fresco' },
+  { title: 'Pure XS', brand: 'Paco Rabanne', style: 'Fresco' },
+  { title: 'Y', brand: 'Yves Saint Laurent', style: 'Fresco' },
 ].map((p) => toProduct(p, CATEGORIES.CABALLERO, 'hombre'))
 
 const damaAgosto2026 = [
@@ -215,6 +222,14 @@ const damaAgosto2026 = [
   { title: 'Mallow Madness', brand: 'Lattafa', style: 'Dulce' },
   { title: 'Paradoxe Intense', brand: 'Prada', style: 'Elegante' },
   { title: 'Aventus for Her', brand: 'Creed', style: 'Fresco' },
+  // El cliente pidió agregar estas igual aunque su texto original no
+  // permitía confirmar el producto exacto sin ambigüedad (marca sola, o
+  // varias variantes posibles) — se usó el producto real más representativo
+  // de esa marca/línea en cada caso.
+  { title: '212 NYC', brand: 'Carolina Herrera', style: 'Fresco' },
+  { title: 'Carolina Herrera', brand: 'Carolina Herrera', style: 'Elegante' },
+  { title: 'Passport Paris', brand: 'Paris Hilton', style: 'Fresco' },
+  { title: 'L\'Eau d\'Issey', brand: 'Issey Miyake', style: 'Fresco' },
 ].map((p) => toProduct(p, CATEGORIES.DAMA, 'mujer'))
 
 const unisex = [
@@ -279,6 +294,15 @@ const unisex = [
   { title: 'Elysium Pour Homme', brand: 'Roja Parfums', style: 'Elegante' },
   { title: 'Speachless', brand: 'Lorenzo Pazzaglia', style: 'Intenso' },
   { title: 'Costa Azzurra', brand: 'Tom Ford', style: 'Fresco' },
+  // El cliente pidió agregar estas igual aunque su texto original no
+  // permitía confirmar el producto exacto sin ambigüedad (marca sola, o
+  // varias variantes posibles) — se usó el producto real más representativo
+  // de esa marca/línea en cada caso.
+  { title: 'Millésime Impérial', brand: 'Creed', style: 'Elegante' },
+  { title: 'Silver Mountain Water', brand: 'Creed', style: 'Fresco' },
+  { title: 'Khamrah Dukhan', brand: 'Lattafa', style: 'Dulce' },
+  { title: 'Summer Hammer', brand: 'Lorenzo Pazzaglia', style: 'Fresco' },
+  { title: 'Arrurrú', brand: 'Arrurrú', style: 'Dulce' },
 ].map((p) => toProduct(p, CATEGORIES.UNISEX, 'unisex'))
 
 function slugify(...parts) {

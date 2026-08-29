@@ -4,9 +4,9 @@ import heroJpg from '../assets/img/hero-bottle.jpg'
 import spotlightAvif from '../assets/img/spotlight-bottle.avif'
 import spotlightWebp from '../assets/img/spotlight-bottle.webp'
 import spotlightJpg from '../assets/img/spotlight-bottle.jpg'
-import lifestyleAvif from '../assets/img/lifestyle-poster.avif'
-import lifestyleWebp from '../assets/img/lifestyle-poster.webp'
-import lifestyleJpg from '../assets/img/lifestyle-poster.jpg'
+import labelAvif from '../assets/img/label-detail.avif'
+import labelWebp from '../assets/img/label-detail.webp'
+import labelJpg from '../assets/img/label-detail.jpg'
 import Reveal from './Reveal'
 import { IconArrowRight } from './icons'
 
@@ -25,8 +25,8 @@ const cards = [
   },
   {
     label: 'Unisex',
-    alt: 'Frasco de Narciso Parfum a contraluz',
-    picture: { avif: lifestyleAvif, webp: lifestyleWebp, jpg: lifestyleJpg },
+    alt: 'Detalle de la etiqueta de Narciso Parfum',
+    picture: { avif: labelAvif, webp: labelWebp, jpg: labelJpg },
     category: 'unisex',
   },
 ]
