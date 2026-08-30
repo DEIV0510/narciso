@@ -1,14 +1,13 @@
 import { useState } from 'react'
-import catalogAvif from '../assets/img/catalog-bottle.avif'
-import catalogWebp from '../assets/img/catalog-bottle.webp'
-import catalogJpg from '../assets/img/catalog-bottle.jpg'
 import { formatCOP } from '../data/products'
+import { getProductImage } from '../data/productImages'
 import { DEFAULT_SIZE_LABEL, useCart } from '../context/CartContext'
 import { IconMinus, IconPlus, IconTrash } from './icons'
 
 export default function CartItemRow({ item }) {
   const { incrementItem, decrementItem, removeItem } = useCart()
   const [leaving, setLeaving] = useState(false)
+  const img = getProductImage(item.image)
 
   const leaveThenRemove = () => {
     setLeaving(true)
@@ -31,10 +30,10 @@ export default function CartItemRow({ item }) {
     >
       <div className="h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-white">
         <picture>
-          <source srcSet={catalogAvif} type="image/avif" />
-          <source srcSet={catalogWebp} type="image/webp" />
+          <source srcSet={img.avif} type="image/avif" />
+          <source srcSet={img.webp} type="image/webp" />
           <img
-            src={catalogJpg}
+            src={img.jpg}
             alt={item.fullName}
             className="h-full w-full object-contain p-2"
             loading="lazy"

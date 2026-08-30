@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom'
-import catalogAvif from '../assets/img/catalog-bottle.avif'
-import catalogWebp from '../assets/img/catalog-bottle.webp'
-import catalogJpg from '../assets/img/catalog-bottle.jpg'
 import { CATEGORIES, formatCOP } from '../data/products'
+import { getProductImage } from '../data/productImages'
 import { waLink } from '../data/site'
 import { useCart, DEFAULT_SIZE_LABEL } from '../context/CartContext'
 import { IconBottle, IconBagPlus } from './icons'
@@ -19,6 +17,8 @@ export default function ProductCard({ product, eager = false }) {
     addItem(product, { label: product.sizes?.[0]?.label || DEFAULT_SIZE_LABEL, price: product.sizes?.[0]?.price ?? product.price })
   }
 
+  const img = getProductImage(product.image)
+
   return (
     <article className="group w-44 shrink-0 snap-start overflow-hidden rounded-2xl border border-ink-100 bg-white sm:w-52 lg:w-56">
       <Link to={href} className="relative block aspect-square w-full overflow-hidden bg-cream-50">
@@ -28,10 +28,10 @@ export default function ProductCard({ product, eager = false }) {
 
         {product.image ? (
           <picture>
-            <source srcSet={catalogAvif} type="image/avif" />
-            <source srcSet={catalogWebp} type="image/webp" />
+            <source srcSet={img.avif} type="image/avif" />
+            <source srcSet={img.webp} type="image/webp" />
             <img
-              src={catalogJpg}
+              src={img.jpg}
               alt={`Narciso Parfum — ${product.fullName}`}
               className="h-full w-full object-contain p-4 transition-transform duration-300 ease-out group-hover:scale-[1.05]"
               loading={eager ? 'eager' : 'lazy'}

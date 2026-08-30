@@ -1,8 +1,5 @@
 import { useState } from 'react'
 import { useParams, Link, Navigate } from 'react-router-dom'
-import catalogAvif from '../assets/img/catalog-bottle.avif'
-import catalogWebp from '../assets/img/catalog-bottle.webp'
-import catalogJpg from '../assets/img/catalog-bottle.jpg'
 import spotlightAvif from '../assets/img/spotlight-bottle.avif'
 import spotlightWebp from '../assets/img/spotlight-bottle.webp'
 import spotlightJpg from '../assets/img/spotlight-bottle.jpg'
@@ -15,18 +12,26 @@ import heroJpg from '../assets/img/hero-bottle.jpg'
 import Breadcrumbs from '../components/Breadcrumbs'
 import Reveal from '../components/Reveal'
 import { CATEGORIES, formatCOP, getProductById, getRelatedProducts } from '../data/products'
+import { getProductImage } from '../data/productImages'
 import { getFragranceInfo } from '../data/fragranceInfo'
 import { waLink } from '../data/site'
 import { useCart, DEFAULT_SIZE_LABEL } from '../context/CartContext'
 import useDocumentMeta from '../hooks/useDocumentMeta'
 import { IconWhatsApp, IconBagPlus } from '../components/icons'
 
-const gallery = [
-  { key: 'principal', avif: catalogAvif, webp: catalogWebp, jpg: catalogJpg, alt: 'Frasco de Narciso Parfum' },
-  { key: 'vista', avif: spotlightAvif, webp: spotlightWebp, jpg: spotlightJpg, alt: 'Narciso Parfum sobre madera' },
-  { key: 'detalle', avif: labelAvif, webp: labelWebp, jpg: labelJpg, alt: 'Detalle de la etiqueta de Narciso Parfum' },
-  { key: 'presentacion', avif: heroAvif, webp: heroWebp, jpg: heroJpg, alt: 'Narciso Parfum junto a la colección' },
-]
+// La primera foto (principal) es la real de ESTE producto (ver
+// data/productImages.js); las otras 3 son recortes reales del mismo frasco
+// físico compartido por toda la colección (source-material/
+// botella-oficial-ambiente.png), iguales para todos los productos.
+function buildGallery(product) {
+  const principal = getProductImage(product.image)
+  return [
+    { key: 'principal', ...principal, alt: 'Frasco de Narciso Parfum' },
+    { key: 'vista', avif: spotlightAvif, webp: spotlightWebp, jpg: spotlightJpg, alt: 'Narciso Parfum sobre madera' },
+    { key: 'detalle', avif: labelAvif, webp: labelWebp, jpg: labelJpg, alt: 'Detalle de la etiqueta de Narciso Parfum' },
+    { key: 'presentacion', avif: heroAvif, webp: heroWebp, jpg: heroJpg, alt: 'Narciso Parfum junto a la colección' },
+  ]
+}
 
 export default function ProductDetailPage() {
   const { slug } = useParams()
@@ -51,6 +56,8 @@ export default function ProductDetailPage() {
 
   const handleAddToCart = () => addItem(product, size)
 
+  const gallery = buildGallery(product)
+
   useDocumentMeta({
     title: `${product.title} | Narciso Parfum`,
     description: `${product.title}, fragancia inspirada de Narciso Parfum (${product.category}). ${formatCOP(product.price)}. Elaborada en Ibagué, Tolima — compra por WhatsApp.`,
@@ -59,7 +66,7 @@ export default function ProductDetailPage() {
       '@context': 'https://schema.org',
       '@type': 'Product',
       name: `Narciso Parfum — ${product.title}`,
-      image: `${window.location.origin}${catalogJpg}`,
+      image: `${window.location.origin}${gallery[0].jpg}`,
       description: `Fragancia inspirada, ${product.category.toLowerCase()}.`,
       brand: { '@type': 'Brand', name: 'Narciso Parfum' },
       offers: {
@@ -234,32 +241,35 @@ export default function ProductDetailPage() {
           <Reveal delay={120} className="mt-16 border-t border-ink-100 pt-10 sm:mt-20">
             <p className="font-display text-xl text-ink-900 sm:text-2xl">También podría gustarte</p>
             <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
-              {related.map((p) => (
-                <Link
-                  key={p.id}
-                  to={`/perfumes/${p.id}`}
-                  className="group overflow-hidden rounded-2xl border border-ink-100 bg-white transition-shadow hover:shadow-md"
-                >
-                  <span className="block aspect-square w-full bg-cream-50">
-                    <picture>
-                      <source srcSet={catalogAvif} type="image/avif" />
-                      <source srcSet={catalogWebp} type="image/webp" />
-                      <img
-                        src={catalogJpg}
-                        alt={p.fullName}
-                        className="h-full w-full object-contain p-3 transition-transform duration-300 group-hover:scale-105"
-                        loading="lazy"
-                        width={200}
-                        height={200}
-                      />
-                    </picture>
-                  </span>
-                  <span className="block p-3">
-                    <span className="line-clamp-2 block font-display text-sm text-ink-900">{p.title}</span>
-                    <span className="mt-1 block font-display text-sm text-gold-600">{formatCOP(p.price)}</span>
-                  </span>
-                </Link>
-              ))}
+              {related.map((p) => {
+                const relatedImg = getProductImage(p.image)
+                return (
+                  <Link
+                    key={p.id}
+                    to={`/perfumes/${p.id}`}
+                    className="group overflow-hidden rounded-2xl border border-ink-100 bg-white transition-shadow hover:shadow-md"
+                  >
+                    <span className="block aspect-square w-full bg-cream-50">
+                      <picture>
+                        <source srcSet={relatedImg.avif} type="image/avif" />
+                        <source srcSet={relatedImg.webp} type="image/webp" />
+                        <img
+                          src={relatedImg.jpg}
+                          alt={p.fullName}
+                          className="h-full w-full object-contain p-3 transition-transform duration-300 group-hover:scale-105"
+                          loading="lazy"
+                          width={200}
+                          height={200}
+                        />
+                      </picture>
+                    </span>
+                    <span className="block p-3">
+                      <span className="line-clamp-2 block font-display text-sm text-ink-900">{p.title}</span>
+                      <span className="mt-1 block font-display text-sm text-gold-600">{formatCOP(p.price)}</span>
+                    </span>
+                  </Link>
+                )
+              })}
             </div>
           </Reveal>
         )}

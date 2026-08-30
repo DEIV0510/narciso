@@ -1,10 +1,8 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import catalogAvif from '../assets/img/catalog-bottle.avif'
-import catalogWebp from '../assets/img/catalog-bottle.webp'
-import catalogJpg from '../assets/img/catalog-bottle.jpg'
 import Reveal from './Reveal'
 import { products, formatCOP } from '../data/products'
+import { getProductImage } from '../data/productImages'
 import { waLink } from '../data/site'
 import { IconArrowRight, IconWhatsApp } from './icons'
 
@@ -120,6 +118,7 @@ export default function FindYourFragrance() {
                 <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
                   {results.map((p) => {
                     const message = `Hola, Narciso Parfum. Estoy interesado/a en comprar el perfume ${p.fullName} por $${p.price.toLocaleString('es-CO')}. ¿Me pueden confirmar disponibilidad?`
+                    const img = getProductImage(p.image)
                     return (
                       <div
                         key={p.id}
@@ -128,10 +127,10 @@ export default function FindYourFragrance() {
                         <Link to={`/perfumes/${p.id}`} className="block">
                           <span className="block aspect-square w-full overflow-hidden bg-white">
                             <picture>
-                              <source srcSet={catalogAvif} type="image/avif" />
-                              <source srcSet={catalogWebp} type="image/webp" />
+                              <source srcSet={img.avif} type="image/avif" />
+                              <source srcSet={img.webp} type="image/webp" />
                               <img
-                                src={catalogJpg}
+                                src={img.jpg}
                                 alt={`Narciso Parfum — ${p.fullName}`}
                                 className="h-full w-full object-contain p-2 transition-transform duration-300 group-hover:scale-105"
                                 loading="lazy"

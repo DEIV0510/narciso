@@ -28,12 +28,11 @@ Dama", con los nombres, precio ($60.000 COP c/u) y categoría exactos que dio
 el cliente — y se amplió en agosto de 2026 (ver más abajo) con 214
 fragancias adicionales (81 Caballero + 64 Dama + 69 Unisex, incluidos 3
 productos reales que el cruce con la hoja de fichas completas reveló que
-faltaban), mismo precio plano. **Todas comparten la misma foto real**
-(`source-material/botella-oficial.png` → `catalog-bottle.*`): así se vende
-realmente — un solo frasco/etiqueta, distinta esencia por dentro. No existen
-fotos individuales por fragancia en el material entregado; si el cliente las
-agrega más adelante, basta con cambiar el campo `image` de cada producto
-(hoy vale `'catalog-bottle'` para los 262).
+faltaban), mismo precio plano. **255 de los 262 productos tienen su propia
+foto real** (ver "Fotos individuales por producto" más abajo); los 7
+restantes usan la foto genérica compartida `catalog-bottle.*`
+(`source-material/botella-oficial.png`) — mismo frasco/etiqueta, tal como
+se vendía antes de que el cliente mandara fotos individuales.
 
 ### Ampliación de catálogo (agosto 2026)
 
@@ -177,6 +176,74 @@ rociador, traslúcido/reflectante y sin borde definido — pero quedó obsoleto
 en cuanto el cliente subió la versión con alfa real.) `removeStudioBackground()`
 (flood-fill) queda sin uso en el script por si el cliente manda una foto de
 estudio con fondo plano a futuro.
+
+### Fotos individuales por producto (agosto 2026)
+
+El cliente compartió `Desktop\portadas`: una foto real por cada uno de los
+259 códigos de la hoja de referencias (mismo esquema D/C/UNI de las
+secciones anteriores). Cada foto muestra **el mismo frasco Narciso real**
+(el de siempre) nítido en primer plano, con el frasco de la fragancia de
+diseñador en la que se inspira ese producto **desenfocado** de fondo — así
+cada producto tiene una foto distinta y reconocible sin dejar de mostrar
+el frasco Narciso real que se vende.
+
+**Nota para el cliente/futuras sesiones:** el frasco de fondo, aunque
+desenfocado, puede tener texto de marca parcialmente legible (ej. "TOM
+FORD" detrás de Costa Azzurra, "Black XS L'Excès" detrás de ese producto).
+Es coherente con el modelo de negocio ya establecido del sitio ("Inspirado
+en [marca]" en cada ficha, nunca se vende el producto original), pero
+implica mostrar el empaque real de otra marca de forma más reconocible que
+solo texto — es una decisión de contenido del cliente, no una que se tomó
+por su cuenta esta sesión.
+
+Proceso:
+1. **Revisión visual de las 257 fotos** (259 códigos menos 2 filas vacías)
+   con un `Workflow` de 13 agentes en paralelo (~20 fotos c/u, viendo cada
+   imagen con la herramienta de lectura) — criterio: frasco Narciso
+   completo (tapa a base), sin recortes feos, nítido. Solo **1 resultó
+   defectuosa** (`C054`, Issey Miyake Pour Homme: un artefacto gráfico
+   borroso superpuesto) — verificada a mano, se movió a
+   `Desktop\portadas\defectuosa\`. El resto se revisó también a mano por
+   muestreo antes de publicar.
+2. **Cruce código → producto real**: mismo esquema de coincidencia difusa
+   por tokens que la ampliación de catálogo, reutilizando ese trabajo. El
+   cruce reveló y corrigió un patrón de bug del propio script (empatan
+   token por token dos productos del catálogo que solo se diferencian por
+   una palabra tipo "Parfum"/"Elixir" — ej. "Acqua di Gio" vs "Acqua di Gio
+   Parfum", "212 NYC" vs "212 Sexy Men" — el script se quedaba con el
+   primero que encontraba). Se corrigió con overrides manuales para cada
+   caso encontrado.
+3. `scripts/optimize-product-photos.mjs` genera `src/assets/img/products/
+   <product.id>.{webp,avif,jpg}` (ancho 1100px, mismos parámetros de calidad
+   que el resto del sitio) para las 255 fotos buenas y mapeadas (256
+   productos tienen foto real, pero dos códigos del archivo original del
+   cliente — `C068`/`C082` — resultaron ser el mismo producto real, "Black
+   XS L'Excès"; se usó solo una).
+4. `src/data/productImages.js` resuelve `product.image` (el id del
+   producto, o `'catalog-bottle'` para los que no tienen foto propia) a sus
+   3 formatos con `import.meta.glob` — `ProductCard.jsx`, `CartItemRow.jsx`,
+   `ProductDetailPage.jsx` (foto principal de la ficha + relacionados) y
+   `FindYourFragrance.jsx` ya no importan `catalog-bottle.*` directo, todos
+   pasan por esta función. `CartContext.jsx` guarda `image` en cada línea
+   del carrito para que se pueda mostrar ahí también.
+5. **7 productos sin foto propia** (usan `catalog-bottle` de respaldo): el
+   que resultó defectuoso (`L'Eau d'Issey Pour Homme`) más los 6 que se
+   agregaron en un pedido aparte después de que el cliente mandara las
+   fotos (9 PM Rebel, Hawas Ice, Hawas Fire, Club de Nuit Precieux I,
+   Supremacy Collector's Edition, Odyssey Mandarin Sky) — no tienen código
+   en el archivo original de fotos.
+
+En la ficha de producto (`/perfumes/:slug`), la foto propia es la primera
+imagen de la galería (posición "principal"); las otras 3 miniaturas siguen
+siendo los recortes reales compartidos del frasco físico (`hero-bottle`,
+`spotlight-bottle`, `label-detail`), iguales para todo el catálogo.
+
+**Nota de rendimiento:** las 255 fotos se cargan con `import.meta.glob(...,
+{ eager: true })`, lo que agrega ~45KB gzip al bundle de JS (son solo las
+rutas de archivo, no las imágenes en sí — esas siguen cargando bajo demanda
+con `loading="lazy"`). Se aceptó el tradeoff por simplicidad; si en el
+futuro esto pesa demasiado, la alternativa es un glob no-eager con
+resolución async y un estado de carga en cada componente.
 
 El catálogo se agrupa en tres secciones (Perfumería Caballero / Perfumería
 Dama / Perfumería Unisex, cada una con su encabezado) y cada sección es un **carrusel horizontal**

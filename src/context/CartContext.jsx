@@ -32,6 +32,7 @@ function reducer(state, action) {
           brand: product.brand,
           fullName: product.fullName,
           category: product.category,
+          image: product.image,
           sizeLabel: size.label,
           price: size.price,
           qty,
