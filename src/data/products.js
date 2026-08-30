@@ -61,14 +61,14 @@ const dama = [
   { title: 'Good Girl Blush', brand: 'Carolina Herrera', style: 'Dulce' },
   { title: '212 VIP', brand: 'Carolina Herrera', style: 'Fresco' },
   { title: '212 VIP Rosé', brand: 'Carolina Herrera', style: 'Fresco' },
-  { title: 'Good Girl Glam', brand: 'Carolina Herrera', style: 'Intenso' },
+  { title: 'Very Good Girl Glam', brand: 'Carolina Herrera', style: 'Intenso' },
   { title: 'Chance Eau Fraîche', brand: 'Chanel', style: 'Fresco' },
   { title: 'La Bomba', brand: 'Carolina Herrera', style: 'Elegante' },
   { title: 'Good Girl Blush Elixir', brand: 'Carolina Herrera', style: 'Intenso' },
   { title: 'Miss Dior Blooming Bouquet', brand: 'Dior', style: 'Fresco' },
   { title: 'Chance', brand: 'Chanel', style: 'Elegante' },
   { title: 'CH Sublime', brand: 'Carolina Herrera', style: 'Elegante' },
-  { title: 'Libre', brand: 'YSL', style: 'Elegante' },
+  { title: 'Libre', brand: 'Yves Saint Laurent', style: 'Elegante' },
 ].map((p) => toProduct(p, CATEGORIES.DAMA, 'mujer'))
 
 // Ampliación de catálogo (agosto 2026): referencias reales adicionales que el
@@ -82,7 +82,7 @@ const caballeroAgosto2026 = [
   { title: 'Pour Homme', brand: 'Bvlgari', style: 'Fresco' },
   { title: 'IN2U for Him', brand: 'Calvin Klein', style: 'Fresco' },
   { title: 'One Shock for Him', brand: 'Calvin Klein', style: 'Fresco' },
-  { title: 'CH Africa', brand: 'Carolina Herrera', style: 'Dulce' },
+  { title: 'CH Men Africa', brand: 'Carolina Herrera', style: 'Dulce' },
   { title: 'Bad Boy', brand: 'Carolina Herrera', style: 'Intenso' },
   { title: 'Bad Boy Elixir', brand: 'Carolina Herrera', style: 'Intenso' },
   { title: 'CH Men', brand: 'Carolina Herrera', style: 'Elegante' },
@@ -115,7 +115,7 @@ const caballeroAgosto2026 = [
   { title: 'Le Male', brand: 'Jean Paul Gaultier', style: 'Fresco' },
   { title: 'Ultra Male', brand: 'Jean Paul Gaultier', style: 'Intenso' },
   { title: 'L.12.12 Blanc', brand: 'Lacoste', style: 'Fresco' },
-  { title: 'Red', brand: 'Lacoste', style: 'Fresco' },
+  { title: 'L.12.12 Rouge', brand: 'Lacoste', style: 'Fresco' },
   { title: 'L.12.12 Noir', brand: 'Lacoste', style: 'Intenso' },
   { title: 'Explorer Platinum', brand: 'Montblanc', style: 'Elegante' },
   { title: 'Starwalker', brand: 'Montblanc', style: 'Elegante' },
@@ -132,9 +132,8 @@ const caballeroAgosto2026 = [
   { title: '1 Million Lucky', brand: 'Paco Rabanne', style: 'Dulce' },
   { title: '1 Million', brand: 'Paco Rabanne', style: 'Dulce' },
   { title: '1 Million Privé', brand: 'Paco Rabanne', style: 'Intenso' },
-  { title: 'Phantom Parfum', brand: 'Paco Rabanne', style: 'Elegante' },
+  { title: 'Phantom Elixir', brand: 'Paco Rabanne', style: 'Elegante' },
   { title: 'Phantom Intense', brand: 'Paco Rabanne', style: 'Intenso' },
-  { title: 'Black XS L\'Aphrodisiaque', brand: 'Paco Rabanne', style: 'Intenso' },
   { title: 'Luna Rossa Carbon', brand: 'Prada', style: 'Fresco' },
   { title: 'Luna Rossa Ocean', brand: 'Prada', style: 'Fresco' },
   { title: 'Polo Ultra Blue', brand: 'Ralph Lauren', style: 'Fresco' },
@@ -151,7 +150,7 @@ const caballeroAgosto2026 = [
   { title: 'Eros', brand: 'Versace', style: 'Fresco' },
   { title: 'Swiss Army Classic', brand: 'Victorinox', style: 'Fresco' },
   { title: 'MYSLF Le Parfum', brand: 'Yves Saint Laurent', style: 'Intenso' },
-  { title: '9PM Night Out', brand: 'Afnan', style: 'Intenso' },
+  { title: '9PM', brand: 'Afnan', style: 'Intenso' },
   { title: 'Fahrenheit', brand: 'Dior', style: 'Intenso' },
   // El cliente pidió agregar estas igual aunque su texto original no
   // permitía confirmar el producto exacto sin ambigüedad (marca sola, o
@@ -159,7 +158,7 @@ const caballeroAgosto2026 = [
   // de esa marca/línea en cada caso.
   { title: 'L\'Eau d\'Issey Pour Homme', brand: 'Issey Miyake', style: 'Fresco' },
   { title: 'Pure XS', brand: 'Paco Rabanne', style: 'Fresco' },
-  { title: 'Y', brand: 'Yves Saint Laurent', style: 'Fresco' },
+  { title: 'La Nuit de l\'Homme', brand: 'Yves Saint Laurent', style: 'Elegante' },
   // Lote adicional (mismo mes) con investigación olfativa completa: el
   // cliente dio él mismo las notas de salida/corazón/fondo de cada una, así
   // que sí tienen ficha en fragranceInfo.js (a diferencia del resto de esta
@@ -167,6 +166,11 @@ const caballeroAgosto2026 = [
   { title: 'Hawas Ice', brand: 'Rasasi', style: 'Fresco' },
   { title: 'Supremacy Collector\'s Edition', brand: 'Afnan', style: 'Intenso' },
   { title: 'Odyssey Mandarin Sky', brand: 'Armaf', style: 'Fresco' },
+  // Detectado al cruzar el catálogo con la hoja de fichas completas del
+  // cliente (agosto 2026): "Dior Sauvage Elixir" es un producto real
+  // distinto de "Sauvage EDT", que el dedup original de 259 referencias
+  // había excluido por error como si fuera el mismo (falso positivo).
+  { title: 'Sauvage Elixir', brand: 'Dior', style: 'Intenso' },
 ].map((p) => toProduct(p, CATEGORIES.CABALLERO, 'hombre'))
 
 const damaAgosto2026 = [
@@ -229,12 +233,18 @@ const damaAgosto2026 = [
   { title: 'Mallow Madness', brand: 'Lattafa', style: 'Dulce' },
   { title: 'Paradoxe Intense', brand: 'Prada', style: 'Elegante' },
   { title: 'Aventus for Her', brand: 'Creed', style: 'Fresco' },
+  // Igual que "Sauvage Elixir": detectados al cruzar el catálogo con la
+  // hoja de fichas completas (agosto 2026) — "Cloud" (2018, distinto de
+  // "Cloud Pink" ya existente) y "Good Girl" (el best-seller base de la
+  // línea, distinto de sus flankers "Good Girl Blush"/"Very Good Girl Glam"
+  // ya existentes) habían quedado fuera del catálogo por error.
+  { title: 'Cloud', brand: 'Ariana Grande', style: 'Dulce' },
+  { title: 'Good Girl', brand: 'Carolina Herrera', style: 'Intenso' },
   // El cliente pidió agregar estas igual aunque su texto original no
   // permitía confirmar el producto exacto sin ambigüedad (marca sola, o
   // varias variantes posibles) — se usó el producto real más representativo
   // de esa marca/línea en cada caso.
   { title: '212 NYC', brand: 'Carolina Herrera', style: 'Fresco' },
-  { title: 'Carolina Herrera', brand: 'Carolina Herrera', style: 'Elegante' },
   { title: 'Passport Paris', brand: 'Paris Hilton', style: 'Fresco' },
   { title: 'L\'Eau d\'Issey', brand: 'Issey Miyake', style: 'Fresco' },
 ].map((p) => toProduct(p, CATEGORIES.DAMA, 'mujer'))

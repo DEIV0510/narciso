@@ -20,19 +20,20 @@ npm run optimize-images   # regenera src/assets/img a partir de source-material/
 - El logo (`logo.png/webp`, `crown-mark.png/webp`, `favicon-32/180.png`) sale de `source-material/logo-oficial.png` — el logo oficial real de la marca (reemplazó a un `LOGO2.png` de menor calidad usado antes de que el cliente entregara el definitivo). Se procesa quitándole el fondo blanco original (chroma-key por luminancia en `scripts/optimize-images.mjs`, función `makeTransparent`) para que se vea limpio sobre cualquier fondo, claro u oscuro; `crown-mark` (el emblema de corona+laurel solo, sin la palabra "NARCISO") se recorta del 70% superior del logo — ese punto de corte se midió fila por fila sobre el PNG fuente para que caiga justo en el espacio entre el emblema y el texto. El logo oficial usa degradados/biseles dorados (no colores planos como el anterior), así que sus PNG/WebP se generan con paleta + compresión lossy de alta calidad en vez de lossless — mismo resultado visual, ~70% más liviano (importa especialmente en `crown-mark`, que carga en el primer paint de cada página vía la pantalla de carga).
 - Número de WhatsApp: `3229282884`. Dirección: Urbanización Santa Ana, Manzana 34 Casa 2, Ibagué, Tolima.
 
-## Catálogo (261 productos)
+## Catálogo (262 productos)
 
 `src/data/products.js` es la única fuente de verdad del catálogo. Arranca con
 el catálogo original — 24 fragancias "Perfumería Caballero" + 24 "Perfumería
 Dama", con los nombres, precio ($60.000 COP c/u) y categoría exactos que dio
-el cliente — y se amplió en agosto de 2026 (ver más abajo) con 213
-fragancias adicionales (81 Caballero + 63 Dama + 69 Unisex), mismo precio
-plano. **Todas comparten la misma foto real**
+el cliente — y se amplió en agosto de 2026 (ver más abajo) con 214
+fragancias adicionales (81 Caballero + 64 Dama + 69 Unisex, incluidos 3
+productos reales que el cruce con la hoja de fichas completas reveló que
+faltaban), mismo precio plano. **Todas comparten la misma foto real**
 (`source-material/botella-oficial.png` → `catalog-bottle.*`): así se vende
 realmente — un solo frasco/etiqueta, distinta esencia por dentro. No existen
 fotos individuales por fragancia en el material entregado; si el cliente las
 agrega más adelante, basta con cambiar el campo `image` de cada producto
-(hoy vale `'catalog-bottle'` para los 261).
+(hoy vale `'catalog-bottle'` para los 262).
 
 ### Ampliación de catálogo (agosto 2026)
 
@@ -77,16 +78,6 @@ Proceso seguido, por disciplina de no inventar datos:
    ficha de producto) y `FindYourFragrance.jsx` (el quiz ahora ofrece
    Hombre/Mujer/Unisex).
 
-**Nota importante:** la investigación profunda de perfil olfativo
-(`fragranceInfo.js` — familia, notas de salida/corazón/fondo, ocasión,
-estación) solo existe para los 48 productos originales **más 6 excepciones**
-(ver abajo). El resto de los 207 productos nuevos de agosto 2026 sí tienen
-`style` (Fresco/Dulce/Intenso/Elegante, verificado igual que marca/título)
-para que funcionen en el quiz y los filtros, pero su ficha individual
-muestra el texto genérico de respaldo hasta que se investigue su perfil
-detallado — es un trabajo pendiente distinto, no iniciado en esta
-ampliación.
-
 **6 productos con ficha completa desde el día uno (mismo mes, pedido
 aparte):** el cliente pidió agregar "9 PM Rebel" (Afnan), "Hawas Ice" y
 "Hawas Fire" (Rasasi), "Club de Nuit Precieux I" y "Odyssey Mandarin Sky"
@@ -96,12 +87,69 @@ mensaje. Se verificó marca/título/género real de cada uno con un workflow
 de investigación + verificación adversarial en paralelo (11 agentes:
 investigación + segunda opinión escéptica por producto) antes de agregarlos,
 pero las notas olfativas en sí se usaron tal cual las dio el cliente, sin
-investigarlas de nuevo ni agregar nada que él no mencionó — por eso sí tienen
-ficha completa en `fragranceInfo.js` (con un comentario ahí mismo que lo deja
-explícito) aunque llegaron después que el resto de la ampliación de agosto
-2026. "Odyssey Mandarin Sky" es un producto real DISTINTO de "Odyssey
-Mandarin Sky Elixir" (ya en el catálogo, con "Elixir" en el nombre) — la
-versión original está clasificada como masculina, la "Elixir" como unisex.
+investigarlas de nuevo ni agregar nada que él no mencionó. "Odyssey Mandarin
+Sky" es un producto real DISTINTO de "Odyssey Mandarin Sky Elixir" (ya en el
+catálogo, con "Elixir" en el nombre) — la versión original está clasificada
+como masculina, la "Elixir" como unisex.
+
+### Fichas de perfil olfativo completas (agosto 2026, `fragranceInfo.js`)
+
+El cliente compartió después `Catalogo_Perfumes_Fichas_Completas_1.xlsx`: la
+MISMA lista de 259 referencias de la ampliación anterior, pero esta vez con
+ficha completa por perfumista/fuente verificada para cada una (familia,
+notas de salida/corazón/fondo, perfil olfativo, descripción comercial,
+ideal para/momento/clima, nivel de confianza y observaciones) y una segunda
+hoja "Por confirmar contigo" con 53 casos ambiguos que el propio archivo ya
+había resuelto con su mejor criterio, documentando el razonamiento. Con
+esto, `fragranceInfo.js` pasó de cubrir 53 productos (los 47 originales +
+las 6 fichas de arriba) a cubrir **259 de los 262** — solo quedan sin ficha
+los 3 casos donde no se pudo usar el dato sin riesgo de inventar o
+atribuir mal (ver el comentario al inicio de `fragranceInfo.js`).
+
+Proceso: cada una de las 259 filas se cruzó por nombre/marca (coincidencia
+difusa por tokens, igual que la deduplicación anterior) contra los 262
+productos reales del catálogo — más de 250 coincidencias limpias — y las
+notas/familia/perfil de esa fila se usaron tal cual para completar o
+**reemplazar** la ficha del producto correspondiente (incluidas varias de
+los 47 originales, donde el archivo traía correcciones verificadas en vivo
+contra Fragrantica). Las categorías de ocasión/momento del día/estación que
+usa el sitio (`occasions`/`timeOfDay`/`season`) no venían en ese formato en
+el archivo — se derivaron con reglas a partir de las columnas de texto libre
+"Momento"/"Clima"/"Ideal para" del archivo, con el mismo criterio orientativo
+que ya aplicaba el campo `style`.
+
+Ese cruce, además, corrigió el catálogo mismo (no solo las fichas):
+
+- **Nombres imprecisos corregidos**, misma marca/género/precio, solo cambia
+  el texto: "CH Africa" → **"CH Men Africa"** (Carolina Herrera es un
+  flanker distinto, femenino, del mismo nombre — el real para hombre es
+  éste); "Y" → **"La Nuit de l'Homme"** (YSL, el masculino más vendido de la
+  casa — verificado por votos/reseñas en Fragrantica, no el que se había
+  supuesto antes); "9PM Night Out" → **"9PM"** ("Night Out" es un subtítulo
+  de marketing de revendedores, no existe como producto propio en
+  Fragrantica); "Red" → **"L.12.12 Rouge"** (Lacoste, nombre técnico real,
+  igual que sus hermanas ya en el catálogo "L.12.12 Blanc"/"Noir");
+  "Phantom Parfum" → **"Phantom Elixir"** (Paco Rabanne — no existía
+  "Phantom Parfum" como tal); marca de "Libre" corregida de la abreviatura
+  "YSL" a "Yves Saint Laurent" para que coincida con el resto del catálogo
+  (evitaba que el cruce automático lo confundiera con otro producto de la
+  misma casa).
+- **Un producto duplicado eliminado:** "Black XS L'Aphrodisiaque" (Paco
+  Rabanne) no existe como producto real — dos referencias distintas del
+  archivo original del cliente (`C068` y `C082`) resultaron ser el MISMO
+  producto real, "Black XS L'Excès", que ya estaba bien en el catálogo bajo
+  ese nombre. Se quitó la entrada duplicada/inexistente.
+- **3 productos reales que faltaban, agregados:** "Sauvage Elixir" (Dior,
+  hombre — un falso positivo del dedup original lo había excluido por
+  parecerse demasiado a "Sauvage EDT", pero es un producto real distinto),
+  "Cloud" (Ariana Grande, mujer — distinto de "Cloud Pink", ya en el
+  catálogo) y **"Good Girl"** (Carolina Herrera, mujer — el best-seller
+  base de la línea, distinto de sus flankers "Good Girl Blush"/"Very Good
+  Girl Glam"). De paso esto resolvió la única excepción documentada desde
+  el inicio del proyecto: la referencia original del cliente que se había
+  dejado como **"Good Girl Glam"** (sin ficha, por no existir ese nombre
+  exacto) en realidad corresponde a **"Very Good Girl Glam"** — se corrigió
+  el título y ya tiene ficha completa.
 
 La foto del frasco actual reemplazó a una foto anterior de estudio
 (`botellabien.png`, ya no se usa pero se deja en `source-material/` por si
@@ -174,7 +222,7 @@ Cambios aplicados, todos con datos y fotos reales de Narciso:
 
 ## Fichas individuales de producto (`/perfumes/:slug`)
 
-Cada uno de los 261 perfumes del catálogo tiene su propia página
+Cada uno de los 262 perfumes del catálogo tiene su propia página
 (`src/pages/ProductDetailPage.jsx`, un solo componente reutilizable
 alimentado por `product.id` vía `react-router-dom`) con breadcrumbs, galería
 (reutiliza las fotos reales ya existentes del sitio), precio, CTA de
@@ -185,25 +233,26 @@ con hasta 4 productos reales relacionados (`getRelatedProducts` en
 mezcla Caballero/Dama ni recomienda al azar).
 
 **Investigación real por fragancia** (`src/data/fragranceInfo.js`): familia
-olfativa, notas de salida/corazón/fondo, año de lanzamiento, concentración,
-ocasión, estación y momento del día para cada una de las 48 fragancias en
-las que Narciso se inspira, investigados con búsqueda web contra fuentes
-públicas (Fragrantica, Basenotes, sitios oficiales de cada marca, retailers
-establecidos como Sephora/Douglas) mediante un workflow de 8 agentes en
-paralelo. Reglas seguidas estrictamente:
+olfativa, notas de salida/corazón/fondo, ocasión, estación y momento del día
+para **259 de los 262** productos del catálogo — los 47 originales
+investigados con un workflow de 8 agentes en paralelo con WebSearch, y el
+resto completado con la hoja de fichas verificadas que compartió el cliente
+(ver "Fichas de perfil olfativo completas" más arriba). Reglas seguidas
+estrictamente:
 
-- **Nunca se muestra un dato que no se pudo verificar.** De 48 fragancias,
-  47 tienen ficha completa. La única excepción es **"Good Girl Glam" de
-  Carolina Herrera** (dama): no existe un producto con ese nombre exacto en
-  el catálogo oficial de la marca ni en las bases de datos consultadas (el
-  producto real más cercano es "Very Good Girl Glam", de la línea "Very Good
-  Girl", distinta a "Good Girl") — para no arriesgar un dato falso, esa
-  ficha no muestra familia/notas/ocasión y usa el texto genérico de
-  respaldo. Sigue teniendo precio, WhatsApp y productos relacionados
-  normalmente.
+- **Nunca se muestra un dato que no se pudo verificar.** Solo quedan 3
+  excepciones sin ficha, a propósito: **"Eros Pour Femme"** (Versace, dama —
+  la fuente disponible documentaba la versión masculina "Eros", con notas
+  distintas, así que no se usó para no atribuirle la pirámide equivocada) y
+  **"Vega"**/**"Arrurrú"** (Ahli y Arrurrú, unisex — ninguna de las dos
+  marcas publica una pirámide olfativa real). Sus fichas no muestran
+  familia/notas/ocasión y usan el texto genérico de respaldo, pero siguen
+  teniendo precio, WhatsApp y productos relacionados normalmente. (La
+  excepción original del proyecto, "Good Girl Glam", ya se resolvió — ver
+  "Fichas de perfil olfativo completas" más arriba.)
 - **Nunca se afirma una duración exacta** ("dura 12 horas") — no se incluyó
   ningún dato de rendimiento/duración por marca por no encontrarse fuentes
-  confiables y consistentes entre sí para las 47 fragancias verificadas.
+  confiables y consistentes entre sí.
 - **"Inspirado en [marca]" en todas partes**, nunca se implica que Narciso
   vende el producto original — el texto de descripción, los `<meta>` y el
   JSON-LD describen siempre el perfil de la fragancia en la que Narciso se
@@ -251,10 +300,10 @@ reemplazo.
   vacía tras el envío.
 - **Tamaños/presentaciones**: la arquitectura ya soporta `product.sizes`
   (cada producto podría tener 30/50/100 ML a precios distintos como
-  líneas separadas en el carrito), pero como los 48 productos reales de
-  hoy venden una sola presentación a $60.000, no se inventó ningún
-  selector de tallas — sencillamente no aparece hasta que el cliente
-  tenga tallas reales que cargar en `products.js`.
+  líneas separadas en el carrito), pero como los productos reales de hoy
+  venden una sola presentación a $60.000, no se inventó ningún selector de
+  tallas — sencillamente no aparece hasta que el cliente tenga tallas
+  reales que cargar en `products.js`.
 
 ## Estructura
 
@@ -269,11 +318,9 @@ src/
   pages/            HomePage, ProductDetailPage (ficha individual /perfumes/:slug)
   data/site.js      marca, WhatsApp, enlaces
   data/cart.js      buildOrderMessage (mensaje de pedido estructurado para WhatsApp)
-  data/products.js  catálogo (261 productos), formatCOP, searchProducts,
+  data/products.js  catálogo (262 productos), formatCOP, searchProducts,
                     getProductById, getRelatedProducts
-  data/fragranceInfo.js  perfil olfativo real por fragancia — los 48
-                    productos originales (investigado) + 6 más de la
-                    ampliación de agosto 2026 (notas dadas por el cliente),
-                    ver Ampliación agosto 2026
+  data/fragranceInfo.js  perfil olfativo real por fragancia — 259 de los 262
+                    productos, ver "Fichas de perfil olfativo completas"
   hooks/            useReveal (scroll reveal), useDocumentMeta (SEO por página)
 ```
