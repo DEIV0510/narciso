@@ -28,11 +28,14 @@ Dama", con los nombres, precio ($60.000 COP c/u) y categoría exactos que dio
 el cliente — y se amplió en agosto de 2026 (ver más abajo) con 214
 fragancias adicionales (81 Caballero + 64 Dama + 69 Unisex, incluidos 3
 productos reales que el cruce con la hoja de fichas completas reveló que
-faltaban), mismo precio plano. **256 de los 262 productos tienen su propia
-foto real** (ver "Fotos individuales por producto" más abajo); los 6
+faltaban), mismo precio plano. **248 de los 262 productos tienen su propia
+foto real** (ver "Fotos individuales por producto" más abajo); los 14
 restantes usan la foto genérica compartida `catalog-bottle.*`
 (`source-material/botella-oficial.png`) — mismo frasco/etiqueta, tal como
-se vendía antes de que el cliente mandara fotos individuales.
+se vendía antes de que el cliente mandara fotos individuales. De esos 14, 8
+SÍ tuvieron foto individual en algún momento pero se les quitó tras
+verificar que el frasco de fondo no correspondía a la marca/fragancia real
+(ver "Verificación frasco↔nombre" más abajo).
 
 ### Ampliación de catálogo (agosto 2026)
 
@@ -239,7 +242,7 @@ imagen de la galería (posición "principal"); las otras 3 miniaturas siguen
 siendo los recortes reales compartidos del frasco físico (`hero-bottle`,
 `spotlight-bottle`, `label-detail`), iguales para todo el catálogo.
 
-**Nota de rendimiento:** las 256 fotos se cargan con `import.meta.glob(...,
+**Nota de rendimiento:** las 248 fotos se cargan con `import.meta.glob(...,
 { eager: true })`, lo que agrega ~45KB gzip al bundle de JS (son solo las
 rutas de archivo, no las imágenes en sí — esas siguen cargando bajo demanda
 con `loading="lazy"`). Se aceptó el tradeoff por simplicidad; si en el
@@ -292,6 +295,50 @@ Proceso:
 Los mismos matices de contenido de la nota de la primera tanda (frasco de
 marca de diseñador desenfocado pero a veces parcialmente legible de fondo)
 aplican igual a las fotos de esta segunda tanda, ahora usadas en las 256.
+
+### Verificación frasco↔nombre (agosto 2026)
+
+El cliente pidió revisar "muy detalladamente" que el frasco desenfocado de
+fondo de cada foto correspondiera de verdad a la marca/fragancia que ese
+producto de Narciso dice representar (no solo que las fotos se vieran bien
+o tuvieran el mismo fondo, sino que el CONTENIDO fuera correcto). Se corrió
+un `Workflow` en dos fases sobre los 256 productos con foto propia:
+
+1. **Revisión** — 13 agentes en paralelo (~20 productos c/u), cada uno leyó
+   cada imagen con la herramienta de lectura y juzgó, usando su propio
+   conocimiento de diseños reales de frascos de perfumería, si la forma/
+   color/texto legible del frasco de fondo era consistente con la marca y
+   el nombre del producto. Veredictos: "coincide", "no_coincide" o
+   "indeterminado" (frasco de fondo demasiado oscuro/borroso para juzgar).
+2. **Verificación** — cada caso marcado "no_coincide" pasó por una segunda
+   revisión independiente (otro agente, sin ver el veredicto del primero
+   como verdad, solo como hipótesis a confirmar o refutar), para filtrar
+   falsos positivos antes de reportarlos.
+
+Resultado sobre 256 productos: **228 coinciden**, **20 indeterminados** (no
+se puede confirmar ni descartar por la calidad de la foto, no implica
+error), y **8 confirmados como mal-emparejados** (los 8 que se marcaron
+"no_coincide" en la fase 1 se confirmaron en la fase 2, 0 falsos positivos):
+`her-elixir-burberry-mujer`, `her-edp-burberry-mujer`,
+`luna-rossa-carbon-prada-hombre`,
+`myslf-le-parfum-yves-saint-laurent-hombre`,
+`scandal-jean-paul-gaultier-mujer`, `yara-tous-lattafa-mujer`,
+`octans-ahli-unisex` y `rehab-initio-parfums-prives-unisex` — en todos
+estos el frasco de fondo real es identificablemente otro producto (ej. el
+Burberry Her Elixir real es rojo/granate intenso, la foto asignada muestra
+un frasco crema pálido). No se encontró un "intercambio" evidente con
+ningún otro producto del catálogo (no es que la foto correcta de uno haya
+quedado asignada a otro por error de nuestro cruce código→producto) — todo
+indica que el problema viene del material fuente en sí (la foto que llegó
+con ese código específico), no de la lógica de emparejamiento del sitio.
+
+A pedido explícito del cliente, estos 8 se sacaron de
+`PRODUCTS_WITH_OWN_PHOTO` en `products.js` y vuelven a usar la foto
+genérica compartida `catalog-bottle` hasta que el cliente consiga una foto
+corregida — mostrar un frasco de marca ajena identificablemente incorrecto
+se consideró peor que no mostrar ninguno específico. Es reversible: en
+cuanto haya una foto correcta para alguno, basta con volver a incluir su id
+en el set.
 
 El catálogo se agrupa en tres secciones (Perfumería Caballero / Perfumería
 Dama / Perfumería Unisex, cada una con su encabezado) y cada sección es un **carrusel horizontal**
