@@ -264,17 +264,25 @@ Proceso:
    el texto de cada página y extraer su código; el cruce código→producto
    reutilizó el mismo `image-product-mapping.json` de la primera tanda (257
    de 257 coincidencias limpias, sin ambigüedades nuevas).
-3. **Comparación 1-a-1 con un `Workflow` de 13 agentes en paralelo**: cada
-   agente vio, para ~20 productos, la foto actual del sitio y la nueva del
-   PDF lado a lado, y eligió cuál se veía mejor (composición/iluminación,
-   pero también nitidez/resolución — la nueva tiende a ganar en luz pero
-   pierde en resolución). Resultado sobre 256 productos comparados: **185
-   ganó la foto nueva, 71 se quedó con la actual**. Un caso notable donde
-   ganó la actual pese al patrón general: `bade-e-al-oud-honor-glory-lattafa-unisex`,
-   porque la foto nueva traía un artefacto flotante defectuoso.
-4. `scripts/apply-photo-v2-winners.mjs` regenera los 3 formatos (mismos
-   parámetros que `optimize-product-photos.mjs`) solo para los 185
-   ganadores, sobrescribiendo sus archivos en `src/assets/img/products/`.
+3. **Comparación 1-a-1 con un `Workflow` de 13 agentes en paralelo** (primer
+   intento): cada agente vio, para ~20 productos, la foto actual del sitio y
+   la nueva del PDF lado a lado, y eligió cuál se veía mejor (composición/
+   iluminación, pero también nitidez/resolución). Resultado sobre 256
+   productos comparados: 185 ganó la foto nueva, 71 se quedó con la actual —
+   `scripts/apply-photo-v2-winners.mjs` aplicó solo esos 185 ganadores.
+4. **Corrección inmediata pedida por el cliente:** al revisar los motivos de
+   cada elección del workflow, quedó claro que las dos tandas de fotos NO
+   son la misma sesión con calidad pareja — son dos sets de estudio
+   visualmente distintos: la tanda original tiene luz plana y fondo liso
+   sin superficie definida, mientras que la del PDF usa luz direccional
+   cálida y un piso con reflejo/textura. Mezclar 185 fotos de un set con 71
+   del otro se veía inconsistente en el catálogo (cada tarjeta con un
+   fondo/iluminación distinta), así que el cliente pidió expresamente que
+   **todas** usaran el fondo del PDF, sin excepción — no la que "se viera
+   mejor" producto por producto. `scripts/apply-photo-v2-all.mjs`
+   (reemplaza a `apply-photo-v2-winners.mjs` para este propósito) regenera
+   los 3 formatos para los 256 productos SIEMPRE desde la fuente del PDF,
+   ignorando el resultado de la comparación anterior.
 5. Este PDF también le dio, por primera vez, una foto propia limpia a
    `L'Eau d'Issey Pour Homme` (Issey Miyake) — el único producto que había
    quedado sin foto en la primera tanda por ser la foto defectuosa (`C054`).
@@ -283,7 +291,7 @@ Proceso:
 
 Los mismos matices de contenido de la nota de la primera tanda (frasco de
 marca de diseñador desenfocado pero a veces parcialmente legible de fondo)
-aplican igual a las fotos nuevas de esta segunda tanda.
+aplican igual a las fotos de esta segunda tanda, ahora usadas en las 256.
 
 El catálogo se agrupa en tres secciones (Perfumería Caballero / Perfumería
 Dama / Perfumería Unisex, cada una con su encabezado) y cada sección es un **carrusel horizontal**
