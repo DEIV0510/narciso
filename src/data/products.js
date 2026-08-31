@@ -17,11 +17,16 @@ export const CATEGORIES = {
 // Desktop\portadas con una foto por referencia — mismo frasco Narciso real
 // en primer plano, nítido, con el frasco de la fragancia real en la que se
 // inspira desenfocado de fondo. Se revisaron las 257 (1 se descartó por
-// defectuosa) y se generaron en src/assets/img/products/<id>.*. Los
-// productos que no están en este set (el que resultó defectuosa, más los
-// 6 agregados después de que el cliente mandara las fotos) siguen usando
-// la foto genérica compartida `catalog-bottle` — ver ProductCard.jsx y
-// ProductDetailPage.jsx, que resuelven `image` con `import.meta.glob`
+// defectuosa) y se generaron en src/assets/img/products/<id>.*. Después el
+// cliente mandó Catalogo_Narciso_3.pdf con una segunda toma/render de la
+// misma composición para los mismos 257 códigos — se comparó cada par
+// (actual vs. nueva) y se reemplazó por la que se veía mejor, incluida la
+// que antes había salido defectuosa (esta vez sin defecto, así que ya
+// tiene foto propia). Los productos que no están en este set (los 6
+// agregados después de que el cliente mandara las fotos, sin código en
+// ese esquema) siguen usando la foto genérica compartida `catalog-bottle`
+// — ver ProductCard.jsx y ProductDetailPage.jsx, que resuelven `image` con
+// `import.meta.glob`
 // sobre esa carpeta.
 const PRODUCTS_WITH_OWN_PHOTO = new Set([
   '1-million-elixir-paco-rabanne-hombre', '1-million-lucky-paco-rabanne-hombre', '1-million-paco-rabanne-hombre', '1-million-prive-paco-rabanne-hombre', '212-nyc-carolina-herrera-hombre', '212-nyc-carolina-herrera-mujer',
@@ -46,7 +51,7 @@ const PRODUCTS_WITH_OWN_PHOTO = new Set([
   'il-mexico-ilmin-unisex', 'il-orgasme-ilmin-unisex', 'imagination-louis-vuitton-unisex', 'in-motion-hugo-boss-hombre', 'in2u-for-him-calvin-klein-hombre', 'instant-crush-mancera-unisex',
   'intense-cafe-montale-unisex', 'invictus-legend-paco-rabanne-hombre', 'invictus-onyx-paco-rabanne-hombre', 'invictus-paco-rabanne-hombre', 'invictus-parfum-paco-rabanne-hombre', 'invictus-platinum-paco-rabanne-hombre',
   'invictus-victory-elixir-paco-rabanne-hombre', 'irresistible-givenchy-mujer', 'island-bliss-armaf-unisex', 'k-by-dolce-gabbana-dolce-gabbana-hombre', 'karpos-ahli-unisex', 'khamrah-dukhan-lattafa-unisex',
-  'khamrah-qahwa-lattafa-unisex', 'king-of-seduction-antonio-banderas-hombre', 'l-12-12-blanc-lacoste-hombre', 'l-12-12-noir-lacoste-hombre', 'l-12-12-rouge-lacoste-hombre', 'l-eau-d-issey-issey-miyake-mujer',
+  'khamrah-qahwa-lattafa-unisex', 'king-of-seduction-antonio-banderas-hombre', 'l-12-12-blanc-lacoste-hombre', 'l-12-12-noir-lacoste-hombre', 'l-12-12-rouge-lacoste-hombre', 'l-eau-d-issey-issey-miyake-mujer', 'l-eau-d-issey-pour-homme-issey-miyake-hombre',
   'l-immensite-louis-vuitton-unisex', 'l-imperatrice-3-dolce-gabbana-mujer', 'la-belle-le-parfum-jean-paul-gaultier-mujer', 'la-bomba-carolina-herrera-mujer', 'la-nuit-de-l-homme-yves-saint-laurent-hombre', 'la-nuit-tresor-lancome-mujer',
   'la-vie-est-belle-l-elixir-lancome-mujer', 'lady-million-lucky-paco-rabanne-mujer', 'lady-million-paco-rabanne-mujer', 'lady-million-royal-paco-rabanne-mujer', 'layton-parfums-de-marly-unisex', 'le-beau-le-parfum-jean-paul-gaultier-hombre',
   'le-beau-paradise-garden-jean-paul-gaultier-hombre', 'le-male-elixir-absolu-jean-paul-gaultier-hombre', 'le-male-jean-paul-gaultier-hombre', 'le-male-le-parfum-jean-paul-gaultier-hombre', 'levar-del-sole-xerjoff-casamorati-unisex', 'libre-yves-saint-laurent-mujer',

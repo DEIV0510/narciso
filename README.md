@@ -28,8 +28,8 @@ Dama", con los nombres, precio ($60.000 COP c/u) y categoría exactos que dio
 el cliente — y se amplió en agosto de 2026 (ver más abajo) con 214
 fragancias adicionales (81 Caballero + 64 Dama + 69 Unisex, incluidos 3
 productos reales que el cruce con la hoja de fichas completas reveló que
-faltaban), mismo precio plano. **255 de los 262 productos tienen su propia
-foto real** (ver "Fotos individuales por producto" más abajo); los 7
+faltaban), mismo precio plano. **256 de los 262 productos tienen su propia
+foto real** (ver "Fotos individuales por producto" más abajo); los 6
 restantes usan la foto genérica compartida `catalog-bottle.*`
 (`source-material/botella-oficial.png`) — mismo frasco/etiqueta, tal como
 se vendía antes de que el cliente mandara fotos individuales.
@@ -226,24 +226,64 @@ Proceso:
    `FindYourFragrance.jsx` ya no importan `catalog-bottle.*` directo, todos
    pasan por esta función. `CartContext.jsx` guarda `image` en cada línea
    del carrito para que se pueda mostrar ahí también.
-5. **7 productos sin foto propia** (usan `catalog-bottle` de respaldo): el
-   que resultó defectuoso (`L'Eau d'Issey Pour Homme`) más los 6 que se
-   agregaron en un pedido aparte después de que el cliente mandara las
-   fotos (9 PM Rebel, Hawas Ice, Hawas Fire, Club de Nuit Precieux I,
+5. **6 productos sin foto propia** (usan `catalog-bottle` de respaldo): los
+   6 que se agregaron en un pedido aparte después de que el cliente mandara
+   las fotos (9 PM Rebel, Hawas Ice, Hawas Fire, Club de Nuit Precieux I,
    Supremacy Collector's Edition, Odyssey Mandarin Sky) — no tienen código
-   en el archivo original de fotos.
+   en el archivo original de fotos. El que resultó defectuoso (`L'Eau
+   d'Issey Pour Homme`, `C054`) sí recuperó foto propia en la segunda tanda
+   (ver más abajo).
 
 En la ficha de producto (`/perfumes/:slug`), la foto propia es la primera
 imagen de la galería (posición "principal"); las otras 3 miniaturas siguen
 siendo los recortes reales compartidos del frasco físico (`hero-bottle`,
 `spotlight-bottle`, `label-detail`), iguales para todo el catálogo.
 
-**Nota de rendimiento:** las 255 fotos se cargan con `import.meta.glob(...,
+**Nota de rendimiento:** las 256 fotos se cargan con `import.meta.glob(...,
 { eager: true })`, lo que agrega ~45KB gzip al bundle de JS (son solo las
 rutas de archivo, no las imágenes en sí — esas siguen cargando bajo demanda
 con `loading="lazy"`). Se aceptó el tradeoff por simplicidad; si en el
 futuro esto pesa demasiado, la alternativa es un glob no-eager con
 resolución async y un estado de carga en cada componente.
+
+### Segunda tanda: comparación con `Catalogo_Narciso_3.pdf` (agosto 2026)
+
+El cliente compartió un segundo catálogo PDF (257 páginas, 1 producto por
+página, mismo esquema de códigos D/C/UNI) que resultó ser **otra sesión de
+fotos/render distinta** de la misma composición (frasco Narciso nítido +
+frasco de la marca de inspiración desenfocado de fondo) — no la misma foto
+reprocesada. Pidió quedarse, por cada producto, con la que se viera mejor.
+
+Proceso:
+1. **Extracción de las fotos embebidas del PDF** con `pdfimages` (Poppler,
+   `C:\Users\Lenovo\AppData\Local\poppler\poppler-24.08.0\Library\bin\`) —
+   evita tener que recortar pie de foto/márgenes de una página renderizada.
+   Las imágenes nuevas quedan en menor resolución nativa (880×1173) que las
+   de la primera tanda (procesadas a 1080×1440).
+2. **Mapeo página → código → producto** con `pdftotext -layout` para leer
+   el texto de cada página y extraer su código; el cruce código→producto
+   reutilizó el mismo `image-product-mapping.json` de la primera tanda (257
+   de 257 coincidencias limpias, sin ambigüedades nuevas).
+3. **Comparación 1-a-1 con un `Workflow` de 13 agentes en paralelo**: cada
+   agente vio, para ~20 productos, la foto actual del sitio y la nueva del
+   PDF lado a lado, y eligió cuál se veía mejor (composición/iluminación,
+   pero también nitidez/resolución — la nueva tiende a ganar en luz pero
+   pierde en resolución). Resultado sobre 256 productos comparados: **185
+   ganó la foto nueva, 71 se quedó con la actual**. Un caso notable donde
+   ganó la actual pese al patrón general: `bade-e-al-oud-honor-glory-lattafa-unisex`,
+   porque la foto nueva traía un artefacto flotante defectuoso.
+4. `scripts/apply-photo-v2-winners.mjs` regenera los 3 formatos (mismos
+   parámetros que `optimize-product-photos.mjs`) solo para los 185
+   ganadores, sobrescribiendo sus archivos en `src/assets/img/products/`.
+5. Este PDF también le dio, por primera vez, una foto propia limpia a
+   `L'Eau d'Issey Pour Homme` (Issey Miyake) — el único producto que había
+   quedado sin foto en la primera tanda por ser la foto defectuosa (`C054`).
+   Por eso el conteo sube de 255 a **256 productos con foto propia**, y los
+   "7 restantes" de la primera tanda bajan a **6 restantes**.
+
+Los mismos matices de contenido de la nota de la primera tanda (frasco de
+marca de diseñador desenfocado pero a veces parcialmente legible de fondo)
+aplican igual a las fotos nuevas de esta segunda tanda.
 
 El catálogo se agrupa en tres secciones (Perfumería Caballero / Perfumería
 Dama / Perfumería Unisex, cada una con su encabezado) y cada sección es un **carrusel horizontal**
