@@ -28,14 +28,15 @@ Dama", con los nombres, precio ($60.000 COP c/u) y categoría exactos que dio
 el cliente — y se amplió en agosto de 2026 (ver más abajo) con 214
 fragancias adicionales (81 Caballero + 64 Dama + 69 Unisex, incluidos 3
 productos reales que el cruce con la hoja de fichas completas reveló que
-faltaban), mismo precio plano. **248 de los 262 productos tienen su propia
-foto real** (ver "Fotos individuales por producto" más abajo); los 14
+faltaban), mismo precio plano. **253 de los 262 productos tienen su propia
+foto real** (ver "Fotos individuales por producto" más abajo); los 9
 restantes usan la foto genérica compartida `catalog-bottle.*`
 (`source-material/botella-oficial.png`) — mismo frasco/etiqueta, tal como
-se vendía antes de que el cliente mandara fotos individuales. De esos 14, 8
+se vendía antes de que el cliente mandara fotos individuales. De esos 9, 6
 SÍ tuvieron foto individual en algún momento pero se les quitó tras
 verificar que el frasco de fondo no correspondía a la marca/fragancia real
-(ver "Verificación frasco↔nombre" más abajo).
+(ver "Verificación frasco↔nombre" y "Lote NARCISO_NUEVOS_CABALLEROS" más
+abajo).
 
 ### Ampliación de catálogo (agosto 2026)
 
@@ -242,7 +243,7 @@ imagen de la galería (posición "principal"); las otras 3 miniaturas siguen
 siendo los recortes reales compartidos del frasco físico (`hero-bottle`,
 `spotlight-bottle`, `label-detail`), iguales para todo el catálogo.
 
-**Nota de rendimiento:** las 248 fotos se cargan con `import.meta.glob(...,
+**Nota de rendimiento:** las 253 fotos se cargan con `import.meta.glob(...,
 { eager: true })`, lo que agrega ~45KB gzip al bundle de JS (son solo las
 rutas de archivo, no las imágenes en sí — esas siguen cargando bajo demanda
 con `loading="lazy"`). Se aceptó el tradeoff por simplicidad; si en el
@@ -339,6 +340,37 @@ corregida — mostrar un frasco de marca ajena identificablemente incorrecto
 se consideró peor que no mostrar ninguno específico. Es reversible: en
 cuanto haya una foto correcta para alguno, basta con volver a incluir su id
 en el set.
+
+### Lote `NARCISO_NUEVOS_CABALLEROS` (agosto 2026)
+
+El cliente mandó `Desktop\NARCISO_NUEVOS_CABALLEROS`: 11 fotos, cada
+archivo nombrado con el nombre del producto (ej. `Myslf le parfum.jpg`,
+`Hawas ice.jpg`). Se resolvió cada nombre de archivo contra `products.js`
+por título+marca (sin adivinar por slug, comparando el texto exacto para
+evitar el bug de coincidencia difusa ya conocido en este proyecto — ver
+más abajo). De las 11:
+
+- **6 reemplazos** de fotos que ya existían y estaban bien (`212 Sexy Men`,
+  `The Scent Elixir`, `Euphoria` hombre, `Invictus Onyx`, `Invictus
+  Parfum`, `Le Male Le Parfum`) — actualización/mejora general, no una
+  corrección de error.
+- **5 fotos nuevas**, de las cuales:
+  - 2 son la corrección de productos de la lista de 8 mal-emparejados:
+    `myslf-le-parfum-yves-saint-laurent-hombre` (ahora muestra la caja gris
+    con el monograma YSL clásico, consistente con el empaque real de
+    MYSLF) y `luna-rossa-carbon-prada-hombre`.
+  - 3 son fotos por primera vez para productos que nunca tuvieron código en
+    el esquema original de fotos: `hawas-ice-rasasi-hombre`,
+    `odyssey-mandarin-sky-armaf-hombre` (cuidado: distinto del ya existente
+    `odyssey-mandarin-sky-elixir-armaf-unisex`, es un producto real
+    diferente) y `supremacy-collector-s-edition-afnan-hombre`.
+
+`scripts/apply-nuevos-caballeros.mjs` (nuevo, permanente) hace el
+procesamiento (mismos parámetros de `sharp` que el resto: 1100px,
+webp q84/avif q58/jpeg q86 mozjpeg). Catálogo final: **253 de 262
+productos con foto propia** — quedan 6 de los 8 mal-emparejados sin
+corregir todavía, más 3 de los agregados después sin código original
+(9 PM Rebel, Hawas Fire, Club de Nuit Precieux I).
 
 El catálogo se agrupa en tres secciones (Perfumería Caballero / Perfumería
 Dama / Perfumería Unisex, cada una con su encabezado) y cada sección es un **carrusel horizontal**
