@@ -28,15 +28,16 @@ Dama", con los nombres, precio ($60.000 COP c/u) y categoría exactos que dio
 el cliente — y se amplió en agosto de 2026 (ver más abajo) con 214
 fragancias adicionales (81 Caballero + 64 Dama + 69 Unisex, incluidos 3
 productos reales que el cruce con la hoja de fichas completas reveló que
-faltaban), mismo precio plano. **253 de los 262 productos tienen su propia
-foto real** (ver "Fotos individuales por producto" más abajo); los 9
+faltaban), mismo precio plano. **255 de los 262 productos tienen su propia
+foto real** (ver "Fotos individuales por producto" más abajo); los 7
 restantes usan la foto genérica compartida `catalog-bottle.*`
 (`source-material/botella-oficial.png`) — mismo frasco/etiqueta, tal como
-se vendía antes de que el cliente mandara fotos individuales. De esos 9, 6
+se vendía antes de que el cliente mandara fotos individuales. De esos 7, 4
 SÍ tuvieron foto individual en algún momento pero se les quitó tras
-verificar que el frasco de fondo no correspondía a la marca/fragancia real
-(ver "Verificación frasco↔nombre" y "Lote NARCISO_NUEVOS_CABALLEROS" más
-abajo).
+verificar (con fotos reales de referencia del cliente, no solo con IA) que
+el frasco de fondo no correspondía a la marca/fragancia real (ver
+"Verificación frasco↔nombre", "Lote NARCISO_NUEVOS_CABALLEROS" y
+"Correcciones con fotos de referencia" más abajo).
 
 ### Ampliación de catálogo (agosto 2026)
 
@@ -243,7 +244,7 @@ imagen de la galería (posición "principal"); las otras 3 miniaturas siguen
 siendo los recortes reales compartidos del frasco físico (`hero-bottle`,
 `spotlight-bottle`, `label-detail`), iguales para todo el catálogo.
 
-**Nota de rendimiento:** las 253 fotos se cargan con `import.meta.glob(...,
+**Nota de rendimiento:** las 255 fotos se cargan con `import.meta.glob(...,
 { eager: true })`, lo que agrega ~45KB gzip al bundle de JS (son solo las
 rutas de archivo, no las imágenes en sí — esas siguen cargando bajo demanda
 con `loading="lazy"`). Se aceptó el tradeoff por simplicidad; si en el
@@ -367,10 +368,48 @@ más abajo). De las 11:
 
 `scripts/apply-nuevos-caballeros.mjs` (nuevo, permanente) hace el
 procesamiento (mismos parámetros de `sharp` que el resto: 1100px,
-webp q84/avif q58/jpeg q86 mozjpeg). Catálogo final: **253 de 262
-productos con foto propia** — quedan 6 de los 8 mal-emparejados sin
-corregir todavía, más 3 de los agregados después sin código original
-(9 PM Rebel, Hawas Fire, Club de Nuit Precieux I).
+webp q84/avif q58/jpeg q86 mozjpeg).
+
+### Correcciones con fotos de referencia del cliente (agosto 2026)
+
+Después de la verificación automática (13 agentes + segunda opinión), el
+cliente empezó a mandar **fotos reales de producto** (capturas de tienda
+online, no fotos del sitio) para confirmar o corregir el veredicto caso
+por caso — resultó ser mucho más confiable que la sola verificación por
+IA, que se había equivocado en varios casos por desconocer el diseño real
+de frascos muy específicos/nicho:
+
+- **`bade-e-al-oud-honor-glory-lattafa-unisex`** — el cliente mandó la foto
+  real (blanco con detalle geométrico dorado estilo art déco). La foto que
+  estábamos usando mostraba un frasco NEGRO de fondo — mal-emparejamiento
+  real que la verificación automática no había detectado (lo había dado
+  por bueno). Se sacó del set, vuelve a la foto genérica.
+- **`her-edp-burberry-mujer`**, **`scandal-jean-paul-gaultier-mujer`** y
+  **`yara-tous-lattafa-mujer`** — los 3 habían sido marcados como
+  mal-emparejados por la verificación automática, pero las fotos reales
+  que mandó el cliente coinciden con lo que YA teníamos: la verificación
+  se equivocó (ej. asumió que el frasco real de Scandal no tiene ninguna
+  figura humana, cuando en realidad su tapa SÍ es una figurilla dorada en
+  forma de pierna/acróbata — visible tanto en la foto real del cliente
+  como en la que ya usábamos). Se restauraron los 3 al set.
+- **`her-elixir-burberry-mujer`** — el cliente pidió revisar si el PDF
+  tenía otra foto de esta fragancia. Solo existe una página para "Her
+  Elixir" en todo el esquema de códigos (`D009`) y muestra el mismo frasco
+  pálido que `her-edp-burberry-mujer` (`D010`) en vez del rojo/granate real
+  del Elixir — no hay ninguna foto mejor disponible, sigue con la foto
+  genérica.
+
+**Lección:** cuando la verificación por IA y una foto real del cliente
+discrepan, la foto real gana — vale la pena volver a preguntar/confirmar
+con el cliente antes de dar por buena una corrección automática en casos
+de frascos de nicho poco documentados, en vez de asumir que el veredicto
+del agente es correcto solo porque pasó una segunda revisión.
+
+Catálogo final: **255 de 262 productos con foto propia**. Quedan 7 sin
+foto: 3 de los 8 mal-emparejados originales sin corregir todavía (Her
+Elixir, Octans, Rehab), `bade-e-al-oud-honor-glory-lattafa-unisex`, y 3 de
+los agregados después sin código original (9 PM Rebel, Hawas Fire, Club de
+Nuit Precieux I).
 
 El catálogo se agrupa en tres secciones (Perfumería Caballero / Perfumería
 Dama / Perfumería Unisex, cada una con su encabezado) y cada sección es un **carrusel horizontal**

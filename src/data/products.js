@@ -37,11 +37,33 @@ export const CATEGORIES = {
 // productos que nunca habían tenido código en el esquema original
 // (`hawas-ice-rasasi-hombre`, `odyssey-mandarin-sky-armaf-hombre`,
 // `supremacy-collector-s-edition-afnan-hombre`) — ver
-// `scripts/apply-nuevos-caballeros.mjs`. Los productos que aún no están en
-// este set (6 de los 8 mal-emparejados que siguen sin foto corregida, más
-// 3 de los agregados después sin código original) usan la foto genérica
-// compartida `catalog-bottle` — ver ProductCard.jsx y ProductDetailPage.jsx,
-// que resuelven `image` con `import.meta.glob` sobre esa carpeta.
+// `scripts/apply-nuevos-caballeros.mjs`.
+//
+// El cliente después mandó fotos reales (de producto, no del sitio) de 4
+// fragancias para confirmar/descartar el veredicto de la verificación
+// automática: Bade'e Al Oud Honor & Glory (blanco con detalle dorado, NO
+// el frasco negro que estábamos usando — confirmó mal-emparejamiento
+// nuevo, no detectado antes) y Her EDP / Scandal / Yara Tous (las 3
+// resultaron ser en realidad fotos CORRECTAS — la verificación automática
+// se había equivocado al juzgar el diseño real de esos frascos, ej. asumió
+// que Scandal no tiene una figura humana en la tapa cuando en realidad su
+// tapa real SÍ es una figurilla dorada en forma de pierna/acróbata). Se
+// restauraron esas 3 y se sacó `bade-e-al-oud-honor-glory-lattafa-unisex`.
+// Para Her Elixir se buscó en el PDF si existía otra página con el frasco
+// rojo/granate real — solo hay una página para Her Elixir en todo el
+// esquema de códigos (D009) y muestra el mismo frasco pálido que Her EDP,
+// así que sigue sin foto propia (no hay nada mejor que usar todavía).
+//
+// Lección: la verificación automática (agentes + segunda opinión) puede
+// fallar en diseños de frascos muy específicos/nicho que no conoce bien —
+// las fotos reales que manda el cliente son la fuente de verdad más
+// confiable, por encima del juicio de los agentes.
+//
+// Los productos que aún no están en este set (5 de los 8 mal-emparejados
+// originales + Bade'e Al Oud Honor & Glory, más 3 de los agregados después
+// sin código original) usan la foto genérica compartida `catalog-bottle`
+// — ver ProductCard.jsx y ProductDetailPage.jsx, que resuelven `image` con
+// `import.meta.glob` sobre esa carpeta.
 const PRODUCTS_WITH_OWN_PHOTO = new Set([
   '1-million-elixir-paco-rabanne-hombre', '1-million-lucky-paco-rabanne-hombre', '1-million-paco-rabanne-hombre', '1-million-prive-paco-rabanne-hombre', '212-nyc-carolina-herrera-hombre', '212-nyc-carolina-herrera-mujer',
   '212-sexy-carolina-herrera-mujer', '212-sexy-men-carolina-herrera-hombre', '212-vip-black-carolina-herrera-hombre', '212-vip-black-extra-carolina-herrera-hombre', '212-vip-black-i-love-ny-carolina-herrera-hombre', '212-vip-black-red-carolina-herrera-hombre',
@@ -50,7 +72,7 @@ const PRODUCTS_WITH_OWN_PHOTO = new Set([
   'allure-homme-sport-chanel-hombre', 'althair-parfums-de-marly-unisex', 'amber-oud-aqua-dubai-al-haramain-unisex', 'ange-ou-demon-givenchy-mujer', 'angels-share-kilian-paris-unisex', 'aqva-pour-homme-bvlgari-hombre',
   'arabians-tonka-montale-unisex', 'ari-ariana-grande-mujer', 'armani-code-edt-giorgio-armani-hombre', 'arrurru-arrurru-unisex', 'art-of-universe-lattafa-unisex', 'aventus-creed-unisex',
   'aventus-for-her-creed-mujer', 'baccarat-rouge-540-maison-francis-kurkdjian-unisex', 'bad-boy-carolina-herrera-hombre', 'bad-boy-elixir-carolina-herrera-hombre', 'bad-diesel-hombre', 'bade-e-al-oud-amethyst-lattafa-unisex',
-  'bade-e-al-oud-honor-glory-lattafa-unisex', 'bade-e-al-oud-sublime-lattafa-unisex', 'bff-kim-kardashian-mujer', 'bianco-latte-giardini-di-toscana-unisex', 'black-opium-yves-saint-laurent-mujer', 'black-orchid-tom-ford-unisex',
+  'bade-e-al-oud-sublime-lattafa-unisex', 'bff-kim-kardashian-mujer', 'bianco-latte-giardini-di-toscana-unisex', 'black-opium-yves-saint-laurent-mujer', 'black-orchid-tom-ford-unisex',
   'black-xs-l-exces-paco-rabanne-hombre', 'bleecker-street-bond-no-9-unisex', 'bleu-de-chanel-chanel-hombre', 'blue-label-givenchy-hombre', 'blue-seduction-antonio-banderas-hombre', 'bombshell-victoria-s-secret-mujer',
   'bottled-elixir-hugo-boss-hombre', 'bottled-night-hugo-boss-hombre', 'bottled-parfum-hugo-boss-hombre', 'bottled-tonic-hugo-boss-hombre', 'bottled-unlimited-hugo-boss-hombre', 'bright-crystal-parfum-versace-mujer',
   'burberry-hero-edp-burberry-hombre', 'bvlgari-man-bvlgari-hombre', 'can-can-paris-hilton-mujer', 'canes-ahli-unisex', 'carmina-creed-mujer', 'centaurus-creed-unisex',
@@ -61,7 +83,7 @@ const PRODUCTS_WITH_OWN_PHOTO = new Set([
   'elysium-pour-homme-roja-parfums-unisex', 'erba-pura-xerjoff-unisex', 'eros-energy-versace-hombre', 'eros-flame-versace-hombre', 'eros-pour-femme-versace-mujer', 'eros-versace-hombre',
   'eternity-calvin-klein-hombre', 'euphoria-calvin-klein-hombre', 'euphoria-calvin-klein-mujer', 'exclusive-azure-fantasy-orientica-mujer', 'explorer-platinum-montblanc-hombre', 'fahrenheit-dior-hombre',
   'fame-paco-rabanne-mujer', 'flamenco-ramon-monegal-unisex', 'good-girl-blush-carolina-herrera-mujer', 'good-girl-blush-elixir-carolina-herrera-mujer', 'good-girl-carolina-herrera-mujer', 'hacivat-nishane-unisex',
-  'hawas-ice-rasasi-hombre', 'herod-parfums-de-marly-unisex', 'il-dolce-ilmin-unisex', 'il-femme-ilmin-unisex', 'il-kakuno-ilmin-unisex',
+  'hawas-ice-rasasi-hombre', 'her-edp-burberry-mujer', 'herod-parfums-de-marly-unisex', 'il-dolce-ilmin-unisex', 'il-femme-ilmin-unisex', 'il-kakuno-ilmin-unisex',
   'il-mexico-ilmin-unisex', 'il-orgasme-ilmin-unisex', 'imagination-louis-vuitton-unisex', 'in-motion-hugo-boss-hombre', 'in2u-for-him-calvin-klein-hombre', 'instant-crush-mancera-unisex',
   'intense-cafe-montale-unisex', 'invictus-legend-paco-rabanne-hombre', 'invictus-onyx-paco-rabanne-hombre', 'invictus-paco-rabanne-hombre', 'invictus-parfum-paco-rabanne-hombre', 'invictus-platinum-paco-rabanne-hombre',
   'invictus-victory-elixir-paco-rabanne-hombre', 'irresistible-givenchy-mujer', 'island-bliss-armaf-unisex', 'k-by-dolce-gabbana-dolce-gabbana-hombre', 'karpos-ahli-unisex', 'khamrah-dukhan-lattafa-unisex',
@@ -78,14 +100,14 @@ const PRODUCTS_WITH_OWN_PHOTO = new Set([
   'phantom-elixir-paco-rabanne-hombre', 'phantom-intense-paco-rabanne-hombre', 'pineapple-dolce-gabbana-mujer', 'polo-red-ralph-lauren-hombre', 'polo-ultra-blue-ralph-lauren-hombre', 'pour-femme-dylan-purple-versace-mujer',
   'pour-homme-bvlgari-hombre', 'pour-homme-dylan-blue-versace-hombre', 'pour-homme-intenso-dolce-gabbana-hombre', 'pure-seduction-victoria-s-secret-mujer', 'pure-xs-paco-rabanne-hombre', 'q-dolce-gabbana-mujer',
   'red-hugo-boss-hombre', 'red-tobacco-mancera-unisex', 'reserve-privee-givenchy-hombre', 'santal-33-le-labo-unisex', 'santos-de-cartier-cartier-hombre',
-  'sauvage-edt-dior-hombre', 'sauvage-elixir-dior-hombre', 'scandal-pour-homme-jean-paul-gaultier-hombre', 'sex-sea-lorenzo-pazzaglia-unisex', 'si-edp-intensely-giorgio-armani-mujer',
+  'sauvage-edt-dior-hombre', 'sauvage-elixir-dior-hombre', 'scandal-jean-paul-gaultier-mujer', 'scandal-pour-homme-jean-paul-gaultier-hombre', 'sex-sea-lorenzo-pazzaglia-unisex', 'si-edp-intensely-giorgio-armani-mujer',
   'si-giorgio-armani-mujer', 'silver-mountain-water-creed-unisex', 'sofia-sofia-vergara-mujer', 'sorbetto-rosso-escada-mujer', 'speachless-lorenzo-pazzaglia-unisex', 'starry-nights-montale-unisex',
   'starwalker-montblanc-hombre', 'stronger-with-you-giorgio-armani-hombre', 'stronger-with-you-intensely-giorgio-armani-hombre', 'stronger-with-you-tobacco-giorgio-armani-hombre', 'sugardaddy-fugazzi-unisex', 'summer-hammer-lorenzo-pazzaglia-unisex',
   'sun-gria-lorenzo-pazzaglia-unisex', 'supremacy-collector-s-edition-afnan-hombre', 'sweet-candy-ariana-grande-mujer', 'swiss-army-classic-victorinox-hombre', 'symphony-louis-vuitton-unisex', 'thank-u-next-ariana-grande-mujer', 'the-one-for-men-dolce-gabbana-hombre',
   'the-one-sport-dolce-gabbana-hombre', 'the-queen-and-the-viper-stephane-humbert-lucas-777-unisex', 'the-scent-elixir-hugo-boss-hombre', 'tommy-tommy-hilfiger-hombre', 'toy-2-bubble-gum-moschino-mujer', 'toy-2-moschino-mujer',
   'toy-boy-moschino-hombre', 'ultra-male-jean-paul-gaultier-hombre', 'uomo-born-in-roma-extradose-valentino-hombre', 'uomo-born-in-roma-green-stravaganza-valentino-hombre', 'uomo-born-in-roma-valentino-hombre', 'uomo-valentino-hombre',
   'vega-ahli-unisex', 'velvet-petals-victoria-s-secret-mujer', 'very-good-girl-glam-carolina-herrera-mujer', 'voyage-nautica-hombre', 'yara-candy-lattafa-mujer', 'yara-lattafa-mujer',
-  'yara-moi-lattafa-mujer', 'yum-yum-armaf-mujer',
+  'yara-moi-lattafa-mujer', 'yara-tous-lattafa-mujer', 'yum-yum-armaf-mujer',
 ])
 
 // `style` = familia olfativa general (Fresco / Dulce / Intenso / Elegante),
