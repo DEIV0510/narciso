@@ -18,6 +18,9 @@ const logoSrc = path.join(SRC, 'logo-oficial.png')
 const craftPosterSrc = path.join(SRC, 'craft-poster-raw.jpg')
 const lifestylePosterSrc = path.join(SRC, 'lifestyle-poster-raw.jpg')
 const studioPosterSrc = path.join(SRC, 'studio-poster-raw.jpg')
+const genderCaballeroSrc = path.join(SRC, 'gender-caballero-raw.png')
+const genderDamaSrc = path.join(SRC, 'gender-dama-raw.png')
+const genderUnisexSrc = path.join(SRC, 'gender-unisex-raw.png')
 
 async function emit(pipeline, outBase) {
   await pipeline.clone().webp({ quality: 82 }).toFile(path.join(OUT, `${outBase}.webp`))
@@ -211,6 +214,17 @@ async function run() {
   await emit(sharp(craftPosterSrc).resize({ width: 1000, withoutEnlargement: true }), 'craft-poster')
   await emit(sharp(lifestylePosterSrc).resize({ width: 760, withoutEnlargement: true }), 'lifestyle-poster')
   await emit(sharp(studioPosterSrc).resize({ width: 1000, withoutEnlargement: true }), 'studio-poster')
+
+  // 8. GenderFinder cards (agosto 2026) — 3 escenas de ambiente reales que
+  // manda el cliente para las tarjetas Hombre/Mujer/Unisex de "Tu fragancia
+  // empieza aquí" (antes reutilizaban hero-bottle/spotlight-bottle/
+  // label-detail, que son genéricos y se usan en otras secciones del
+  // sitio). Las 3 ya vienen en proporción cercana al aspect-[4/5] de la
+  // tarjeta (0.75 nativo vs 0.8 de la tarjeta), object-cover recorta un
+  // poco arriba/abajo sin problema.
+  await emit(sharp(genderCaballeroSrc).resize({ width: 1000, withoutEnlargement: true }), 'gender-caballero')
+  await emit(sharp(genderDamaSrc).resize({ width: 1000, withoutEnlargement: true }), 'gender-dama')
+  await emit(sharp(genderUnisexSrc).resize({ width: 1000, withoutEnlargement: true }), 'gender-unisex')
 
   console.log('Image optimization complete.')
 }

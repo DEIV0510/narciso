@@ -1,32 +1,32 @@
-import heroAvif from '../assets/img/hero-bottle.avif'
-import heroWebp from '../assets/img/hero-bottle.webp'
-import heroJpg from '../assets/img/hero-bottle.jpg'
-import spotlightAvif from '../assets/img/spotlight-bottle.avif'
-import spotlightWebp from '../assets/img/spotlight-bottle.webp'
-import spotlightJpg from '../assets/img/spotlight-bottle.jpg'
-import labelAvif from '../assets/img/label-detail.avif'
-import labelWebp from '../assets/img/label-detail.webp'
-import labelJpg from '../assets/img/label-detail.jpg'
+import genderCaballeroAvif from '../assets/img/gender-caballero.avif'
+import genderCaballeroWebp from '../assets/img/gender-caballero.webp'
+import genderCaballeroJpg from '../assets/img/gender-caballero.jpg'
+import genderDamaAvif from '../assets/img/gender-dama.avif'
+import genderDamaWebp from '../assets/img/gender-dama.webp'
+import genderDamaJpg from '../assets/img/gender-dama.jpg'
+import genderUnisexAvif from '../assets/img/gender-unisex.avif'
+import genderUnisexWebp from '../assets/img/gender-unisex.webp'
+import genderUnisexJpg from '../assets/img/gender-unisex.jpg'
 import Reveal from './Reveal'
 import { IconArrowRight } from './icons'
 
 const cards = [
   {
     label: 'Hombre',
-    alt: 'Frasco de Narciso Parfum, fragancias para caballero',
-    picture: { avif: heroAvif, webp: heroWebp, jpg: heroJpg },
+    alt: 'Frasco de Narciso Parfum en un escritorio de estudio masculino, fragancias para caballero',
+    picture: { avif: genderCaballeroAvif, webp: genderCaballeroWebp, jpg: genderCaballeroJpg },
     category: 'caballero',
   },
   {
     label: 'Mujer',
-    alt: 'Frasco de Narciso Parfum, fragancias para dama',
-    picture: { avif: spotlightAvif, webp: spotlightWebp, jpg: spotlightJpg },
+    alt: 'Frasco de Narciso Parfum junto a flores y joyería, fragancias para dama',
+    picture: { avif: genderDamaAvif, webp: genderDamaWebp, jpg: genderDamaJpg },
     category: 'dama',
   },
   {
     label: 'Unisex',
-    alt: 'Detalle de la etiqueta de Narciso Parfum',
-    picture: { avif: labelAvif, webp: labelWebp, jpg: labelJpg },
+    alt: 'Frasco de Narciso Parfum en ambiente unisex, para él, para ella, para ti',
+    picture: { avif: genderUnisexAvif, webp: genderUnisexWebp, jpg: genderUnisexJpg },
     category: 'unisex',
   },
 ]

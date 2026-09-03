@@ -437,11 +437,17 @@ Cambios aplicados, todos con datos y fotos reales de Narciso:
   agregaron rating ni cifras de clientes ni envíos nacionales — no hay dato
   real que lo respalde.
 - **`GenderFinder.jsx`** ("Tu fragancia empieza aquí"): 3 tarjetas grandes
-  Hombre/Mujer/Unisex con fotos reales (recortes distintos de la misma
-  fotografía real). Las 3 filtran el catálogo en vivo (evento
-  `narciso:filter-category` que Catalog.jsx escucha). Unisex era WhatsApp-only
-  originalmente porque no existían productos unisex reales en el catálogo —
-  pasó a filtro real en la ampliación de agosto 2026, ver arriba.
+  Hombre/Mujer/Unisex, cada una con su propia foto de ambiente real
+  (`gender-caballero`/`gender-dama`/`gender-unisex` en
+  `source-material/`, procesadas por `optimize-images.mjs`) — el cliente
+  mandó estas 3 fotos específicamente para las tarjetas (antes reutilizaban
+  `hero-bottle`/`spotlight-bottle`/`label-detail`, que son genéricos y se
+  usan en otras secciones del sitio, así que se sacaron a assets propios
+  para no pisar esos usos compartidos). Las 3 filtran el catálogo en vivo
+  (evento `narciso:filter-category` que Catalog.jsx escucha). Unisex era
+  WhatsApp-only originalmente porque no existían productos unisex reales en
+  el catálogo — pasó a filtro real en la ampliación de agosto 2026, ver
+  arriba.
 - **`WhyNarciso.jsx`** ("¿Por qué Narciso?", reemplaza a `Benefits.jsx`):
   checklist con los 6 hechos reales confirmados por el cliente.
 - **`Experience.jsx`** ("Tu aroma. Tu presencia."): foto real (fotograma del
