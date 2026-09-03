@@ -28,16 +28,15 @@ Dama", con los nombres, precio ($60.000 COP c/u) y categoría exactos que dio
 el cliente — y se amplió en agosto de 2026 (ver más abajo) con 214
 fragancias adicionales (81 Caballero + 64 Dama + 69 Unisex, incluidos 3
 productos reales que el cruce con la hoja de fichas completas reveló que
-faltaban), mismo precio plano. **255 de los 262 productos tienen su propia
-foto real** (ver "Fotos individuales por producto" más abajo); los 7
-restantes usan la foto genérica compartida `catalog-bottle.*`
-(`source-material/botella-oficial.png`) — mismo frasco/etiqueta, tal como
-se vendía antes de que el cliente mandara fotos individuales. De esos 7, 4
-SÍ tuvieron foto individual en algún momento pero se les quitó tras
-verificar (con fotos reales de referencia del cliente, no solo con IA) que
-el frasco de fondo no correspondía a la marca/fragancia real (ver
-"Verificación frasco↔nombre", "Lote NARCISO_NUEVOS_CABALLEROS" y
-"Correcciones con fotos de referencia" más abajo).
+faltaban), mismo precio plano. **261 de los 262 productos tienen su propia
+foto real** (ver "Fotos individuales por producto" más abajo); solo
+`Her Elixir` (Burberry) usa la foto genérica compartida `catalog-bottle.*`
+(`source-material/botella-oficial.png`) — tres tomas distintas del
+proveedor han mostrado el mismo frasco pálido de "Her EDP" en vez del rojo/
+granate real del Elixir, así que se dejó sin foto propia en vez de mostrar
+una marca/color incorrecto (ver "Verificación frasco↔nombre", "Lote
+NARCISO_NUEVOS_CABALLEROS", "Correcciones con fotos de referencia" y
+"Lote NARCISO_NUEVOS_DAMAS / UNISEX" más abajo).
 
 ### Ampliación de catálogo (agosto 2026)
 
@@ -244,7 +243,7 @@ imagen de la galería (posición "principal"); las otras 3 miniaturas siguen
 siendo los recortes reales compartidos del frasco físico (`hero-bottle`,
 `spotlight-bottle`, `label-detail`), iguales para todo el catálogo.
 
-**Nota de rendimiento:** las 255 fotos se cargan con `import.meta.glob(...,
+**Nota de rendimiento:** las 261 fotos se cargan con `import.meta.glob(...,
 { eager: true })`, lo que agrega ~45KB gzip al bundle de JS (son solo las
 rutas de archivo, no las imágenes en sí — esas siguen cargando bajo demanda
 con `loading="lazy"`). Se aceptó el tradeoff por simplicidad; si en el
@@ -405,11 +404,46 @@ con el cliente antes de dar por buena una corrección automática en casos
 de frascos de nicho poco documentados, en vez de asumir que el veredicto
 del agente es correcto solo porque pasó una segunda revisión.
 
-Catálogo final: **255 de 262 productos con foto propia**. Quedan 7 sin
-foto: 3 de los 8 mal-emparejados originales sin corregir todavía (Her
-Elixir, Octans, Rehab), `bade-e-al-oud-honor-glory-lattafa-unisex`, y 3 de
-los agregados después sin código original (9 PM Rebel, Hawas Fire, Club de
-Nuit Precieux I).
+Catálogo final tras esta ronda: **255 de 262 productos con foto propia**.
+
+### Lote `NARCISO_NUEVOS_DAMAS` / `NARCISO_NUEVOS_UNISEX` (septiembre 2026)
+
+El cliente pidió revisar cuáles perfumes seguían sin foto y, sin decir la
+ruta, avisó que ya había agregado imágenes nuevas al Escritorio. Se
+encontraron `Desktop\NARCISO_NUEVOS_DAMAS` (11 fotos) y
+`Desktop\NARCISO_NUEVOS_UNISEX` (8 fotos) — hermanas de
+`NARCISO_NUEVOS_CABALLEROS` que nunca se habían procesado, mismo esquema
+de nombre de archivo = nombre del producto. Se resolvió cada nombre contra
+`products.js` por título+marca exacto (2 casos ambiguos por nombre
+genérico se resolvieron viendo la foto: `Bond_No_9_labios.jpg` → el diseño
+icónico de labios de Bond No. 9 es el de **Nolita**; `CH_212_Mujer.jpg` →
+el frasco cilíndrico blanco con "212" en relieve vertical es el **212 NYC**
+clásico, no una de las variantes VIP).
+
+De las 18 fotos:
+- **12 reemplazos** de fotos que ya estaban bien (actualización general).
+- **6 nuevas** que cierran 6 de los 7 productos que quedaban sin foto:
+  `octans-ahli-unisex` (ahora sí se lee "AHLI" en la etiqueta),
+  `bade-e-al-oud-honor-glory-lattafa-unisex` (blanco con detalle art déco
+  dorado, coincide con la foto de referencia que mandó el cliente),
+  `rehab-initio-parfums-prives-unisex` (caja blanca con el rombo de marca
+  de Initio — se verificó de cerca que es empaque real, no un error;
+  el frasco de vidrio adentro sigue siendo negro),
+  `club-de-nuit-precieux-i-armaf-unisex`, `hawas-fire-rasasi-unisex` y
+  `9-pm-rebel-afnan-unisex` (primera foto real para los 3, antes usaban la
+  genérica).
+- **`her-elixir-burberry-mujer` sigue sin foto propia**: la foto nueva de
+  este lote es la TERCERA toma distinta que manda el proveedor y sigue
+  mostrando el mismo frasco pálido de "Her EDP" en vez del rojo/granate
+  real del Elixir. Con 3 renders independientes mostrando lo mismo, parece
+  una limitación real del material del proveedor (probablemente solo
+  tienen un prop físico de Burberry "Her", no uno específico de Elixir) —
+  no algo que un cuarto reenvío vaya a arreglar solo. Se le explicó esto al
+  cliente en vez de reintentar sin más.
+
+`scripts/apply-nuevos-damas-unisex.mjs` (nuevo, permanente) procesa las 18
+(excluye a propósito la de Her Elixir). Catálogo final: **261 de 262
+productos con foto propia** — el único que falta es Her Elixir.
 
 El catálogo se agrupa en tres secciones (Perfumería Caballero / Perfumería
 Dama / Perfumería Unisex, cada una con su encabezado) y cada sección es un **carrusel horizontal**
@@ -449,7 +483,10 @@ Cambios aplicados, todos con datos y fotos reales de Narciso:
   el catálogo — pasó a filtro real en la ampliación de agosto 2026, ver
   arriba.
 - **`WhyNarciso.jsx`** ("¿Por qué Narciso?", reemplaza a `Benefits.jsx`):
-  checklist con los 6 hechos reales confirmados por el cliente.
+  checklist con los 6 hechos reales confirmados por el cliente, con una
+  miniatura del frasco completo (`spotlight-bottle`) al lado — antes usaba
+  `label-detail` (recorte muy cerrado, solo etiqueta/tapa) y el cliente
+  pidió ver el frasco completo, no solo la etiqueta.
 - **`Experience.jsx`** ("Tu aroma. Tu presencia."): foto real (fotograma del
   video "La fragancia") en tarjeta oscura grande.
 - **`FindYourFragrance.jsx`** ahora es un mini-quiz de 2 pasos (género +

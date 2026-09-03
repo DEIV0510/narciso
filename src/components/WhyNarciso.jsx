@@ -1,6 +1,6 @@
-import labelAvif from '../assets/img/label-detail.avif'
-import labelWebp from '../assets/img/label-detail.webp'
-import labelJpg from '../assets/img/label-detail.jpg'
+import spotlightAvif from '../assets/img/spotlight-bottle.avif'
+import spotlightWebp from '../assets/img/spotlight-bottle.webp'
+import spotlightJpg from '../assets/img/spotlight-bottle.jpg'
 import Reveal from './Reveal'
 import { whyNarciso, waLink, waMessages } from '../data/site'
 import { IconCheck } from './icons'
@@ -21,11 +21,11 @@ export default function WhyNarciso() {
             </ul>
             <div className="hidden w-28 shrink-0 overflow-hidden rounded-2xl sm:block">
               <picture>
-                <source srcSet={labelAvif} type="image/avif" />
-                <source srcSet={labelWebp} type="image/webp" />
+                <source srcSet={spotlightAvif} type="image/avif" />
+                <source srcSet={spotlightWebp} type="image/webp" />
                 <img
-                  src={labelJpg}
-                  alt="Detalle de la etiqueta de Narciso Parfum"
+                  src={spotlightJpg}
+                  alt="Frasco completo de Narciso Parfum"
                   className="aspect-[3/4] h-full w-full object-cover"
                   loading="lazy"
                   width={300}

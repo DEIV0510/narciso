@@ -59,31 +59,47 @@ export const CATEGORIES = {
 // las fotos reales que manda el cliente son la fuente de verdad más
 // confiable, por encima del juicio de los agentes.
 //
-// Los productos que aún no están en este set (5 de los 8 mal-emparejados
-// originales + Bade'e Al Oud Honor & Glory, más 3 de los agregados después
-// sin código original) usan la foto genérica compartida `catalog-bottle`
-// — ver ProductCard.jsx y ProductDetailPage.jsx, que resuelven `image` con
-// `import.meta.glob` sobre esa carpeta.
+// El cliente después mandó `Desktop\NARCISO_NUEVOS_DAMAS` y
+// `Desktop\NARCISO_NUEVOS_UNISEX` (hermanas de NARCISO_NUEVOS_CABALLEROS,
+// mismo esquema de nombre de archivo = nombre del producto): 18 fotos —
+// 12 reemplazos de fotos ya buenas y 6 nuevas que cierran 6 de los 7
+// productos que quedaban sin foto propia (`octans-ahli-unisex`,
+// `bade-e-al-oud-honor-glory-lattafa-unisex`,
+// `rehab-initio-parfums-prives-unisex`,
+// `club-de-nuit-precieux-i-armaf-unisex`, `hawas-fire-rasasi-unisex`,
+// `9-pm-rebel-afnan-unisex`) — ver `scripts/apply-nuevos-damas-unisex.mjs`.
+// El único que sigue sin foto propia es `her-elixir-burberry-mujer`: la
+// foto nueva de este lote (`Burberry_Her_Elixir.jpg`) es la TERCERA toma
+// distinta del proveedor y sigue mostrando el mismo frasco pálido de "Her
+// EDP" en vez del rojo/granate real del Elixir — parece una limitación del
+// material del proveedor (probablemente solo tienen un prop de Burberry
+// "Her", no uno específico de Elixir), no algo que un nuevo reenvío vaya a
+// arreglar solo. Sigue con la foto genérica.
+//
+// El único producto que NO está en este set es `her-elixir-burberry-mujer`
+// (261 de 262 productos ya tienen foto propia) — usa la foto genérica
+// compartida `catalog-bottle` — ver ProductCard.jsx y ProductDetailPage.jsx,
+// que resuelven `image` con `import.meta.glob` sobre esa carpeta.
 const PRODUCTS_WITH_OWN_PHOTO = new Set([
   '1-million-elixir-paco-rabanne-hombre', '1-million-lucky-paco-rabanne-hombre', '1-million-paco-rabanne-hombre', '1-million-prive-paco-rabanne-hombre', '212-nyc-carolina-herrera-hombre', '212-nyc-carolina-herrera-mujer',
   '212-sexy-carolina-herrera-mujer', '212-sexy-men-carolina-herrera-hombre', '212-vip-black-carolina-herrera-hombre', '212-vip-black-extra-carolina-herrera-hombre', '212-vip-black-i-love-ny-carolina-herrera-hombre', '212-vip-black-red-carolina-herrera-hombre',
-  '212-vip-carolina-herrera-hombre', '212-vip-carolina-herrera-mujer', '212-vip-rose-carolina-herrera-mujer', '212-vip-wild-party-carolina-herrera-mujer', '9am-dive-afnan-unisex', '9pm-afnan-hombre',
+  '212-vip-carolina-herrera-hombre', '212-vip-carolina-herrera-mujer', '212-vip-rose-carolina-herrera-mujer', '212-vip-wild-party-carolina-herrera-mujer', '9-pm-rebel-afnan-unisex', '9am-dive-afnan-unisex', '9pm-afnan-hombre',
   'a-men-mugler-hombre', 'acqua-di-gio-giorgio-armani-hombre', 'acqua-di-gio-parfum-giorgio-armani-hombre', 'acqua-di-gio-profumo-giorgio-armani-hombre', 'acqua-di-gioia-giorgio-armani-mujer', 'agua-del-sol-escada-mujer',
   'allure-homme-sport-chanel-hombre', 'althair-parfums-de-marly-unisex', 'amber-oud-aqua-dubai-al-haramain-unisex', 'ange-ou-demon-givenchy-mujer', 'angels-share-kilian-paris-unisex', 'aqva-pour-homme-bvlgari-hombre',
   'arabians-tonka-montale-unisex', 'ari-ariana-grande-mujer', 'armani-code-edt-giorgio-armani-hombre', 'arrurru-arrurru-unisex', 'art-of-universe-lattafa-unisex', 'aventus-creed-unisex',
   'aventus-for-her-creed-mujer', 'baccarat-rouge-540-maison-francis-kurkdjian-unisex', 'bad-boy-carolina-herrera-hombre', 'bad-boy-elixir-carolina-herrera-hombre', 'bad-diesel-hombre', 'bade-e-al-oud-amethyst-lattafa-unisex',
-  'bade-e-al-oud-sublime-lattafa-unisex', 'bff-kim-kardashian-mujer', 'bianco-latte-giardini-di-toscana-unisex', 'black-opium-yves-saint-laurent-mujer', 'black-orchid-tom-ford-unisex',
+  'bade-e-al-oud-honor-glory-lattafa-unisex', 'bade-e-al-oud-sublime-lattafa-unisex', 'bff-kim-kardashian-mujer', 'bianco-latte-giardini-di-toscana-unisex', 'black-opium-yves-saint-laurent-mujer', 'black-orchid-tom-ford-unisex',
   'black-xs-l-exces-paco-rabanne-hombre', 'bleecker-street-bond-no-9-unisex', 'bleu-de-chanel-chanel-hombre', 'blue-label-givenchy-hombre', 'blue-seduction-antonio-banderas-hombre', 'bombshell-victoria-s-secret-mujer',
   'bottled-elixir-hugo-boss-hombre', 'bottled-night-hugo-boss-hombre', 'bottled-parfum-hugo-boss-hombre', 'bottled-tonic-hugo-boss-hombre', 'bottled-unlimited-hugo-boss-hombre', 'bright-crystal-parfum-versace-mujer',
   'burberry-hero-edp-burberry-hombre', 'bvlgari-man-bvlgari-hombre', 'can-can-paris-hilton-mujer', 'canes-ahli-unisex', 'carmina-creed-mujer', 'centaurus-creed-unisex',
   'ch-men-africa-carolina-herrera-hombre', 'ch-men-carolina-herrera-hombre', 'ch-prive-edt-carolina-herrera-hombre', 'ch-sublime-carolina-herrera-mujer', 'chance-chanel-mujer', 'chance-eau-fraiche-chanel-mujer',
-  'ck-in2u-calvin-klein-mujer', 'ck-one-calvin-klein-unisex', 'ck-one-reflections-calvin-klein-unisex', 'cloud-ariana-grande-mujer', 'cloud-pink-ariana-grande-mujer', 'club-de-nuit-milestone-armaf-unisex',
+  'ck-in2u-calvin-klein-mujer', 'ck-one-calvin-klein-unisex', 'ck-one-reflections-calvin-klein-unisex', 'cloud-ariana-grande-mujer', 'cloud-pink-ariana-grande-mujer', 'club-de-nuit-milestone-armaf-unisex', 'club-de-nuit-precieux-i-armaf-unisex',
   'coco-mademoiselle-chanel-mujer', 'coconut-passion-victoria-s-secret-mujer', 'costa-azzurra-tom-ford-unisex', 'crystal-noir-parfum-versace-mujer', 'devotion-dolce-gabbana-mujer', 'dior-homme-sport-dior-hombre',
   'divine-le-parfum-jean-paul-gaultier-mujer', 'donna-born-in-roma-coral-fantasy-valentino-mujer', 'donna-born-in-roma-green-stravaganza-valentino-mujer', 'donna-born-in-roma-valentino-mujer', 'drakkar-noir-guy-laroche-hombre', 'eclaire-lattafa-unisex',
   'elysium-pour-homme-roja-parfums-unisex', 'erba-pura-xerjoff-unisex', 'eros-energy-versace-hombre', 'eros-flame-versace-hombre', 'eros-pour-femme-versace-mujer', 'eros-versace-hombre',
   'eternity-calvin-klein-hombre', 'euphoria-calvin-klein-hombre', 'euphoria-calvin-klein-mujer', 'exclusive-azure-fantasy-orientica-mujer', 'explorer-platinum-montblanc-hombre', 'fahrenheit-dior-hombre',
   'fame-paco-rabanne-mujer', 'flamenco-ramon-monegal-unisex', 'good-girl-blush-carolina-herrera-mujer', 'good-girl-blush-elixir-carolina-herrera-mujer', 'good-girl-carolina-herrera-mujer', 'hacivat-nishane-unisex',
-  'hawas-ice-rasasi-hombre', 'her-edp-burberry-mujer', 'herod-parfums-de-marly-unisex', 'il-dolce-ilmin-unisex', 'il-femme-ilmin-unisex', 'il-kakuno-ilmin-unisex',
+  'hawas-fire-rasasi-unisex', 'hawas-ice-rasasi-hombre', 'her-edp-burberry-mujer', 'herod-parfums-de-marly-unisex', 'il-dolce-ilmin-unisex', 'il-femme-ilmin-unisex', 'il-kakuno-ilmin-unisex',
   'il-mexico-ilmin-unisex', 'il-orgasme-ilmin-unisex', 'imagination-louis-vuitton-unisex', 'in-motion-hugo-boss-hombre', 'in2u-for-him-calvin-klein-hombre', 'instant-crush-mancera-unisex',
   'intense-cafe-montale-unisex', 'invictus-legend-paco-rabanne-hombre', 'invictus-onyx-paco-rabanne-hombre', 'invictus-paco-rabanne-hombre', 'invictus-parfum-paco-rabanne-hombre', 'invictus-platinum-paco-rabanne-hombre',
   'invictus-victory-elixir-paco-rabanne-hombre', 'irresistible-givenchy-mujer', 'island-bliss-armaf-unisex', 'k-by-dolce-gabbana-dolce-gabbana-hombre', 'karpos-ahli-unisex', 'khamrah-dukhan-lattafa-unisex',
@@ -94,12 +110,12 @@ const PRODUCTS_WITH_OWN_PHOTO = new Set([
   'light-blue-dolce-gabbana-mujer', 'light-blue-pour-homme-dolce-gabbana-hombre', 'love-addict-victoria-s-secret-mujer', 'luna-rossa-carbon-prada-hombre', 'luna-rossa-ocean-prada-hombre', 'mallow-madness-lattafa-mujer',
   'man-in-black-bvlgari-hombre', 'meow-katy-perry-mujer', 'miami-blossom-escada-mujer', 'millesime-imperial-creed-unisex', 'miss-dior-blooming-bouquet-dior-mujer', 'miss-dior-parfum-dior-mujer',
   'mod-vanilla-ariana-grande-mujer', 'myslf-le-parfum-yves-saint-laurent-hombre', 'n-5-chanel-mujer', 'neroli-portofino-tom-ford-unisex', 'new-york-signature-bond-no-9-unisex', 'niche-femme-bharara-unisex',
-  'noble-blush-lattafa-mujer', 'nolita-bond-no-9-mujer', 'odyssey-mandarin-sky-armaf-hombre', 'odyssey-mandarin-sky-elixir-armaf-unisex', 'olympea-parfum-paco-rabanne-mujer', 'ombre-nomade-louis-vuitton-unisex',
+  'noble-blush-lattafa-mujer', 'nolita-bond-no-9-mujer', 'octans-ahli-unisex', 'odyssey-mandarin-sky-armaf-hombre', 'odyssey-mandarin-sky-elixir-armaf-unisex', 'olympea-parfum-paco-rabanne-mujer', 'ombre-nomade-louis-vuitton-unisex',
   'omnia-amethyste-bvlgari-mujer', 'omnia-crystalline-bvlgari-mujer', 'omnia-pink-sapphire-bvlgari-mujer', 'one-shock-for-him-calvin-klein-hombre', 'onyx-bharara-unisex', 'orange-hugo-boss-hombre',
   'organza-givenchy-mujer', 'oud-maracuja-maison-crivelli-unisex', 'pacific-chill-louis-vuitton-unisex', 'paradoxe-intense-prada-mujer', 'passport-paris-paris-hilton-mujer', 'petits-et-mamans-bvlgari-unisex',
   'phantom-elixir-paco-rabanne-hombre', 'phantom-intense-paco-rabanne-hombre', 'pineapple-dolce-gabbana-mujer', 'polo-red-ralph-lauren-hombre', 'polo-ultra-blue-ralph-lauren-hombre', 'pour-femme-dylan-purple-versace-mujer',
   'pour-homme-bvlgari-hombre', 'pour-homme-dylan-blue-versace-hombre', 'pour-homme-intenso-dolce-gabbana-hombre', 'pure-seduction-victoria-s-secret-mujer', 'pure-xs-paco-rabanne-hombre', 'q-dolce-gabbana-mujer',
-  'red-hugo-boss-hombre', 'red-tobacco-mancera-unisex', 'reserve-privee-givenchy-hombre', 'santal-33-le-labo-unisex', 'santos-de-cartier-cartier-hombre',
+  'red-hugo-boss-hombre', 'red-tobacco-mancera-unisex', 'rehab-initio-parfums-prives-unisex', 'reserve-privee-givenchy-hombre', 'santal-33-le-labo-unisex', 'santos-de-cartier-cartier-hombre',
   'sauvage-edt-dior-hombre', 'sauvage-elixir-dior-hombre', 'scandal-jean-paul-gaultier-mujer', 'scandal-pour-homme-jean-paul-gaultier-hombre', 'sex-sea-lorenzo-pazzaglia-unisex', 'si-edp-intensely-giorgio-armani-mujer',
   'si-giorgio-armani-mujer', 'silver-mountain-water-creed-unisex', 'sofia-sofia-vergara-mujer', 'sorbetto-rosso-escada-mujer', 'speachless-lorenzo-pazzaglia-unisex', 'starry-nights-montale-unisex',
   'starwalker-montblanc-hombre', 'stronger-with-you-giorgio-armani-hombre', 'stronger-with-you-intensely-giorgio-armani-hombre', 'stronger-with-you-tobacco-giorgio-armani-hombre', 'sugardaddy-fugazzi-unisex', 'summer-hammer-lorenzo-pazzaglia-unisex',
