@@ -44,6 +44,21 @@ export const waMessages = {
   order: 'Hola, Narciso Parfum. Quiero hacer mi pedido. ¿Me ayudan con el proceso?',
 }
 
+// Próximos lanzamientos anunciados por el cliente (aún sin precio/stock, no son
+// parte del catálogo real todavía — ver [[feedback-no-inventar-catalogo]]). Se
+// muestran como adelanto ("Próximamente") con un mensaje de WhatsApp para que
+// el cliente avise cuando lleguen, en vez de crear una ficha de producto falsa.
+export const upcomingLaunches = [
+  { brand: 'Xerjoff', name: 'Torino21', category: 'Caballero' },
+  { brand: 'Elivi Parfums', name: 'Unstoppable Hong Kong', category: 'Caballero' },
+]
+
+export function launchWaLink(item) {
+  return waLink(
+    `Hola, Narciso Parfum. Vi que próximamente llega ${item.brand} ${item.name}. ¿Me avisan cuando esté disponible?`
+  )
+}
+
 export const navLinks = [
   { label: 'Inicio', href: '#inicio' },
   { label: 'Catálogo', href: '#catalogo' },

@@ -64,12 +64,17 @@ export default {
           '60%': { transform: 'scale(1.25)' },
           '100%': { transform: 'scale(1)' },
         },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
       },
       animation: {
         fadeUp: 'fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) forwards',
         fadeIn: 'fadeIn 0.6s ease forwards',
         pulseRing: 'pulseRing 2.4s cubic-bezier(0.4,0,0.6,1) infinite',
         bump: 'bump 0.4s cubic-bezier(0.34,1.56,0.64,1)',
+        float: 'float 4.5s ease-in-out infinite',
       },
     },
   },

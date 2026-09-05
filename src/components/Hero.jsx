@@ -3,6 +3,7 @@ import heroWebp from '../assets/img/hero-bottle.webp'
 import heroJpg from '../assets/img/hero-bottle.jpg'
 import { waLink, waMessages } from '../data/site'
 import { IconArrowRight, IconMapPin, IconWhatsApp } from './icons'
+import UpcomingLaunches from './UpcomingLaunches'
 
 const pills = ['Alta calidad', 'Perfumería inspirada', 'Atención personalizada']
 
@@ -80,6 +81,7 @@ export default function Hero() {
                 </picture>
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-ink-900 to-transparent lg:hidden" />
                 <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-24 bg-gradient-to-r from-ink-900 to-transparent lg:block" />
+                <UpcomingLaunches />
               </div>
             </div>
           </div>
