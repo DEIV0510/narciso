@@ -50,9 +50,9 @@ export const CATEGORIES = {
 // tapa real SÍ es una figurilla dorada en forma de pierna/acróbata). Se
 // restauraron esas 3 y se sacó `bade-e-al-oud-honor-glory-lattafa-unisex`.
 // Para Her Elixir se buscó en el PDF si existía otra página con el frasco
-// rojo/granate real — solo hay una página para Her Elixir en todo el
-// esquema de códigos (D009) y muestra el mismo frasco pálido que Her EDP,
-// así que sigue sin foto propia (no hay nada mejor que usar todavía).
+// real — la búsqueda inicial asumió que solo había una página (D009) y que
+// mostraba el mismo frasco pálido que Her EDP, así que quedó sin foto
+// propia por un tiempo (ver entrada de abajo sobre la corrección).
 //
 // Lección: la verificación automática (agentes + segunda opinión) puede
 // fallar en diseños de frascos muy específicos/nicho que no conoce bien —
@@ -68,18 +68,31 @@ export const CATEGORIES = {
 // `rehab-initio-parfums-prives-unisex`,
 // `club-de-nuit-precieux-i-armaf-unisex`, `hawas-fire-rasasi-unisex`,
 // `9-pm-rebel-afnan-unisex`) — ver `scripts/apply-nuevos-damas-unisex.mjs`.
-// El único que sigue sin foto propia es `her-elixir-burberry-mujer`: la
-// foto nueva de este lote (`Burberry_Her_Elixir.jpg`) es la TERCERA toma
-// distinta del proveedor y sigue mostrando el mismo frasco pálido de "Her
-// EDP" en vez del rojo/granate real del Elixir — parece una limitación del
-// material del proveedor (probablemente solo tienen un prop de Burberry
-// "Her", no uno específico de Elixir), no algo que un nuevo reenvío vaya a
-// arreglar solo. Sigue con la foto genérica.
+// El único que seguía sin foto propia era `her-elixir-burberry-mujer`: las
+// 3 tomas resueltas hasta entonces (portadas D009, `Catalogo_Narciso_3.pdf`
+// vía el mapeo código→producto, y `Burberry_Her_Elixir.jpg` de
+// NARCISO_NUEVOS_DAMAS) mostraban el mismo frasco pálido/crema que Her EDP.
 //
-// El único producto que NO está en este set es `her-elixir-burberry-mujer`
-// (261 de 262 productos ya tienen foto propia) — usa la foto genérica
-// compartida `catalog-bottle` — ver ProductCard.jsx y ProductDetailPage.jsx,
-// que resuelven `image` con `import.meta.glob` sobre esa carpeta.
+// 2026-09-05 — corregido: el cliente mandó una foto de referencia real del
+// frasco oficial de Burberry Her Elixir de Parfum (rosa pálido, tapa
+// redondeada, "BURBERRY" en relieve en la base) y confirmó el nombre —
+// coincide con el bottle real que Burberry vende (verificado también en
+// burberry.com). Al extraer la imagen de la página 9 del PDF directamente
+// con pdfimages -f 9 -l 9 (en vez de reutilizar el archivo `new_<id>.jpg`
+// ya generado por el cruce código→producto), apareció un frasco rosado
+// redondeado DISTINTO al crema/caja de Her EDP — visualmente igual al
+// bottle real. Se confirmó que el archivo `new_her-elixir-burberry-mujer.jpg`
+// generado en la sesión de agosto era, de hecho, una copia accidental del
+// de Her EDP (ambos con bytes/composición casi idénticos) — un bug real del
+// cruce de esa sesión, no una limitación del proveedor como se había
+// concluido. Las 7 versiones del PDF que el cliente reenvió con el tiempo
+// (`Catalogo_Narciso.pdf` a `_6`) muestran consistentemente ese mismo
+// frasco rosado correcto en la página 9. Ver nota fechada en
+// project_narciso_parfum.md para el detalle completo.
+//
+// Con esta corrección, los 262 productos ya tienen foto propia — ver
+// ProductCard.jsx y ProductDetailPage.jsx, que resuelven `image` con
+// `import.meta.glob` sobre `src/assets/img/products/`.
 const PRODUCTS_WITH_OWN_PHOTO = new Set([
   '1-million-elixir-paco-rabanne-hombre', '1-million-lucky-paco-rabanne-hombre', '1-million-paco-rabanne-hombre', '1-million-prive-paco-rabanne-hombre', '212-nyc-carolina-herrera-hombre', '212-nyc-carolina-herrera-mujer',
   '212-sexy-carolina-herrera-mujer', '212-sexy-men-carolina-herrera-hombre', '212-vip-black-carolina-herrera-hombre', '212-vip-black-extra-carolina-herrera-hombre', '212-vip-black-i-love-ny-carolina-herrera-hombre', '212-vip-black-red-carolina-herrera-hombre',
@@ -99,7 +112,7 @@ const PRODUCTS_WITH_OWN_PHOTO = new Set([
   'elysium-pour-homme-roja-parfums-unisex', 'erba-pura-xerjoff-unisex', 'eros-energy-versace-hombre', 'eros-flame-versace-hombre', 'eros-pour-femme-versace-mujer', 'eros-versace-hombre',
   'eternity-calvin-klein-hombre', 'euphoria-calvin-klein-hombre', 'euphoria-calvin-klein-mujer', 'exclusive-azure-fantasy-orientica-mujer', 'explorer-platinum-montblanc-hombre', 'fahrenheit-dior-hombre',
   'fame-paco-rabanne-mujer', 'flamenco-ramon-monegal-unisex', 'good-girl-blush-carolina-herrera-mujer', 'good-girl-blush-elixir-carolina-herrera-mujer', 'good-girl-carolina-herrera-mujer', 'hacivat-nishane-unisex',
-  'hawas-fire-rasasi-unisex', 'hawas-ice-rasasi-hombre', 'her-edp-burberry-mujer', 'herod-parfums-de-marly-unisex', 'il-dolce-ilmin-unisex', 'il-femme-ilmin-unisex', 'il-kakuno-ilmin-unisex',
+  'hawas-fire-rasasi-unisex', 'hawas-ice-rasasi-hombre', 'her-edp-burberry-mujer', 'her-elixir-burberry-mujer', 'herod-parfums-de-marly-unisex', 'il-dolce-ilmin-unisex', 'il-femme-ilmin-unisex', 'il-kakuno-ilmin-unisex',
   'il-mexico-ilmin-unisex', 'il-orgasme-ilmin-unisex', 'imagination-louis-vuitton-unisex', 'in-motion-hugo-boss-hombre', 'in2u-for-him-calvin-klein-hombre', 'instant-crush-mancera-unisex',
   'intense-cafe-montale-unisex', 'invictus-legend-paco-rabanne-hombre', 'invictus-onyx-paco-rabanne-hombre', 'invictus-paco-rabanne-hombre', 'invictus-parfum-paco-rabanne-hombre', 'invictus-platinum-paco-rabanne-hombre',
   'invictus-victory-elixir-paco-rabanne-hombre', 'irresistible-givenchy-mujer', 'island-bliss-armaf-unisex', 'k-by-dolce-gabbana-dolce-gabbana-hombre', 'karpos-ahli-unisex', 'khamrah-dukhan-lattafa-unisex',
