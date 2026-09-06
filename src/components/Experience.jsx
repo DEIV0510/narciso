@@ -1,6 +1,6 @@
-import lifestyleAvif from '../assets/img/lifestyle-poster.avif'
-import lifestyleWebp from '../assets/img/lifestyle-poster.webp'
-import lifestyleJpg from '../assets/img/lifestyle-poster.jpg'
+import heroAvif from '../assets/img/hero-bottle.avif'
+import heroWebp from '../assets/img/hero-bottle.webp'
+import heroJpg from '../assets/img/hero-bottle.jpg'
 import Reveal from './Reveal'
 import { IconArrowRight } from './icons'
 
@@ -11,15 +11,15 @@ export default function Experience() {
         <Reveal className="relative overflow-hidden rounded-[1.75rem] sm:rounded-[2.5rem]">
           <div className="relative aspect-[4/5] w-full sm:aspect-[16/8]">
             <picture>
-              <source srcSet={lifestyleAvif} type="image/avif" />
-              <source srcSet={lifestyleWebp} type="image/webp" />
+              <source srcSet={heroAvif} type="image/avif" />
+              <source srcSet={heroWebp} type="image/webp" />
               <img
-                src={lifestyleJpg}
-                alt="Frasco de Narciso Parfum en la mano, a la luz del sol"
-                className="h-full w-full object-cover"
+                src={heroJpg}
+                alt="Frasco de Narciso Parfum sobre un mostrador, con la estantería de fragancias de fondo"
+                className="h-full w-full object-cover object-[center_28%] sm:object-[68%_38%]"
                 loading="lazy"
-                width={760}
-                height={1350}
+                width={1600}
+                height={2143}
               />
             </picture>
             <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-900/85 via-ink-900/20 to-transparent sm:bg-gradient-to-r sm:from-ink-900/85 sm:via-ink-900/30 sm:to-transparent" />
