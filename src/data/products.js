@@ -136,7 +136,7 @@ const PRODUCTS_WITH_OWN_PHOTO = new Set([
   'the-one-sport-dolce-gabbana-hombre', 'the-queen-and-the-viper-stephane-humbert-lucas-777-unisex', 'the-scent-elixir-hugo-boss-hombre', 'tommy-tommy-hilfiger-hombre', 'toy-2-bubble-gum-moschino-mujer', 'toy-2-moschino-mujer',
   'toy-boy-moschino-hombre', 'ultra-male-jean-paul-gaultier-hombre', 'uomo-born-in-roma-extradose-valentino-hombre', 'uomo-born-in-roma-green-stravaganza-valentino-hombre', 'uomo-born-in-roma-valentino-hombre', 'uomo-valentino-hombre',
   'vega-ahli-unisex', 'velvet-petals-victoria-s-secret-mujer', 'very-good-girl-glam-carolina-herrera-mujer', 'voyage-nautica-hombre', 'yara-candy-lattafa-mujer', 'yara-lattafa-mujer',
-  'yara-moi-lattafa-mujer', 'yara-tous-lattafa-mujer', 'yum-yum-armaf-mujer',
+  'y-eau-de-parfum-yves-saint-laurent-hombre', 'yara-moi-lattafa-mujer', 'yara-tous-lattafa-mujer', 'yum-yum-armaf-mujer',
 ])
 
 // `style` = familia olfativa general (Fresco / Dulce / Intenso / Elegante),
@@ -297,6 +297,9 @@ const caballeroAgosto2026 = [
   // distinto de "Sauvage EDT", que el dedup original de 259 referencias
   // había excluido por error como si fuera el mismo (falso positivo).
   { title: 'Sauvage Elixir', brand: 'Dior', style: 'Intenso' },
+  // 2026-09-06: el cliente mandó foto propia real (frasco azul facetado real
+  // de la línea "Y") y pidió agregarlo como producto nuevo de hombre.
+  { title: 'Y Eau de Parfum', brand: 'Yves Saint Laurent', style: 'Fresco' },
 ].map((p) => toProduct(p, CATEGORIES.CABALLERO, 'hombre'))
 
 const damaAgosto2026 = [

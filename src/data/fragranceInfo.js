@@ -2623,7 +2623,18 @@ export const fragranceInfo = {
     season: ["Otoño", "Invierno"],
     timeOfDay: ["Tarde", "Noche"],
     profile: "Un inicio jugoso de piña y cítricos con un toque especiado de pimienta, que evoluciona hacia un corazón floral y amaderado, y cierra en una base ambarada, de cuero y vainilla que se siente lujosa y envolvente. Elegante y con una evolución profunda.",
-  },}
+  },
+  'y-eau-de-parfum-yves-saint-laurent-hombre': {
+    family: "Fougère Aromática",
+    topNotes: ["Manzana", "Jengibre", "Bergamota"],
+    heartNotes: ["Salvia", "Bayas de Enebro", "Geranio"],
+    baseNotes: ["Madera de Ámbar", "Haba Tonka", "Cedro", "Vetiver", "Olíbano"],
+    occasions: ["Día a día", "Trabajo", "Cita"],
+    season: ["Primavera", "Otoño"],
+    timeOfDay: ["Día", "Tarde"],
+    profile: "Apertura fresca y jugosa de manzana y jengibre con un toque cítrico de bergamota, corazón aromático de salvia y geranio, y un fondo amaderado con haba tonka y vetiver; masculino, versátil y de buena proyección.",
+  },
+}
 
 export function getFragranceInfo(id) {
   return fragranceInfo[id] || null
