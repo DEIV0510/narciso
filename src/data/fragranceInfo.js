@@ -2634,6 +2634,26 @@ export const fragranceInfo = {
     timeOfDay: ["Día", "Tarde"],
     profile: "Apertura fresca y jugosa de manzana y jengibre con un toque cítrico de bergamota, corazón aromático de salvia y geranio, y un fondo amaderado con haba tonka y vetiver; masculino, versátil y de buena proyección.",
   },
+  'torino21-xerjoff-hombre': {
+    family: "Aromática Cítrica",
+    topNotes: ["Menta", "Limón", "Tomillo", "Albahaca"],
+    heartNotes: ["Jazmín", "Romero", "Grosella Negra", "Lavanda"],
+    baseNotes: ["Almizcle", "Verbena"],
+    occasions: ["Día a día", "Deporte", "Trabajo"],
+    season: ["Primavera", "Verano"],
+    timeOfDay: ["Día"],
+    profile: "Un estallido fresco de menta, limón y hierbas aromáticas que se suaviza con jazmín, romero y lavanda, y cierra en un fondo limpio de almizcle y verbena; vibrante, natural y perfecto para el día a día.",
+  },
+  'unstoppable-hong-kong-elivi-parfums-hombre': {
+    family: "Amaderada Especiada",
+    topNotes: ["Pomelo", "Bergamota", "Clementina", "Grosella Negra", "Notas Marinas"],
+    heartNotes: ["Geranio", "Clavo de Olor"],
+    baseNotes: ["Cuero", "Cedro", "Vainilla", "Pachulí", "Ámbar", "Musgo", "Vetiver", "Almizcle Animal"],
+    occasions: ["Salida", "Cita", "Noche"],
+    season: ["Otoño", "Invierno"],
+    timeOfDay: ["Noche"],
+    profile: "Apertura eléctrica de cítricos y grosella negra con un toque marino, corazón especiado de geranio y clavo, y un fondo intenso de cuero, cedro y vainilla con un fondo animal; audaz, adictivo y de gran proyección.",
+  },
 }
 
 export function getFragranceInfo(id) {

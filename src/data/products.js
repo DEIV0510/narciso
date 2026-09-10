@@ -134,7 +134,7 @@ const PRODUCTS_WITH_OWN_PHOTO = new Set([
   'starwalker-montblanc-hombre', 'stronger-with-you-giorgio-armani-hombre', 'stronger-with-you-intensely-giorgio-armani-hombre', 'stronger-with-you-tobacco-giorgio-armani-hombre', 'sugardaddy-fugazzi-unisex', 'summer-hammer-lorenzo-pazzaglia-unisex',
   'sun-gria-lorenzo-pazzaglia-unisex', 'supremacy-collector-s-edition-afnan-hombre', 'sweet-candy-ariana-grande-mujer', 'swiss-army-classic-victorinox-hombre', 'symphony-louis-vuitton-unisex', 'thank-u-next-ariana-grande-mujer', 'the-one-for-men-dolce-gabbana-hombre',
   'the-one-sport-dolce-gabbana-hombre', 'the-queen-and-the-viper-stephane-humbert-lucas-777-unisex', 'the-scent-elixir-hugo-boss-hombre', 'tommy-tommy-hilfiger-hombre', 'toy-2-bubble-gum-moschino-mujer', 'toy-2-moschino-mujer',
-  'toy-boy-moschino-hombre', 'ultra-male-jean-paul-gaultier-hombre', 'uomo-born-in-roma-extradose-valentino-hombre', 'uomo-born-in-roma-green-stravaganza-valentino-hombre', 'uomo-born-in-roma-valentino-hombre', 'uomo-valentino-hombre',
+  'torino21-xerjoff-hombre', 'toy-boy-moschino-hombre', 'ultra-male-jean-paul-gaultier-hombre', 'unstoppable-hong-kong-elivi-parfums-hombre', 'uomo-born-in-roma-extradose-valentino-hombre', 'uomo-born-in-roma-green-stravaganza-valentino-hombre', 'uomo-born-in-roma-valentino-hombre', 'uomo-valentino-hombre',
   'vega-ahli-unisex', 'velvet-petals-victoria-s-secret-mujer', 'very-good-girl-glam-carolina-herrera-mujer', 'voyage-nautica-hombre', 'yara-candy-lattafa-mujer', 'yara-lattafa-mujer',
   'y-eau-de-parfum-yves-saint-laurent-hombre', 'yara-moi-lattafa-mujer', 'yara-tous-lattafa-mujer', 'yum-yum-armaf-mujer',
 ])
@@ -300,6 +300,11 @@ const caballeroAgosto2026 = [
   // 2026-09-06: el cliente mandó foto propia real (frasco azul facetado real
   // de la línea "Y") y pidió agregarlo como producto nuevo de hombre.
   { title: 'Y Eau de Parfum', brand: 'Yves Saint Laurent', style: 'Fresco' },
+  // 2026-09-10: estas 2 estaban como "Próximamente" (badges flotantes en el
+  // Hero, sin precio) — el cliente pidió pasarlas al catálogo real de
+  // caballero. Se quitaron las insignias flotantes al agregarlas aquí.
+  { title: 'Torino21', brand: 'Xerjoff', style: 'Fresco' },
+  { title: 'Unstoppable Hong Kong', brand: 'Elivi Parfums', style: 'Intenso' },
 ].map((p) => toProduct(p, CATEGORIES.CABALLERO, 'hombre'))
 
 const damaAgosto2026 = [
