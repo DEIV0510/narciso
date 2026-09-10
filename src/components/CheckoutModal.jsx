@@ -3,7 +3,8 @@ import { formatCOP } from '../data/products'
 import { buildOrderMessage, paymentMethods } from '../data/cart'
 import { brand, waLink } from '../data/site'
 import { useCart } from '../context/CartContext'
-import { IconWhatsApp, IconChevronRight, IconX } from './icons'
+import { IconWhatsApp, IconChevronRight, IconX, IconHeart } from './icons'
+import { VALENTINES_ACTIVE } from '../data/campaign'
 
 const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
@@ -123,8 +124,9 @@ export default function CheckoutModal() {
               <IconChevronRight className="h-3.5 w-3.5 rotate-180" />
               Volver al carrito
             </button>
-            <h2 id="checkout-title" className="mt-1.5 font-display text-2xl text-ink-900">
+            <h2 id="checkout-title" className="mt-1.5 flex items-center gap-2 font-display text-2xl text-ink-900">
               Finalizar compra
+              {VALENTINES_ACTIVE && <IconHeart className="h-4 w-4 text-wine-400" />}
             </h2>
           </div>
           <button
@@ -138,7 +140,7 @@ export default function CheckoutModal() {
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-6 px-6 py-6 sm:px-8">
-          <div className="rounded-2xl border border-ink-100 bg-white p-4">
+          <div className={`rounded-2xl border bg-white p-4 ${VALENTINES_ACTIVE ? 'border-wine-100' : 'border-ink-100'}`}>
             <p className="font-body text-xs uppercase tracking-wide text-ink-400">Resumen del pedido</p>
             <ul className="mt-3 space-y-2">
               {items.map((item) => (

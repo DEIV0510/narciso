@@ -3,14 +3,25 @@ import spotlightWebp from '../assets/img/spotlight-bottle.webp'
 import spotlightJpg from '../assets/img/spotlight-bottle.jpg'
 import Reveal from './Reveal'
 import { whyNarciso, waLink, waMessages } from '../data/site'
-import { IconCheck } from './icons'
+import { IconCheck, IconPetal } from './icons'
+import { VALENTINES_ACTIVE } from '../data/campaign'
 
 export default function WhyNarciso() {
   return (
     <section aria-labelledby="why-heading" className="bg-cream-100 py-16 sm:py-24">
       <div className="mx-auto grid max-w-6xl items-center gap-10 px-6 sm:px-8 lg:grid-cols-2 lg:gap-16 lg:px-8">
-        <Reveal className="order-2 overflow-hidden rounded-3xl border border-ink-900/5 bg-white p-6 shadow-sm sm:p-8 lg:order-1">
-          <div className="grid grid-cols-[1fr_auto] items-center gap-6">
+        <Reveal
+          className={`relative order-2 overflow-hidden rounded-3xl border bg-white p-6 shadow-sm sm:p-8 lg:order-1 ${
+            VALENTINES_ACTIVE ? 'border-wine-100' : 'border-ink-900/5'
+          }`}
+        >
+          {VALENTINES_ACTIVE && (
+            <IconPetal
+              aria-hidden="true"
+              className="pointer-events-none absolute -right-2 -top-2 h-14 w-14 rotate-[25deg] text-wine-100"
+            />
+          )}
+          <div className="relative grid grid-cols-[1fr_auto] items-center gap-6">
             <ul className="space-y-3.5">
               {whyNarciso.map((item) => (
                 <li key={item} className="flex items-center gap-2.5 font-body text-sm text-ink-700 sm:text-base">

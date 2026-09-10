@@ -8,7 +8,8 @@ import genderUnisexAvif from '../assets/img/gender-unisex.avif'
 import genderUnisexWebp from '../assets/img/gender-unisex.webp'
 import genderUnisexJpg from '../assets/img/gender-unisex.jpg'
 import Reveal from './Reveal'
-import { IconArrowRight } from './icons'
+import { IconArrowRight, IconHeart } from './icons'
+import { VALENTINES_ACTIVE } from '../data/campaign'
 
 const cards = [
   {
@@ -78,7 +79,16 @@ function CardImage({ card }) {
           height={1000}
         />
       </picture>
-      <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-900/70 via-ink-900/5 to-transparent" />
+      <span
+        className={`pointer-events-none absolute inset-0 bg-gradient-to-t to-transparent ${
+          VALENTINES_ACTIVE ? 'from-wine-900/70 via-ink-900/10' : 'from-ink-900/70 via-ink-900/5'
+        }`}
+      />
+      {VALENTINES_ACTIVE && (
+        <span className="pointer-events-none absolute left-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-cream-50/20 text-cream-50 backdrop-blur-sm">
+          <IconHeart className="h-3.5 w-3.5" />
+        </span>
+      )}
       <span className="absolute bottom-4 right-4 inline-flex items-center gap-1.5 rounded-full bg-cream-50 px-4 py-2 font-body text-xs uppercase tracking-wide text-ink-900 shadow-md transition-transform duration-200 group-hover:translate-x-0.5">
         {card.label}
         <IconArrowRight className="h-3.5 w-3.5" />

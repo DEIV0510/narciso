@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import { formatCOP } from '../data/products'
 import { useCart } from '../context/CartContext'
 import CartItemRow from './CartItemRow'
-import { IconBag, IconX } from './icons'
+import { IconBag, IconX, IconHeart } from './icons'
+import { VALENTINES_ACTIVE } from '../data/campaign'
 
 const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
@@ -66,10 +67,15 @@ export default function CartDrawer() {
           drawerOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="flex items-center justify-between border-b border-ink-100 px-5 py-4 sm:px-7">
+        <div
+          className={`flex items-center justify-between border-b px-5 py-4 sm:px-7 ${
+            VALENTINES_ACTIVE ? 'border-wine-100' : 'border-ink-100'
+          }`}
+        >
           <div>
-            <h2 id="cart-drawer-title" className="font-display text-xl text-ink-900">
+            <h2 id="cart-drawer-title" className="flex items-center gap-2 font-display text-xl text-ink-900">
               Tu carrito
+              {VALENTINES_ACTIVE && <IconHeart className="h-4 w-4 text-wine-400" />}
             </h2>
             {!isEmpty && (
               <p className="mt-0.5 font-body text-xs text-ink-400">
@@ -90,7 +96,11 @@ export default function CartDrawer() {
 
         {isEmpty ? (
           <div className="flex flex-1 flex-col items-center justify-center px-8 text-center">
-            <span className="flex h-20 w-20 items-center justify-center rounded-full bg-gold-50 text-gold-500">
+            <span
+              className={`flex h-20 w-20 items-center justify-center rounded-full ${
+                VALENTINES_ACTIVE ? 'bg-wine-50 text-wine-400' : 'bg-gold-50 text-gold-500'
+              }`}
+            >
               <IconBag className="h-9 w-9" />
             </span>
             <p className="mt-6 font-display text-xl text-ink-900">Tu colección está esperando.</p>
@@ -132,8 +142,13 @@ export default function CartDrawer() {
               <button
                 type="button"
                 onClick={openCheckout}
-                className="mt-5 flex w-full items-center justify-center rounded-full bg-gold-500 py-4 font-body text-sm uppercase tracking-wide text-ink-900 transition-transform duration-200 hover:scale-[1.01] hover:bg-gold-400"
+                className={`mt-5 flex w-full items-center justify-center gap-2 rounded-full py-4 font-body text-sm uppercase tracking-wide text-ink-900 transition-transform duration-200 hover:scale-[1.01] ${
+                  VALENTINES_ACTIVE
+                    ? 'bg-gradient-to-r from-gold-500 via-gold-400 to-wine-300 hover:from-gold-400 hover:to-wine-200'
+                    : 'bg-gold-500 hover:bg-gold-400'
+                }`}
               >
+                {VALENTINES_ACTIVE && <IconHeart className="h-3.5 w-3.5" />}
                 Finalizar compra
               </button>
             </div>

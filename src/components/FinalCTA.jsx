@@ -1,10 +1,18 @@
 import Reveal from './Reveal'
 import { waLink, waMessages } from '../data/site'
+import { IconHeart } from './icons'
+import { VALENTINES_ACTIVE } from '../data/campaign'
 
 export default function FinalCTA() {
   return (
-    <section className="bg-gold-500 py-16 sm:py-20">
-      <div className="mx-auto max-w-2xl px-6 text-center sm:px-8">
+    <section className="relative overflow-hidden bg-gold-500 py-16 sm:py-20">
+      {VALENTINES_ACTIVE && (
+        <>
+          <IconHeart className="pointer-events-none absolute left-[8%] top-[20%] h-6 w-6 text-ink-900/10" aria-hidden="true" />
+          <IconHeart className="pointer-events-none absolute right-[10%] bottom-[18%] h-8 w-8 text-ink-900/10" aria-hidden="true" />
+        </>
+      )}
+      <div className="relative mx-auto max-w-2xl px-6 text-center sm:px-8">
         <Reveal>
           <h2 className="font-display text-3xl text-ink-900 sm:text-4xl text-balance">
             Tu próxima fragancia está aquí.

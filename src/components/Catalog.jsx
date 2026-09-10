@@ -3,7 +3,8 @@ import { CATEGORIES, brands, products, searchProducts } from '../data/products'
 import ProductCard from './ProductCard'
 import ProductRow from './ProductRow'
 import Reveal from './Reveal'
-import { IconSearch } from './icons'
+import { IconSearch, IconHeart } from './icons'
+import { VALENTINES_ACTIVE, valentinesCopy } from '../data/campaign'
 
 const CATEGORY_FILTERS = [
   { key: 'todos', label: 'Todos' },
@@ -59,17 +60,28 @@ export default function Catalog() {
   return (
     <section
       id="catalogo"
-      className="scroll-mt-20 border-y border-ink-100 bg-cream-50 py-16 sm:scroll-mt-24 sm:py-24"
+      className={`scroll-mt-20 border-y border-ink-100 py-16 sm:scroll-mt-24 sm:py-24 ${
+        VALENTINES_ACTIVE ? 'bg-gradient-to-b from-blush-50 via-cream-50 to-cream-50' : 'bg-cream-50'
+      }`}
     >
       <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-8">
         <Reveal className="mx-auto max-w-xl text-center">
+          {VALENTINES_ACTIVE && (
+            <span className="mx-auto mb-3 inline-flex w-fit items-center gap-1.5 rounded-full border border-wine-200 bg-wine-50 px-3 py-1 font-body text-[10px] uppercase tracking-widest2 text-wine-600">
+              <IconHeart className="h-3 w-3 text-wine-500" />
+              {valentinesCopy.catalogEyebrow}
+            </span>
+          )}
           <p className="section-eyebrow text-gold-600">Catálogo completo</p>
           <h2 className="mt-3 font-display text-3xl text-balance text-ink-900 sm:text-4xl">
             Descubre tu fragancia
           </h2>
           <p className="mt-3 font-body text-sm text-ink-400 sm:text-base">
-            {products.length} fragancias inspiradas, mismo frasco Narciso. $60.000 COP cada una.
+            {products.length} fragancias inspiradas, mismo frasco Narciso. Desde $55.000 COP · 50 ml.
           </p>
+          {VALENTINES_ACTIVE && (
+            <p className="mt-1 font-display italic text-sm text-wine-600">{valentinesCopy.catalogLine}</p>
+          )}
         </Reveal>
 
         <Reveal delay={80} className="mt-8 space-y-4 sm:mt-10">

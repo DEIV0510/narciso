@@ -17,7 +17,9 @@ import { getFragranceInfo } from '../data/fragranceInfo'
 import { waLink } from '../data/site'
 import { useCart, DEFAULT_SIZE_LABEL } from '../context/CartContext'
 import useDocumentMeta from '../hooks/useDocumentMeta'
-import { IconWhatsApp, IconBagPlus } from '../components/icons'
+import { IconWhatsApp, IconBagPlus, IconHeart } from '../components/icons'
+import ValentineAccents from '../components/ValentineAccents'
+import { VALENTINES_ACTIVE, valentinesCopy } from '../data/campaign'
 
 // La primera foto (principal) es la real de ESTE producto (ver
 // data/productImages.js); las otras 3 son recortes reales del mismo frasco
@@ -95,7 +97,14 @@ export default function ProductDetailPage() {
         <div className="mt-6 grid gap-8 lg:grid-cols-2 lg:gap-14">
           {/* Móvil: foto primero. Desktop: foto a la derecha (order-2). */}
           <Reveal className="order-1 lg:order-2">
-            <div className="overflow-hidden rounded-3xl bg-white">
+            <div className="relative overflow-hidden rounded-3xl bg-white">
+              {VALENTINES_ACTIVE && (
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(124,36,48,0.08),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(180,134,58,0.08),transparent_55%)]"
+                />
+              )}
+              <ValentineAccents />
               <picture>
                 <source srcSet={current.avif} type="image/avif" />
                 <source srcSet={current.webp} type="image/webp" />
@@ -134,11 +143,19 @@ export default function ProductDetailPage() {
             <h1 className="mt-2 font-display text-3xl leading-tight text-ink-900 sm:text-4xl">{product.title}</h1>
             <p className="mt-1 font-body text-sm text-ink-400">Inspirado en {product.brand}</p>
 
-            {info?.family && (
-              <span className="mt-4 inline-flex w-fit items-center rounded-full bg-gold-50 px-3 py-1 font-body text-[11px] uppercase tracking-wide text-gold-700">
-                Familia olfativa: {info.family}
-              </span>
-            )}
+            <div className="mt-4 flex flex-wrap items-center gap-2">
+              {info?.family && (
+                <span className="inline-flex w-fit items-center rounded-full bg-gold-50 px-3 py-1 font-body text-[11px] uppercase tracking-wide text-gold-700">
+                  Familia olfativa: {info.family}
+                </span>
+              )}
+              {VALENTINES_ACTIVE && (
+                <span className="inline-flex w-fit items-center gap-1 rounded-full bg-wine-50 px-3 py-1 font-body text-[11px] uppercase tracking-wide text-wine-600">
+                  <IconHeart className="h-3 w-3" />
+                  {valentinesCopy.giftBadge}
+                </span>
+              )}
+            </div>
 
             {info?.profile ? (
               <p className="mt-4 font-body text-base leading-relaxed text-ink-500">{info.profile}</p>

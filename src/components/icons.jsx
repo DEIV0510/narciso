@@ -71,9 +71,9 @@ export function IconMapPin({ className = 'h-5 w-5' }) {
   )
 }
 
-export function IconSparkle({ className = 'h-6 w-6' }) {
+export function IconSparkle({ className = 'h-6 w-6', ...rest }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true" {...rest}>
       <path
         d="M12 3c.6 3.6 2.4 5.4 6 6-3.6.6-5.4 2.4-6 6-.6-3.6-2.4-5.4-6-6 3.6-.6 5.4-2.4 6-6Z"
         stroke="currentColor"
@@ -98,15 +98,30 @@ export function IconLeaf({ className = 'h-6 w-6' }) {
   )
 }
 
-export function IconHeart({ className = 'h-6 w-6' }) {
+export function IconHeart({ className = 'h-6 w-6', ...rest }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true" {...rest}>
       <path
         d="M12 20s-7.2-4.5-9.3-9A5 5 0 0 1 12 6a5 5 0 0 1 9.3 5c-2.1 4.5-9.3 9-9.3 9Z"
         stroke="currentColor"
         strokeWidth="1.4"
         strokeLinejoin="round"
       />
+    </svg>
+  )
+}
+
+// Pétalo minimalista para la ambientación de San Valentín (ver data/campaign.js).
+export function IconPetal({ className = 'h-6 w-6', ...rest }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true" {...rest}>
+      <path
+        d="M12 3c4 2.4 6 6 6 9.5A6 6 0 0 1 6 12.5C6 9 8 5.4 12 3Z"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinejoin="round"
+      />
+      <path d="M12 5.5V19" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
     </svg>
   )
 }

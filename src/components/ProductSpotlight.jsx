@@ -4,6 +4,7 @@ import spotlightWebp from '../assets/img/spotlight-bottle.webp'
 import spotlightJpg from '../assets/img/spotlight-bottle.jpg'
 import Reveal from './Reveal'
 import ProductModal from './ProductModal'
+import ValentineAccents from './ValentineAccents'
 import { waLink, waMessages } from '../data/site'
 
 export default function ProductSpotlight() {
@@ -23,6 +24,7 @@ export default function ProductSpotlight() {
         </Reveal>
 
         <Reveal delay={120} className="group relative mt-10 overflow-hidden rounded-3xl bg-ink-800 sm:mt-14">
+          <ValentineAccents />
           <div className="grid sm:grid-cols-2">
             <div className="relative aspect-square overflow-hidden sm:aspect-auto">
               <picture>

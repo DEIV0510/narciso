@@ -3,7 +3,8 @@ import { CATEGORIES, formatCOP } from '../data/products'
 import { getProductImage } from '../data/productImages'
 import { waLink } from '../data/site'
 import { useCart, DEFAULT_SIZE_LABEL } from '../context/CartContext'
-import { IconBottle, IconBagPlus } from './icons'
+import { IconBottle, IconBagPlus, IconHeart } from './icons'
+import { VALENTINES_ACTIVE } from '../data/campaign'
 
 export default function ProductCard({ product, eager = false }) {
   const { addItem } = useCart()
@@ -23,11 +24,25 @@ export default function ProductCard({ product, eager = false }) {
   const img = getProductImage(product.image)
 
   return (
-    <article className="group w-44 shrink-0 snap-start overflow-hidden rounded-2xl border border-ink-100 bg-white sm:w-52 lg:w-56">
+    <article
+      className={`group w-44 shrink-0 snap-start overflow-hidden rounded-2xl border bg-white transition-colors duration-200 sm:w-52 lg:w-56 ${
+        VALENTINES_ACTIVE
+          ? 'border-ink-100 hover:border-wine-200 hover:shadow-[0_10px_28px_-6px_rgba(124,36,48,0.22)]'
+          : 'border-ink-100'
+      }`}
+    >
       <Link to={href} className="relative block aspect-square w-full overflow-hidden bg-cream-50">
         <span className="absolute left-2.5 top-2.5 z-10 rounded-full border border-ink-900/10 bg-ink-900/85 px-2.5 py-1 font-body text-[10px] uppercase tracking-wide text-cream-50">
           {categoryLabel}
         </span>
+        {VALENTINES_ACTIVE && (
+          <span
+            aria-hidden="true"
+            className="absolute right-2.5 top-2.5 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-cream-50/90 text-wine-500 opacity-0 shadow-sm transition-opacity duration-200 group-hover:opacity-100"
+          >
+            <IconHeart className="h-3.5 w-3.5" />
+          </span>
+        )}
 
         {product.image ? (
           <picture>

@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import logo from '../assets/img/logo.webp'
 import { brand, navLinks, waLink, waMessages } from '../data/site'
-import { IconInstagram, IconTikTok, IconMenu, IconClose, IconWhatsApp, IconBag } from './icons'
+import { IconInstagram, IconTikTok, IconMenu, IconClose, IconWhatsApp, IconBag, IconHeart } from './icons'
 import SectionLink from './SectionLink'
 import { useCart } from '../context/CartContext'
+import { VALENTINES_ACTIVE } from '../data/campaign'
 
 function CartButton({ className = '' }) {
   const { totalItems, openCart } = useCart()
@@ -40,10 +41,24 @@ export default function Header({ open, onOpenChange }) {
   }, [isOpen, setOpen])
 
   return (
-    <header className="sticky top-0 z-50 border-b border-ink-100 bg-cream-50/95 backdrop-blur-sm">
+    <header
+      className={`sticky top-0 z-50 bg-cream-50/95 backdrop-blur-sm ${
+        VALENTINES_ACTIVE ? '' : 'border-b border-ink-100'
+      }`}
+    >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:h-20 sm:px-6 lg:px-8">
-        <SectionLink href="#inicio" className="flex items-center gap-2" aria-label="Narciso Parfum, inicio">
+        <SectionLink
+          href="#inicio"
+          className="relative flex items-center gap-2"
+          aria-label="Narciso Parfum, inicio"
+        >
           <img src={logo} alt="Narciso Parfum" className="h-9 w-auto sm:h-11" width={220} height={110} />
+          {VALENTINES_ACTIVE && (
+            <IconHeart
+              aria-hidden="true"
+              className="absolute -right-2 -top-1 h-3 w-3 text-wine-400 motion-safe:animate-twinkle"
+            />
+          )}
         </SectionLink>
 
         <nav className="hidden items-center gap-8 lg:flex" aria-label="Navegación principal">
@@ -111,6 +126,13 @@ export default function Header({ open, onOpenChange }) {
           </button>
         </div>
       </div>
+
+      {VALENTINES_ACTIVE && (
+        <div
+          aria-hidden="true"
+          className="h-[2px] bg-gradient-to-r from-gold-400 via-wine-400 to-gold-400"
+        />
+      )}
 
       <div
         id="mobile-nav"

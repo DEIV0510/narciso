@@ -1,11 +1,15 @@
 import { brand, navLinks, waLink, waMessages } from '../data/site'
-import { IconInstagram, IconTikTok } from './icons'
+import { IconInstagram, IconTikTok, IconHeart } from './icons'
 import SectionLink from './SectionLink'
+import { VALENTINES_ACTIVE, valentinesCopy } from '../data/campaign'
 
 export default function Footer() {
   const year = new Date().getFullYear()
   return (
     <footer className="bg-ink-900 pt-14 sm:pt-16">
+      {VALENTINES_ACTIVE && (
+        <div aria-hidden="true" className="h-[2px] bg-gradient-to-r from-gold-500 via-wine-400 to-gold-500" />
+      )}
       <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-8">
         <div className="grid gap-10 border-b border-cream-50/10 pb-12 sm:grid-cols-2 lg:grid-cols-4">
           <div>
@@ -81,6 +85,12 @@ export default function Footer() {
         <p className="py-6 text-center font-body text-xs text-ink-300">
           © {year} Narciso Parfum. Todos los derechos reservados.
         </p>
+        {VALENTINES_ACTIVE && (
+          <p className="-mt-4 flex items-center justify-center gap-1.5 pb-6 font-display italic text-xs text-wine-300">
+            <IconHeart className="h-3 w-3" />
+            {valentinesCopy.footerNote}
+          </p>
+        )}
       </div>
     </footer>
   )

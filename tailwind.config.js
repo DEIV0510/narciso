@@ -37,6 +37,26 @@ export default {
           200: '#f0e8d9',
           300: '#e4d5ba',
         },
+        // Paleta de la campaña San Valentín (borgoña/vino) — capa estacional
+        // encima de ink/gold/cream, nunca los reemplaza.
+        wine: {
+          DEFAULT: '#7c2430',
+          50: '#fbeef0',
+          100: '#f3d9dc',
+          200: '#e3aab0',
+          300: '#c97b83',
+          400: '#a8535d',
+          500: '#7c2430',
+          600: '#671c26',
+          700: '#4f151d',
+          800: '#3a0f15',
+          900: '#26090d',
+        },
+        blush: {
+          50: '#fdf3f2',
+          100: '#f9e4e1',
+          200: '#f1c7c1',
+        },
       },
       fontFamily: {
         display: ['"Playfair Display"', 'Georgia', 'serif'],
@@ -64,12 +84,24 @@ export default {
           '60%': { transform: 'scale(1.25)' },
           '100%': { transform: 'scale(1)' },
         },
+        heartFloat: {
+          '0%': { transform: 'translateY(6px) scale(0.85)', opacity: 0 },
+          '15%': { opacity: 1 },
+          '85%': { opacity: 1 },
+          '100%': { transform: 'translateY(-14px) scale(1)', opacity: 0 },
+        },
+        twinkle: {
+          '0%, 100%': { opacity: 0.25, transform: 'scale(0.85)' },
+          '50%': { opacity: 1, transform: 'scale(1.1)' },
+        },
       },
       animation: {
         fadeUp: 'fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) forwards',
         fadeIn: 'fadeIn 0.6s ease forwards',
         pulseRing: 'pulseRing 2.4s cubic-bezier(0.4,0,0.6,1) infinite',
         bump: 'bump 0.4s cubic-bezier(0.34,1.56,0.64,1)',
+        heartFloat: 'heartFloat 5s ease-in-out infinite',
+        twinkle: 'twinkle 3.2s ease-in-out infinite',
       },
     },
   },
