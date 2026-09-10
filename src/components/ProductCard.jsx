@@ -9,7 +9,10 @@ export default function ProductCard({ product, eager = false }) {
   const { addItem } = useCart()
   const categoryLabel =
     product.category === CATEGORIES.DAMA ? 'Dama' : product.category === CATEGORIES.UNISEX ? 'Unisex' : 'Caballero'
-  const message = `Hola, Narciso Parfum. Estoy interesado/a en comprar el perfume ${product.fullName} por $${product.price.toLocaleString('es-CO')}. ¿Me pueden confirmar disponibilidad?`
+  const sizeLabel = product.sizes?.[0]?.label
+  const message = `Hola, Narciso Parfum. Estoy interesado/a en comprar el perfume ${product.fullName}${
+    sizeLabel ? ` (${sizeLabel})` : ''
+  } por $${product.price.toLocaleString('es-CO')}. ¿Me pueden confirmar disponibilidad?`
   const wa = waLink(message)
   const href = `/perfumes/${product.id}`
 
@@ -53,7 +56,10 @@ export default function ProductCard({ product, eager = false }) {
             {product.title}
           </Link>
         </h3>
-        <p className="font-display text-lg text-gold-600">{formatCOP(product.price)}</p>
+        <p className="font-display text-lg text-gold-600">
+          {formatCOP(product.price)}
+          {sizeLabel && <span className="ml-1.5 font-body text-xs text-ink-400">· {sizeLabel}</span>}
+        </p>
 
         <div className="mt-1.5 flex items-center gap-2">
           <a

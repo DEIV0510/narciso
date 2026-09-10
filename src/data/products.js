@@ -303,8 +303,10 @@ const caballeroAgosto2026 = [
   // 2026-09-10: estas 2 estaban como "Próximamente" (badges flotantes en el
   // Hero, sin precio) — el cliente pidió pasarlas al catálogo real de
   // caballero. Se quitaron las insignias flotantes al agregarlas aquí.
-  { title: 'Torino21', brand: 'Xerjoff', style: 'Fresco' },
-  { title: 'Unstoppable Hong Kong', brand: 'Elivi Parfums', style: 'Intenso' },
+  // Excluidas explícitamente del cambio a $55.000/50ml del mismo día: el
+  // cliente las nombró como excepción, así que mantienen $60.000 sin talla.
+  { title: 'Torino21', brand: 'Xerjoff', style: 'Fresco', price: 60000, size: null },
+  { title: 'Unstoppable Hong Kong', brand: 'Elivi Parfums', style: 'Intenso', price: 60000, size: null },
 ].map((p) => toProduct(p, CATEGORIES.CABALLERO, 'hombre'))
 
 const damaAgosto2026 = [
@@ -473,7 +475,12 @@ function slugify(...parts) {
     .replace(/(^-|-$)/g, '')
 }
 
-function toProduct({ title, brand, style }, category, gender) {
+// Precio y presentación reales dados por el cliente (2026-09-10): $55.000
+// COP en frasco de 50 ml para todo el catálogo — excepto Torino21 (Xerjoff)
+// y Unstoppable Hong Kong (Elivi Parfums), que el cliente pidió dejar fuera
+// del cambio (mantienen su precio/presentación anterior, sin talla fija) al
+// pasar `price`/`size` explícitos en su entrada.
+function toProduct({ title, brand, style, price = 55000, size = '50 ml' }, category, gender) {
   const id = slugify(title, brand, gender)
   return {
     id,
@@ -481,7 +488,8 @@ function toProduct({ title, brand, style }, category, gender) {
     brand,
     style,
     fullName: `${title} by ${brand}`,
-    price: 60000,
+    price,
+    ...(size ? { sizes: [{ label: size, price }] } : {}),
     category,
     gender,
     image: PRODUCTS_WITH_OWN_PHOTO.has(id) ? id : 'catalog-bottle',

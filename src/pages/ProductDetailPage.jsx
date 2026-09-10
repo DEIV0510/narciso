@@ -171,7 +171,12 @@ export default function ProductDetailPage() {
                   </div>
                 </>
               ) : (
-                <p className="font-display text-3xl text-gold-600">{formatCOP(product.price)}</p>
+                <>
+                  <p className="font-display text-3xl text-gold-600">{formatCOP(product.price)}</p>
+                  {size.label !== DEFAULT_SIZE_LABEL && (
+                    <p className="mt-1 font-body text-sm text-ink-400">{size.label}</p>
+                  )}
+                </>
               )}
 
               <div className="mt-5 flex flex-col gap-3 sm:flex-row">
