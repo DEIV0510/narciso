@@ -24,7 +24,7 @@ export default function Hero() {
             <div className="relative order-1 px-6 pb-8 pt-9 sm:px-10 sm:pt-12 lg:order-1 lg:px-14 lg:py-20 xl:px-16">
               {VALENTINES_ACTIVE && (
                 <span className="mb-3 inline-flex w-fit items-center gap-1.5 rounded-full border border-wine-300/40 bg-wine-500/15 px-3 py-1 font-body text-[10px] uppercase tracking-widest2 text-wine-200 animate-fadeUp">
-                  <IconHeart className="h-3 w-3 text-wine-300" />
+                  <IconHeart className="h-3 w-3 text-wine-300 motion-safe:animate-heartBeat" />
                   {valentinesCopy.heroEyebrow}
                 </span>
               )}
@@ -38,7 +38,7 @@ export default function Hero() {
               </p>
               {VALENTINES_ACTIVE && (
                 <p className="mt-2 flex items-center gap-2 font-display text-base text-blush-100 sm:text-lg animate-fadeUp [animation-delay:200ms]">
-                  <IconHeart className="h-4 w-4 shrink-0 text-wine-300" />
+                  <IconHeart className="h-4 w-4 shrink-0 text-wine-300 motion-safe:animate-heartBeat" />
                   {valentinesCopy.heroLine}
                 </p>
               )}

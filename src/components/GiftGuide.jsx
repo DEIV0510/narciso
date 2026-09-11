@@ -23,7 +23,7 @@ export default function GiftGuide() {
       <div className="relative mx-auto max-w-6xl px-6 sm:px-8 lg:px-8">
         <Reveal className="mx-auto max-w-xl text-center">
           <span className="inline-flex items-center gap-1.5 font-body text-[11px] uppercase tracking-widest2 text-wine-200">
-            <IconHeart className="h-3 w-3" />
+            <IconHeart className="h-3 w-3 motion-safe:animate-heartBeat" />
             {valentinesCopy.giftGuideEyebrow}
           </span>
           <h2 className="mt-3 font-display text-3xl text-balance text-cream-50 sm:text-4xl">

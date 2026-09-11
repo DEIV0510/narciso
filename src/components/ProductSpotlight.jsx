@@ -50,7 +50,7 @@ export default function ProductSpotlight() {
                 </span>
                 {VALENTINES_ACTIVE && (
                   <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-wine-500/15 px-3 py-1 font-body text-[11px] uppercase tracking-widest2 text-wine-200">
-                    <IconHeart className="h-3 w-3" />
+                    <IconHeart className="h-3 w-3 motion-safe:animate-heartBeat" />
                     {valentinesCopy.heroEyebrow}
                   </span>
                 )}

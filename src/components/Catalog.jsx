@@ -68,7 +68,7 @@ export default function Catalog() {
         <Reveal className="mx-auto max-w-xl text-center">
           {VALENTINES_ACTIVE && (
             <span className="mx-auto mb-3 inline-flex w-fit items-center gap-1.5 rounded-full border border-wine-200 bg-wine-50 px-3 py-1 font-body text-[10px] uppercase tracking-widest2 text-wine-600">
-              <IconHeart className="h-3 w-3 text-wine-500" />
+              <IconHeart className="h-3 w-3 text-wine-500 motion-safe:animate-heartBeat" />
               {valentinesCopy.catalogEyebrow}
             </span>
           )}

@@ -38,7 +38,7 @@ export default function WhatsAppButton({ hideForMenu = false }) {
           aria-hidden="true"
           className="absolute -left-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-wine-500 text-cream-50 shadow-sm"
         >
-          <IconHeart className="h-2.5 w-2.5" />
+          <IconHeart className="h-2.5 w-2.5 motion-safe:animate-heartBeat" />
         </span>
       )}
     </a>
