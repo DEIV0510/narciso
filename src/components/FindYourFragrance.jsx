@@ -4,7 +4,8 @@ import Reveal from './Reveal'
 import { products, formatCOP } from '../data/products'
 import { getProductImage } from '../data/productImages'
 import { waLink } from '../data/site'
-import { IconArrowRight, IconWhatsApp } from './icons'
+import { IconArrowRight, IconWhatsApp, IconHeart } from './icons'
+import { VALENTINES_ACTIVE } from '../data/campaign'
 
 const GENDERS = [
   { key: 'hombre', label: 'Hombre' },
@@ -46,9 +47,20 @@ export default function FindYourFragrance() {
           <p className="mt-3 font-body text-sm text-ink-400 sm:text-base">
             Responde 2 preguntas rápidas y te mostramos opciones reales de nuestro catálogo.
           </p>
+          {VALENTINES_ACTIVE && (
+            <p className="mt-1 flex items-center justify-center gap-1.5 font-display italic text-sm text-wine-600">
+              <IconHeart className="h-3.5 w-3.5" />
+              Encuentra el aroma perfecto para regalar
+            </p>
+          )}
         </Reveal>
 
-        <Reveal delay={100} className="mt-8 rounded-3xl border border-ink-100 bg-white p-6 shadow-sm sm:mt-10 sm:p-10">
+        <Reveal
+          delay={100}
+          className={`mt-8 rounded-3xl border bg-white p-6 shadow-sm sm:mt-10 sm:p-10 ${
+            VALENTINES_ACTIVE ? 'border-wine-100' : 'border-ink-100'
+          }`}
+        >
           <div className="mx-auto flex max-w-[10rem] items-center gap-2">
             <span className={`h-1 flex-1 rounded-full ${step >= 0 ? 'bg-gold-500' : 'bg-ink-100'}`} />
             <span className={`h-1 flex-1 rounded-full ${step >= 1 ? 'bg-gold-500' : 'bg-ink-100'}`} />

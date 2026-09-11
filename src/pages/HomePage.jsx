@@ -1,6 +1,8 @@
 import Hero from '../components/Hero'
+import PromoBanner from '../components/PromoBanner'
 import GenderFinder from '../components/GenderFinder'
 import Catalog from '../components/Catalog'
+import GiftGuide from '../components/GiftGuide'
 import WhyNarciso from '../components/WhyNarciso'
 import ProductSpotlight from '../components/ProductSpotlight'
 import CraftProcess from '../components/CraftProcess'
@@ -15,8 +17,10 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <PromoBanner />
       <GenderFinder />
       <Catalog />
+      <GiftGuide />
       <WhyNarciso />
       <ProductSpotlight />
       <CraftProcess />

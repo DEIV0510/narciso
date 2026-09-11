@@ -6,10 +6,24 @@
 export const VALENTINES_ACTIVE = true
 
 export const valentinesCopy = {
-  heroEyebrow: 'Especial San Valentín',
+  promoBar: 'Especial San Valentín · Elige tu fragancia · Regala una experiencia',
+  heroEyebrow: 'Edición San Valentín',
   heroLine: 'Celebra el amor con una fragancia',
   catalogEyebrow: 'Edición San Valentín',
   catalogLine: 'Favoritos para regalar en San Valentín',
   giftBadge: 'Ideal para regalar',
+  giftGuideEyebrow: 'San Valentín',
+  giftGuideTitle: 'El regalo perfecto tiene aroma',
+  giftGuideLine: 'Encuentra la fragancia ideal para cada persona especial.',
+  promoImageAlt: 'Promoción especial Narciso Parfum: elige 3 fragancias por $130.000 COP',
   footerNote: 'Con amor, Narciso Parfum.',
 }
+
+// Las 3 tarjetas de la sección "El regalo perfecto tiene aroma" reusan el
+// mismo evento `narciso:filter-category` que ya usa GenderFinder — enlazan
+// a categorías REALES del catálogo, no a productos inventados.
+export const giftGuideCards = [
+  { label: 'Para ella', category: 'dama' },
+  { label: 'Para él', category: 'caballero' },
+  { label: 'Para compartir', category: 'unisex' },
+]

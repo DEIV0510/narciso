@@ -4,6 +4,7 @@ import heroJpg from '../assets/img/hero-bottle.jpg'
 import { waLink, waMessages } from '../data/site'
 import { IconArrowRight, IconMapPin, IconWhatsApp, IconHeart } from './icons'
 import ValentineAccents from './ValentineAccents'
+import FeaturedLaunches from './FeaturedLaunches'
 import { VALENTINES_ACTIVE, valentinesCopy } from '../data/campaign'
 
 const pills = ['Alta calidad', 'Perfumería inspirada', 'Atención personalizada']
@@ -16,7 +17,7 @@ export default function Hero() {
           {VALENTINES_ACTIVE && (
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_25%_15%,rgba(124,36,48,0.35),transparent_60%)]"
+              className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_20%_10%,rgba(124,36,48,0.55),transparent_65%),radial-gradient(ellipse_at_85%_85%,rgba(124,36,48,0.3),transparent_55%)]"
             />
           )}
           <div className="relative grid items-center gap-0 lg:grid-cols-2 lg:gap-8">
@@ -35,6 +36,12 @@ export default function Hero() {
               <p className="mt-4 max-w-sm font-display italic text-lg text-cream-100/90 sm:text-xl animate-fadeUp [animation-delay:160ms]">
                 Una fragancia que deja huella.
               </p>
+              {VALENTINES_ACTIVE && (
+                <p className="mt-2 flex items-center gap-2 font-display text-base text-blush-100 sm:text-lg animate-fadeUp [animation-delay:200ms]">
+                  <IconHeart className="h-4 w-4 shrink-0 text-wine-300" />
+                  {valentinesCopy.heroLine}
+                </p>
+              )}
 
               <div className="mt-6 flex flex-wrap gap-2 animate-fadeUp [animation-delay:220ms]">
                 {pills.map((p) => (
@@ -95,6 +102,7 @@ export default function Hero() {
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-ink-900 to-transparent lg:hidden" />
                 <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-24 bg-gradient-to-r from-ink-900 to-transparent lg:block" />
                 <ValentineAccents />
+                <FeaturedLaunches />
               </div>
             </div>
           </div>

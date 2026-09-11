@@ -94,6 +94,10 @@ export default {
           '0%, 100%': { opacity: 0.25, transform: 'scale(0.85)' },
           '50%': { opacity: 1, transform: 'scale(1.1)' },
         },
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
       },
       animation: {
         fadeUp: 'fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) forwards',
@@ -102,6 +106,7 @@ export default {
         bump: 'bump 0.4s cubic-bezier(0.34,1.56,0.64,1)',
         heartFloat: 'heartFloat 5s ease-in-out infinite',
         twinkle: 'twinkle 3.2s ease-in-out infinite',
+        marquee: 'marquee 22s linear infinite',
       },
     },
   },

@@ -5,7 +5,9 @@ import spotlightJpg from '../assets/img/spotlight-bottle.jpg'
 import Reveal from './Reveal'
 import ProductModal from './ProductModal'
 import ValentineAccents from './ValentineAccents'
+import { IconHeart } from './icons'
 import { waLink, waMessages } from '../data/site'
+import { VALENTINES_ACTIVE, valentinesCopy } from '../data/campaign'
 
 export default function ProductSpotlight() {
   const [open, setOpen] = useState(false)
@@ -42,9 +44,17 @@ export default function ProductSpotlight() {
             </div>
 
             <div className="flex flex-col justify-center p-8 sm:p-10 lg:p-14">
-              <span className="inline-flex w-fit items-center rounded-full bg-gold-500/10 px-3 py-1 font-body text-[11px] uppercase tracking-widest2 text-gold-400">
-                Especialistas en inspiración
-              </span>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="inline-flex w-fit items-center rounded-full bg-gold-500/10 px-3 py-1 font-body text-[11px] uppercase tracking-widest2 text-gold-400">
+                  Especialistas en inspiración
+                </span>
+                {VALENTINES_ACTIVE && (
+                  <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-wine-500/15 px-3 py-1 font-body text-[11px] uppercase tracking-widest2 text-wine-200">
+                    <IconHeart className="h-3 w-3" />
+                    {valentinesCopy.heroEyebrow}
+                  </span>
+                )}
+              </div>
               <h3 className="mt-4 font-display text-2xl text-cream-50 sm:text-3xl">
                 Eau de parfum / vaporisateur
               </h3>
