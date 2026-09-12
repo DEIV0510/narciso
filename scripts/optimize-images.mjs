@@ -211,8 +211,11 @@ async function run() {
 
   // 7. Video posters — real still frames from the 3 real videos, used as
   // click-to-play posters for the "Detrás de la fragancia" gallery.
+  // lifestyle-poster-raw.jpg ahora es un frame extraído del video HD que
+  // mandó el cliente (720px nativo, antes 360px) — de ahí el mismo ancho
+  // objetivo que los otros dos posters.
   await emit(sharp(craftPosterSrc).resize({ width: 1000, withoutEnlargement: true }), 'craft-poster')
-  await emit(sharp(lifestylePosterSrc).resize({ width: 760, withoutEnlargement: true }), 'lifestyle-poster')
+  await emit(sharp(lifestylePosterSrc).resize({ width: 1000, withoutEnlargement: true }), 'lifestyle-poster')
   await emit(sharp(studioPosterSrc).resize({ width: 1000, withoutEnlargement: true }), 'studio-poster')
 
   // 8. GenderFinder cards (agosto 2026) — 3 escenas de ambiente reales que
