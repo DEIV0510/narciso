@@ -2654,6 +2654,16 @@ export const fragranceInfo = {
     timeOfDay: ["Noche"],
     profile: "Apertura eléctrica de cítricos y grosella negra con un toque marino, corazón especiado de geranio y clavo, y un fondo intenso de cuero, cedro y vainilla con un fondo animal; audaz, adictivo y de gran proyección.",
   },
+  'amber-rouge-orientica-unisex': {
+    family: "Amaderada Especiada",
+    topNotes: ["Azafrán", "Jazmín"],
+    heartNotes: ["Amberwood (madera de ámbar)", "Ámbar gris"],
+    baseNotes: ["Cedro", "Resina de abeto"],
+    occasions: ["Noche", "Evento"],
+    season: ["Otoño", "Invierno"],
+    timeOfDay: ["Noche"],
+    profile: "Apertura especiada de azafrán y jazmín sobre un corazón mineral de amberwood y ámbar gris, con un fondo seco de cedro y resina de abeto; ámbar amaderado robusto, envolvente y de gran proyección.",
+  },
 }
 
 export function getFragranceInfo(id) {

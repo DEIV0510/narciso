@@ -463,6 +463,11 @@ const unisex = [
   { title: '9 PM Rebel', brand: 'Afnan', style: 'Intenso' },
   { title: 'Hawas Fire', brand: 'Rasasi', style: 'Fresco' },
   { title: 'Club de Nuit Precieux I', brand: 'Armaf', style: 'Intenso' },
+  // 2026-09-15: el cliente pidió agregar esta puntualmente a Unisex.
+  // Producto real verificado (Fragrantica): amaderada-especiada, azafrán/
+  // jazmín/ambarwood/ámbar gris, se posiciona como alternativa a Baccarat
+  // Rouge 540 — ficha completa en fragranceInfo.js.
+  { title: 'Amber Rouge', brand: 'Orientica', style: 'Intenso' },
 ].map((p) => toProduct(p, CATEGORIES.UNISEX, 'unisex'))
 
 function slugify(...parts) {
