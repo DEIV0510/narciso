@@ -18,7 +18,7 @@ export default function ProductSpotlight() {
         <Reveal className="mx-auto max-w-xl text-center">
           <p className="section-eyebrow text-gold-400">Nuestra fragancia</p>
           <h2 className="mt-3 font-display text-3xl text-cream-50 sm:text-4xl text-balance">
-            Narciso Parfum
+            Gentleman Co
           </h2>
           <p className="mt-3 font-body text-sm text-ink-300 sm:text-base">
             Elaborada en Ibagué, Tolima. Pensada para dejar huella.
@@ -34,7 +34,7 @@ export default function ProductSpotlight() {
                 <source srcSet={spotlightWebp} type="image/webp" />
                 <img
                   src={spotlightJpg}
-                  alt="Narciso Parfum, frasco negro con tapa dorada y etiqueta con corona"
+                  alt="Gentleman Co, frasco negro con tapa dorada y etiqueta con corona"
                   className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
                   loading="lazy"
                   width={800}

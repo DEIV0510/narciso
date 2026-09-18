@@ -13,7 +13,7 @@ export default function PromoBanner() {
   if (!VALENTINES_ACTIVE) return null
 
   const message =
-    'Hola, Narciso Parfum. Vi la promoción especial de San Valentín (elige 3 fragancias por $130.000 COP) y quiero armar mi combo.'
+    'Hola, Gentleman Co. Vi la promoción especial de San Valentín (elige 3 fragancias por $130.000 COP) y quiero armar mi combo.'
 
   return (
     <section className="bg-cream-50 py-10 sm:py-14">

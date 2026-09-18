@@ -14,26 +14,26 @@ import { VALENTINES_ACTIVE } from '../data/campaign'
 const cards = [
   {
     label: 'Hombre',
-    alt: 'Frasco de Narciso Parfum en un escritorio de estudio masculino, fragancias para caballero',
+    alt: 'Frasco de Gentleman Co en un escritorio de estudio masculino, fragancias para caballero',
     picture: { avif: genderCaballeroAvif, webp: genderCaballeroWebp, jpg: genderCaballeroJpg },
     category: 'caballero',
   },
   {
     label: 'Mujer',
-    alt: 'Frasco de Narciso Parfum junto a flores y joyería, fragancias para dama',
+    alt: 'Frasco de Gentleman Co junto a flores y joyería, fragancias para dama',
     picture: { avif: genderDamaAvif, webp: genderDamaWebp, jpg: genderDamaJpg },
     category: 'dama',
   },
   {
     label: 'Unisex',
-    alt: 'Frasco de Narciso Parfum en ambiente unisex, para él, para ella, para ti',
+    alt: 'Frasco de Gentleman Co en ambiente unisex, para él, para ella, para ti',
     picture: { avif: genderUnisexAvif, webp: genderUnisexWebp, jpg: genderUnisexJpg },
     category: 'unisex',
   },
 ]
 
 function goToCategory(category) {
-  window.dispatchEvent(new CustomEvent('narciso:filter-category', { detail: category }))
+  window.dispatchEvent(new CustomEvent('gentleman-co:filter-category', { detail: category }))
   document.getElementById('catalogo')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 

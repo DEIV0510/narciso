@@ -17,7 +17,7 @@ export default function Experience() {
               <source srcSet={heroWebp} type="image/webp" />
               <img
                 src={heroJpg}
-                alt="Frasco de Narciso Parfum sobre un mostrador, con la estantería de fragancias de fondo"
+                alt="Frasco de Gentleman Co sobre un mostrador, con la estantería de fragancias de fondo"
                 className="h-full w-full object-cover object-[center_28%] sm:object-[68%_38%]"
                 loading="lazy"
                 width={1600}

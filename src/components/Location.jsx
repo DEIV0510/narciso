@@ -11,7 +11,7 @@ export default function Location() {
             <IconMapPin />
           </span>
           <p className="section-eyebrow mt-5 text-gold-600">Ubicación</p>
-          <h2 className="mt-2 font-display text-2xl text-ink-900 sm:text-3xl">Narciso Parfum</h2>
+          <h2 className="mt-2 font-display text-2xl text-ink-900 sm:text-3xl">Gentleman Co</h2>
           <p className="mt-4 font-body text-base leading-relaxed text-ink-500">
             {brand.address.line1}
             <br />

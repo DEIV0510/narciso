@@ -129,7 +129,7 @@ export default function FindYourFragrance() {
               ) : (
                 <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
                   {results.map((p) => {
-                    const message = `Hola, Narciso Parfum. Estoy interesado/a en comprar el perfume ${p.fullName} por $${p.price.toLocaleString('es-CO')}. ¿Me pueden confirmar disponibilidad?`
+                    const message = `Hola, Gentleman Co. Estoy interesado/a en comprar el perfume ${p.fullName} por $${p.price.toLocaleString('es-CO')}. ¿Me pueden confirmar disponibilidad?`
                     const img = getProductImage(p.image)
                     return (
                       <div
@@ -143,7 +143,7 @@ export default function FindYourFragrance() {
                               <source srcSet={img.webp} type="image/webp" />
                               <img
                                 src={img.jpg}
-                                alt={`Narciso Parfum — ${p.fullName}`}
+                                alt={`Gentleman Co — ${p.fullName}`}
                                 className="h-full w-full object-contain p-2 transition-transform duration-300 group-hover:scale-105"
                                 loading="lazy"
                                 width={200}

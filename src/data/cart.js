@@ -1,7 +1,7 @@
 import { formatCOP } from './products'
 import { DEFAULT_SIZE_LABEL } from '../context/CartContext'
 
-// Narciso Parfum no maneja pago contra entrega — solo transferencia. Si el
+// Gentleman Co no maneja pago contra entrega — solo transferencia. Si el
 // negocio agrega otro método real más adelante, basta con añadirlo aquí.
 export const paymentMethods = ['Transferencia bancaria']
 
@@ -17,7 +17,7 @@ export function buildOrderMessage(items, customer) {
   const subtotal = items.reduce((sum, item) => sum + item.price * item.qty, 0)
 
   return [
-    'Hola, quiero realizar el siguiente pedido en Narciso Parfum:',
+    'Hola, quiero realizar el siguiente pedido en Gentleman Co:',
     '',
     'PEDIDO:',
     '',

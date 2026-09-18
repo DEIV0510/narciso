@@ -13,7 +13,7 @@ export default function BrandSection() {
             <source srcSet={labelWebp} type="image/webp" />
             <img
               src={labelJpg}
-              alt="Detalle de la etiqueta de Narciso Parfum con la corona y laureles dorados"
+              alt="Detalle de la etiqueta de Gentleman Co con la corona y laureles dorados"
               className="aspect-[4/5] h-full w-full object-cover"
               loading="lazy"
               width={800}
@@ -28,7 +28,7 @@ export default function BrandSection() {
             Más que una fragancia.
           </h2>
           <p className="mt-5 font-body text-base leading-relaxed text-ink-500 sm:text-lg">
-            En Narciso Parfum nos especializamos en perfumería inspirada de alta calidad,
+            En Gentleman Co nos especializamos en perfumería inspirada de alta calidad,
             seleccionada para quienes buscan aromas sofisticados, elegantes y memorables.
           </p>
           <p className="mt-4 font-body text-sm text-ink-500">

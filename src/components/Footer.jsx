@@ -13,7 +13,7 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-8">
         <div className="grid gap-10 border-b border-cream-50/10 pb-12 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <p className="font-display text-xl text-cream-50">NARCISO PARFUM</p>
+            <p className="font-display text-xl text-cream-50">GENTLEMAN CO</p>
             <p className="mt-2 font-body text-sm text-ink-300">Perfumería de alta calidad</p>
           </div>
 
@@ -83,7 +83,7 @@ export default function Footer() {
         </div>
 
         <p className="py-6 text-center font-body text-xs text-ink-300">
-          © {year} Narciso Parfum. Todos los derechos reservados.
+          © {year} Gentleman Co. Todos los derechos reservados.
         </p>
         {VALENTINES_ACTIVE && (
           <p className="-mt-4 flex items-center justify-center gap-1.5 pb-6 font-display italic text-xs text-wine-300">

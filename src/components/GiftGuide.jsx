@@ -5,12 +5,12 @@ import { VALENTINES_ACTIVE, valentinesCopy, giftGuideCards } from '../data/campa
 
 // Sección exclusiva de la campaña de San Valentín: NO agrega productos ni
 // datos nuevos — las 3 tarjetas disparan el mismo evento
-// `narciso:filter-category` que ya usa GenderFinder.jsx para filtrar el
+// `gentleman-co:filter-category` que ya usa GenderFinder.jsx para filtrar el
 // catálogo real por género. Fondo borgoña oscuro a propósito: es la "sección
 // oscura/borgoña" del ritmo de fondos que pidió el cliente, entre las
 // secciones claras del resto de la página.
 function goToCategory(category) {
-  window.dispatchEvent(new CustomEvent('narciso:filter-category', { detail: category }))
+  window.dispatchEvent(new CustomEvent('gentleman-co:filter-category', { detail: category }))
   document.getElementById('catalogo')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 

@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 
-const DEFAULT_TITLE = 'Narciso Parfum | Perfumería de Alta Calidad en Ibagué'
+const DEFAULT_TITLE = 'Gentleman Co | Perfumería de Alta Calidad en Ibagué'
 const DEFAULT_DESCRIPTION =
-  'Narciso Parfum ofrece perfumería inspirada de alta calidad en Ibagué, Tolima. Descubre nuestras fragancias y compra fácilmente por WhatsApp.'
+  'Gentleman Co ofrece perfumería inspirada de alta calidad en Ibagué, Tolima. Descubre nuestras fragancias y compra fácilmente por WhatsApp.'
 
 function setMeta(name, content, attr = 'name') {
   if (!content) return

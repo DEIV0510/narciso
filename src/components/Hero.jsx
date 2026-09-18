@@ -30,8 +30,8 @@ export default function Hero() {
               )}
               <p className="section-eyebrow animate-fadeUp text-gold-400">Especialistas en inspiración</p>
               <h1 className="mt-4 font-display text-[2.5rem] leading-[1.05] text-cream-50 sm:text-6xl lg:text-[3.4rem] xl:text-[3.8rem] animate-fadeUp [animation-delay:80ms]">
-                NARCISO
-                <span className="block text-gold-400">PARFUM</span>
+                GENTLEMAN
+                <span className="block text-gold-400">CO</span>
               </h1>
               <p className="mt-4 max-w-sm font-display italic text-lg text-cream-100/90 sm:text-xl animate-fadeUp [animation-delay:160ms]">
                 Una fragancia que deja huella.
@@ -91,7 +91,7 @@ export default function Hero() {
                   <source srcSet={heroWebp} type="image/webp" />
                   <img
                     src={heroJpg}
-                    alt="Frasco de Narciso Parfum, perfume inspirado elaborado en Ibagué, Tolima"
+                    alt="Frasco de Gentleman Co, perfume inspirado elaborado en Ibagué, Tolima"
                     className="h-full w-full object-cover lg:object-[center_30%]"
                     width={1600}
                     height={2143}

@@ -50,9 +50,9 @@ export default function Header({ open, onOpenChange }) {
         <SectionLink
           href="#inicio"
           className="relative flex items-center gap-2"
-          aria-label="Narciso Parfum, inicio"
+          aria-label="Gentleman Co, inicio"
         >
-          <img src={logo} alt="Narciso Parfum" className="h-9 w-auto sm:h-11" width={220} height={110} />
+          <img src={logo} alt="Gentleman Co" className="h-9 w-auto sm:h-11" width={277} height={220} />
           {VALENTINES_ACTIVE && (
             <IconHeart
               aria-hidden="true"
@@ -78,7 +78,7 @@ export default function Header({ open, onOpenChange }) {
             href={brand.instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Instagram de Narciso Parfum"
+            aria-label="Instagram de Gentleman Co"
             className="text-ink-500 transition-colors hover:text-gold-600"
           >
             <IconInstagram />
@@ -87,7 +87,7 @@ export default function Header({ open, onOpenChange }) {
             href={brand.tiktokUrl}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="TikTok de Narciso Parfum"
+            aria-label="TikTok de Gentleman Co"
             className="text-ink-500 transition-colors hover:text-gold-600"
           >
             <IconTikTok />

@@ -2,7 +2,7 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "narciso-parfum",
+      "name": "gentleman-co",
       "runtimeExecutable": "npm.cmd",
       "runtimeArgs": ["run", "dev"],
       "port": 5264

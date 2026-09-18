@@ -11,7 +11,7 @@ export default function ProductCard({ product, eager = false }) {
   const categoryLabel =
     product.category === CATEGORIES.DAMA ? 'Dama' : product.category === CATEGORIES.UNISEX ? 'Unisex' : 'Caballero'
   const sizeLabel = product.sizes?.[0]?.label
-  const message = `Hola, Narciso Parfum. Estoy interesado/a en comprar el perfume ${product.fullName}${
+  const message = `Hola, Gentleman Co. Estoy interesado/a en comprar el perfume ${product.fullName}${
     sizeLabel ? ` (${sizeLabel})` : ''
   } por $${product.price.toLocaleString('es-CO')}. ¿Me pueden confirmar disponibilidad?`
   const wa = waLink(message)
@@ -50,7 +50,7 @@ export default function ProductCard({ product, eager = false }) {
             <source srcSet={img.webp} type="image/webp" />
             <img
               src={img.jpg}
-              alt={`Narciso Parfum — ${product.fullName}`}
+              alt={`Gentleman Co — ${product.fullName}`}
               className="h-full w-full object-contain p-4 transition-transform duration-300 ease-out group-hover:scale-[1.05]"
               loading={eager ? 'eager' : 'lazy'}
               width={300}

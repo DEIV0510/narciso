@@ -3,7 +3,7 @@ import PromoBanner from '../components/PromoBanner'
 import GenderFinder from '../components/GenderFinder'
 import Catalog from '../components/Catalog'
 import GiftGuide from '../components/GiftGuide'
-import WhyNarciso from '../components/WhyNarciso'
+import WhyGentlemanCo from '../components/WhyGentlemanCo'
 import ProductSpotlight from '../components/ProductSpotlight'
 import CraftProcess from '../components/CraftProcess'
 import Experience from '../components/Experience'
@@ -21,7 +21,7 @@ export default function HomePage() {
       <GenderFinder />
       <Catalog />
       <GiftGuide />
-      <WhyNarciso />
+      <WhyGentlemanCo />
       <ProductSpotlight />
       <CraftProcess />
       <Experience />

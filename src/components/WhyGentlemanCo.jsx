@@ -2,11 +2,11 @@ import spotlightAvif from '../assets/img/spotlight-bottle.avif'
 import spotlightWebp from '../assets/img/spotlight-bottle.webp'
 import spotlightJpg from '../assets/img/spotlight-bottle.jpg'
 import Reveal from './Reveal'
-import { whyNarciso, waLink, waMessages } from '../data/site'
+import { whyGentlemanCo, waLink, waMessages } from '../data/site'
 import { IconCheck, IconPetal } from './icons'
 import { VALENTINES_ACTIVE } from '../data/campaign'
 
-export default function WhyNarciso() {
+export default function WhyGentlemanCo() {
   return (
     <section aria-labelledby="why-heading" className="bg-cream-100 py-16 sm:py-24">
       <div className="mx-auto grid max-w-6xl items-center gap-10 px-6 sm:px-8 lg:grid-cols-2 lg:gap-16 lg:px-8">
@@ -23,7 +23,7 @@ export default function WhyNarciso() {
           )}
           <div className="relative grid grid-cols-[1fr_auto] items-center gap-6">
             <ul className="space-y-3.5">
-              {whyNarciso.map((item) => (
+              {whyGentlemanCo.map((item) => (
                 <li key={item} className="flex items-center gap-2.5 font-body text-sm text-ink-700 sm:text-base">
                   <IconCheck className="h-4 w-4 shrink-0 text-gold-600" />
                   {item}
@@ -36,7 +36,7 @@ export default function WhyNarciso() {
                 <source srcSet={spotlightWebp} type="image/webp" />
                 <img
                   src={spotlightJpg}
-                  alt="Frasco completo de Narciso Parfum"
+                  alt="Frasco completo de Gentleman Co"
                   className="aspect-[3/4] h-full w-full object-cover"
                   loading="lazy"
                   width={300}
@@ -48,13 +48,13 @@ export default function WhyNarciso() {
         </Reveal>
 
         <Reveal delay={100} className="order-1 lg:order-2">
-          <p className="section-eyebrow text-gold-600">¿Por qué Narciso?</p>
+          <p className="section-eyebrow text-gold-600">¿Por qué Gentleman Co?</p>
           <h2 id="why-heading" className="mt-3 font-display text-3xl text-balance text-ink-900 sm:text-4xl">
             Calidad que se siente real.
           </h2>
           <p className="mt-5 font-body text-base leading-relaxed text-ink-500 sm:text-lg">
             Todo lo que buscas en una fragancia inspirada: presentación cuidada, aroma que
-            perdura y atención personalizada, sin complicaciones. Eso es Narciso Parfum.
+            perdura y atención personalizada, sin complicaciones. Eso es Gentleman Co.
           </p>
           <a
             href={waLink(waMessages.catalog)}

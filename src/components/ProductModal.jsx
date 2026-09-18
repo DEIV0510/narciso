@@ -12,9 +12,9 @@ import { waLink, waMessages } from '../data/site'
 import { IconX } from './icons'
 
 const gallery = [
-  { avif: spotlightAvif, webp: spotlightWebp, jpg: spotlightJpg, alt: 'Frasco de Narciso Parfum sobre madera' },
-  { avif: heroAvif, webp: heroWebp, jpg: heroJpg, alt: 'Narciso Parfum junto a otros frascos de la colección' },
-  { avif: labelAvif, webp: labelWebp, jpg: labelJpg, alt: 'Detalle de la etiqueta y tapa dorada de Narciso Parfum' },
+  { avif: spotlightAvif, webp: spotlightWebp, jpg: spotlightJpg, alt: 'Frasco de Gentleman Co sobre madera' },
+  { avif: heroAvif, webp: heroWebp, jpg: heroJpg, alt: 'Gentleman Co junto a otros frascos de la colección' },
+  { avif: labelAvif, webp: labelWebp, jpg: labelJpg, alt: 'Detalle de la etiqueta y tapa dorada de Gentleman Co' },
 ]
 
 const FOCUSABLE_SELECTOR =
@@ -117,7 +117,7 @@ export default function ProductModal({ open, onClose }) {
           <div className="flex flex-col p-6 sm:p-8">
             <p className="section-eyebrow text-gold-600">Especialistas en inspiración</p>
             <h3 id="product-modal-title" className="mt-2 font-display text-3xl text-ink-900">
-              Narciso Parfum
+              Gentleman Co
             </h3>
             <p className="mt-3 font-body text-sm leading-relaxed text-ink-500">
               Eau de parfum en spray presurizado, elaborada en Ibagué, Tolima. Una fragancia

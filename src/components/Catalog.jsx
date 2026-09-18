@@ -37,8 +37,8 @@ export default function Catalog() {
       setCategory(e.detail)
       setQuery('')
     }
-    window.addEventListener('narciso:filter-category', handler)
-    return () => window.removeEventListener('narciso:filter-category', handler)
+    window.addEventListener('gentleman-co:filter-category', handler)
+    return () => window.removeEventListener('gentleman-co:filter-category', handler)
   }, [])
 
   const sections = useMemo(() => {
@@ -77,7 +77,7 @@ export default function Catalog() {
             Descubre tu fragancia
           </h2>
           <p className="mt-3 font-body text-sm text-ink-400 sm:text-base">
-            {products.length} fragancias inspiradas, mismo frasco Narciso. Desde $55.000 COP · 50 ml.
+            {products.length} fragancias inspiradas, mismo frasco Gentleman Co. Desde $55.000 COP · 50 ml.
           </p>
           {VALENTINES_ACTIVE && (
             <p className="mt-1 font-display italic text-sm text-wine-600">{valentinesCopy.catalogLine}</p>

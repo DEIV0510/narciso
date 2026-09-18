@@ -28,10 +28,10 @@ import { VALENTINES_ACTIVE, valentinesCopy } from '../data/campaign'
 function buildGallery(product) {
   const principal = getProductImage(product.image)
   return [
-    { key: 'principal', ...principal, alt: 'Frasco de Narciso Parfum' },
-    { key: 'vista', avif: spotlightAvif, webp: spotlightWebp, jpg: spotlightJpg, alt: 'Narciso Parfum sobre madera' },
-    { key: 'detalle', avif: labelAvif, webp: labelWebp, jpg: labelJpg, alt: 'Detalle de la etiqueta de Narciso Parfum' },
-    { key: 'presentacion', avif: heroAvif, webp: heroWebp, jpg: heroJpg, alt: 'Narciso Parfum junto a la colección' },
+    { key: 'principal', ...principal, alt: 'Frasco de Gentleman Co' },
+    { key: 'vista', avif: spotlightAvif, webp: spotlightWebp, jpg: spotlightJpg, alt: 'Gentleman Co sobre madera' },
+    { key: 'detalle', avif: labelAvif, webp: labelWebp, jpg: labelJpg, alt: 'Detalle de la etiqueta de Gentleman Co' },
+    { key: 'presentacion', avif: heroAvif, webp: heroWebp, jpg: heroJpg, alt: 'Gentleman Co junto a la colección' },
   ]
 }
 
@@ -52,7 +52,7 @@ export default function ProductDetailPage() {
   const related = getRelatedProducts(product, 4)
   const sizes = product.sizes || [{ label: DEFAULT_SIZE_LABEL, price: product.price }]
   const size = selectedSize || sizes[0]
-  const message = `Hola, Narciso Parfum. Estoy interesado/a en ${product.fullName}${
+  const message = `Hola, Gentleman Co. Estoy interesado/a en ${product.fullName}${
     size.label !== DEFAULT_SIZE_LABEL ? ` (${size.label})` : ''
   } por $${size.price.toLocaleString('es-CO')} COP. ¿Me pueden confirmar disponibilidad?`
 
@@ -61,16 +61,16 @@ export default function ProductDetailPage() {
   const gallery = buildGallery(product)
 
   useDocumentMeta({
-    title: `${product.title} | Narciso Parfum`,
-    description: `${product.title}, fragancia inspirada de Narciso Parfum (${product.category}). ${formatCOP(product.price)}. Elaborada en Ibagué, Tolima — compra por WhatsApp.`,
+    title: `${product.title} | Gentleman Co`,
+    description: `${product.title}, fragancia inspirada de Gentleman Co (${product.category}). ${formatCOP(product.price)}. Elaborada en Ibagué, Tolima — compra por WhatsApp.`,
     path: `/perfumes/${product.id}`,
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'Product',
-      name: `Narciso Parfum — ${product.title}`,
+      name: `Gentleman Co — ${product.title}`,
       image: `${window.location.origin}${gallery[0].jpg}`,
       description: `Fragancia inspirada, ${product.category.toLowerCase()}.`,
-      brand: { '@type': 'Brand', name: 'Narciso Parfum' },
+      brand: { '@type': 'Brand', name: 'Gentleman Co' },
       offers: {
         '@type': 'Offer',
         priceCurrency: 'COP',
@@ -161,7 +161,7 @@ export default function ProductDetailPage() {
               <p className="mt-4 font-body text-base leading-relaxed text-ink-500">{info.profile}</p>
             ) : (
               <p className="mt-4 font-body text-base leading-relaxed text-ink-500">
-                Una fragancia inspirada de Narciso Parfum, elaborada en Ibagué, Tolima.
+                Una fragancia inspirada de Gentleman Co, elaborada en Ibagué, Tolima.
               </p>
             )}
 

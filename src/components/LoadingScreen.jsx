@@ -30,7 +30,7 @@ export default function LoadingScreen() {
         <source srcSet={crownWebp} type="image/webp" />
         <img
           src={crownPng}
-          alt="Narciso Parfum"
+          alt="Gentleman Co"
           className="relative h-20 w-auto sm:h-24 motion-safe:[animation:crownIn_0.7s_cubic-bezier(0.34,1.56,0.64,1)_forwards]"
           style={{ opacity: 0 }}
         />
@@ -38,14 +38,14 @@ export default function LoadingScreen() {
 
       <span className="relative mt-5 font-display text-2xl tracking-[0.32em] sm:text-3xl">
         <span className="shimmer-text motion-safe:animate-fadeUp [animation-delay:480ms]" style={{ opacity: 0 }}>
-          NARCISO
+          GENTLEMAN
         </span>
       </span>
       <span
         className="relative mt-2 font-body text-[10px] tracking-widest2 text-ink-300 motion-safe:animate-fadeUp sm:text-xs [animation-delay:640ms]"
         style={{ opacity: 0 }}
       >
-        PARFUM
+        CO
       </span>
 
       <span

@@ -3,7 +3,7 @@
 // la información que existe realmente (etiqueta del frasco, logo, datos de contacto).
 
 export const brand = {
-  name: 'Narciso Parfum',
+  name: 'Gentleman Co',
   tagline: 'Perfumería de alta calidad',
   subtagline: 'Perfumería inspirada para quienes quieren dejar huella.',
   specialists: 'Especialistas en inspiración',
@@ -31,17 +31,17 @@ export function waLink(message) {
 }
 
 export const waMessages = {
-  catalog: 'Hola, Narciso Parfum. Quiero conocer su catálogo de fragancias y precios.',
+  catalog: 'Hola, Gentleman Co. Quiero conocer su catálogo de fragancias y precios.',
   product:
-    'Hola, Narciso Parfum. Estoy interesado/a en el perfume Narciso Parfum. ¿Me pueden dar información y precio?',
+    'Hola, Gentleman Co. Quiero más información sobre su fragancia insignia. ¿Me pueden dar información y precio?',
   feminine:
-    'Hola, Narciso Parfum. Estoy buscando una fragancia femenina. ¿Me pueden recomendar opciones y precios?',
+    'Hola, Gentleman Co. Estoy buscando una fragancia femenina. ¿Me pueden recomendar opciones y precios?',
   masculine:
-    'Hola, Narciso Parfum. Estoy buscando una fragancia masculina. ¿Me pueden recomendar opciones y precios?',
+    'Hola, Gentleman Co. Estoy buscando una fragancia masculina. ¿Me pueden recomendar opciones y precios?',
   unisex:
-    'Hola, Narciso Parfum. Estoy buscando una fragancia unisex. ¿Me pueden recomendar opciones y precios?',
-  availability: 'Hola, Narciso Parfum. Quiero consultar disponibilidad de sus fragancias.',
-  order: 'Hola, Narciso Parfum. Quiero hacer mi pedido. ¿Me ayudan con el proceso?',
+    'Hola, Gentleman Co. Estoy buscando una fragancia unisex. ¿Me pueden recomendar opciones y precios?',
+  availability: 'Hola, Gentleman Co. Quiero consultar disponibilidad de sus fragancias.',
+  order: 'Hola, Gentleman Co. Quiero hacer mi pedido. ¿Me ayudan con el proceso?',
 }
 
 export const navLinks = [
@@ -53,7 +53,7 @@ export const navLinks = [
   { label: 'Ubicación', href: '#ubicacion' },
 ]
 
-export const whyNarciso = [
+export const whyGentlemanCo = [
   'Perfumería de alta calidad',
   'Perfumería inspirada',
   'Presentación premium',

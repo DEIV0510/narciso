@@ -1,6 +1,15 @@
-# Narciso Parfum
+# Gentleman Co
 
-Sitio web de marca para **Narciso Parfum** (perfumería inspirada de alta calidad, Ibagué, Tolima). React + Vite + Tailwind CSS, orientado 100% a conversión por WhatsApp.
+Sitio web de marca para **Gentleman Co** (perfumería inspirada de alta calidad, Ibagué, Tolima). React + Vite + Tailwind CSS, orientado 100% a conversión por WhatsApp.
+
+> **Nota de rebranding (2026-09-18):** el negocio se llamaba "Narciso Parfum" hasta esta
+> fecha — todo el historial de este README (catálogo, fotos, decisiones de contenido) es
+> de esa época y sigue siendo válido tal cual, solo cambió el nombre de marca. El frasco
+> físico real que se fotografía y se despacha hoy sigue con la etiqueta "Narciso Parfum"
+> (no hay empaque nuevo todavía) — por eso las fotos de producto no se tocaron, mientras
+> que marca/textos/SEO/checkout ya dicen "Gentleman Co" en todo el sitio. Ver
+> `project_narciso_parfum.md` (memoria del proyecto) para el detalle completo de la
+> migración.
 
 ## Desarrollo
 
@@ -478,11 +487,12 @@ Cambios aplicados, todos con datos y fotos reales de Narciso:
   `hero-bottle`/`spotlight-bottle`/`label-detail`, que son genéricos y se
   usan en otras secciones del sitio, así que se sacaron a assets propios
   para no pisar esos usos compartidos). Las 3 filtran el catálogo en vivo
-  (evento `narciso:filter-category` que Catalog.jsx escucha). Unisex era
+  (evento `gentleman-co:filter-category` que Catalog.jsx escucha). Unisex era
   WhatsApp-only originalmente porque no existían productos unisex reales en
   el catálogo — pasó a filtro real en la ampliación de agosto 2026, ver
   arriba.
-- **`WhyNarciso.jsx`** ("¿Por qué Narciso?", reemplaza a `Benefits.jsx`):
+- **`WhyGentlemanCo.jsx`** (antes `WhyNarciso.jsx`, renombrado en el
+  rebranding — "¿Por qué Gentleman Co?", reemplaza a `Benefits.jsx`):
   checklist con los 6 hechos reales confirmados por el cliente, con una
   miniatura del frasco completo (`spotlight-bottle`) al lado — antes usaba
   `label-detail` (recorte muy cerrado, solo etiqueta/tapa) y el cliente
@@ -586,7 +596,7 @@ reemplazo.
 ```
 src/
   components/   Header, Hero, GenderFinder, Catalog, ProductCard, ProductRow,
-                WhyNarciso, ProductSpotlight, ProductModal, CraftProcess,
+                WhyGentlemanCo, ProductSpotlight, ProductModal, CraftProcess,
                 Experience, FindYourFragrance, BrandSection, Location,
                 Socials, FinalCTA, Footer, WhatsAppButton, LoadingScreen,
                 Breadcrumbs, CartDrawer, CartItemRow, CartToast, CheckoutModal

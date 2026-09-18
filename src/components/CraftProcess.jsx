@@ -20,21 +20,21 @@ const clips = [
     label: 'El proceso',
     video: craftVideo,
     poster: { avif: craftPosterAvif, webp: craftPosterWebp, jpg: craftPosterJpg },
-    alt: 'Elaborando una fragancia Narciso Parfum: dosificación de esencias en el taller',
+    alt: 'Elaborando una fragancia Gentleman Co: dosificación de esencias en el taller',
   },
   {
     key: 'fragancia',
     label: 'La fragancia',
     video: lifestyleVideo,
     poster: { avif: lifestylePosterAvif, webp: lifestylePosterWebp, jpg: lifestylePosterJpg },
-    alt: 'Frasco de Narciso Parfum en la mano, con la fragancia dorada a contraluz',
+    alt: 'Frasco de Gentleman Co en la mano, con la fragancia dorada a contraluz',
   },
   {
     key: 'taller',
     label: 'Nuestro taller',
     video: studioVideo,
     poster: { avif: studioPosterAvif, webp: studioPosterWebp, jpg: studioPosterJpg },
-    alt: 'Frascos de Narciso Parfum recién envasados en el taller',
+    alt: 'Frascos de Gentleman Co recién envasados en el taller',
   },
 ]
 
@@ -109,7 +109,7 @@ export default function CraftProcess() {
           </div>
         </div>
 
-        <div className="mt-4 flex justify-center gap-3" role="tablist" aria-label="Videos de Narciso Parfum">
+        <div className="mt-4 flex justify-center gap-3" role="tablist" aria-label="Videos de Gentleman Co">
           {clips.map((clip, i) => (
             <button
               key={clip.key}

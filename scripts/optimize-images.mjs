@@ -14,7 +14,7 @@ mkdirSync(PUBLIC, { recursive: true })
 
 const bottleSrc = path.join(SRC, 'botella-oficial-ambiente.png')
 const bottleOficialSrc = path.join(SRC, 'botella-oficial.png')
-const logoSrc = path.join(SRC, 'logo-oficial.png')
+const logoSrc = path.join(SRC, 'logo-gentleman-co.png')
 const craftPosterSrc = path.join(SRC, 'craft-poster-raw.jpg')
 const lifestylePosterSrc = path.join(SRC, 'lifestyle-poster-raw.jpg')
 const studioPosterSrc = path.join(SRC, 'studio-poster-raw.jpg')
@@ -163,20 +163,22 @@ async function run() {
 
   // 5. Logo — trim the whitespace margin, then key out the white background for
   // real transparency (not just a cropped white box) so it sits cleanly on any surface.
-  // El logo oficial tiene degradados/biseles (no colores planos como el logo
-  // anterior), así que lossless/truecolor pesa mucho para un asset tan
-  // pequeño en pantalla — se usa lossy de alta calidad + PNG con paleta
-  // (visualmente idéntico, ~70% más liviano).
+  // Rebranding Narciso Parfum → Gentleman Co (2026-09-18): logo-gentleman-co.png
+  // (corona+laurel + wordmark "Gentleman Co. · Fine Fragrances") reemplaza a
+  // logo-oficial.png en todo el pipeline — mismo tratamiento (degradados/biseles
+  // dorados, no colores planos), así que sigue conviniendo lossy de alta calidad
+  // + PNG con paleta en vez de lossless (visualmente idéntico, mucho más liviano).
   const logoTrim = await sharp(logoSrc).trim({ threshold: 8 }).toBuffer()
   const logoTransparentBuf = await (await makeTransparent(logoTrim)).png().toBuffer()
   await sharp(logoTransparentBuf).resize({ height: 440, withoutEnlargement: true }).png({ compressionLevel: 9, palette: true, quality: 95 }).toFile(path.join(OUT, 'logo.png'))
   await sharp(logoTransparentBuf).resize({ height: 440, withoutEnlargement: true }).webp({ quality: 90, alphaQuality: 90 }).toFile(path.join(OUT, 'logo.webp'))
 
   // 6. Favicon — crop just the crown+laurel mark from the top of the trimmed logo (opaque background needed here).
-  // 0.70 mide el hueco real entre el emblema y la palabra "NARCISO" en el
-  // logo oficial (medido con un scan fila-por-fila del PNG fuente).
+  // 0.745 mide el hueco real entre el emblema y el adorno/wordmark "Gentleman
+  // Co." del logo nuevo (scan fila-por-fila sobre el PNG ya recortado —
+  // distinto del 0.70 que medía el logo Narciso anterior, proporciones nuevas).
   const logoMeta = await sharp(logoTrim).metadata()
-  const crownH = Math.round(logoMeta.height * 0.7)
+  const crownH = Math.round(logoMeta.height * 0.745)
   const crownBuf = await sharp(logoTrim)
     .extract({ left: 0, top: 0, width: logoMeta.width, height: crownH })
     .flatten({ background: '#f8f3ea' })

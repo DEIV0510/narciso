@@ -1,5 +1,5 @@
 // Interruptor de la campaña visual de San Valentín — capa puramente estética
-// sobre la identidad real de Narciso Parfum (NO toca catálogo, precios,
+// sobre la identidad real de Gentleman Co (NO toca catálogo, precios,
 // notas, contacto ni funcionalidades). Cuando termine la temporada, poner
 // esta bandera en `false` quita toda la ambientación de un solo lugar sin
 // tener que revisar componente por componente.
@@ -15,12 +15,12 @@ export const valentinesCopy = {
   giftGuideEyebrow: 'San Valentín',
   giftGuideTitle: 'El regalo perfecto tiene aroma',
   giftGuideLine: 'Encuentra la fragancia ideal para cada persona especial.',
-  promoImageAlt: 'Promoción especial Narciso Parfum: elige 3 fragancias por $130.000 COP',
-  footerNote: 'Con amor, Narciso Parfum.',
+  promoImageAlt: 'Promoción especial Gentleman Co: elige 3 fragancias por $130.000 COP',
+  footerNote: 'Con amor, Gentleman Co.',
 }
 
 // Las 3 tarjetas de la sección "El regalo perfecto tiene aroma" reusan el
-// mismo evento `narciso:filter-category` que ya usa GenderFinder — enlazan
+// mismo evento `gentleman-co:filter-category` que ya usa GenderFinder — enlazan
 // a categorías REALES del catálogo, no a productos inventados.
 export const giftGuideCards = [
   { label: 'Para ella', category: 'dama' },

@@ -1,8 +1,8 @@
 // Perfiles olfativos reales por fragancia (familia, notas de salida/corazón/
 // fondo, y una clasificación orientativa de ocasión/estación/momento del
-// día) sobre la fragancia ORIGINAL en la que cada producto de Narciso
-// Parfum está inspirado. Se usan únicamente para describir el perfil de la
-// inspiración — nunca implican que Narciso venda el producto original de
+// día) sobre la fragancia ORIGINAL en la que cada producto de Gentleman
+// Co está inspirado. Se usan únicamente para describir el perfil de la
+// inspiración — nunca implican que Gentleman Co venda el producto original de
 // esa marca. Llave = product.id (ver products.js).
 //
 // Fuentes, en dos capas:

@@ -9,7 +9,7 @@ export default function Socials() {
         <Reveal>
           <p className="section-eyebrow text-gold-400">Redes sociales</p>
           <h2 id="socials-heading" className="mt-3 font-display text-2xl text-cream-50 sm:text-3xl">
-            Sigue a Narciso Parfum
+            Sigue a Gentleman Co
           </h2>
         </Reveal>
 
