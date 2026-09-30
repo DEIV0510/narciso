@@ -1,9 +1,9 @@
 import { formatCOP } from './products'
 import { DEFAULT_SIZE_LABEL } from '../context/CartContext'
 
-// Gentleman Co no maneja pago contra entrega — solo transferencia. Si el
-// negocio agrega otro método real más adelante, basta con añadirlo aquí.
-export const paymentMethods = ['Transferencia bancaria']
+// Gentleman Co no maneja pago contra entrega. Métodos reales del negocio —
+// si se agrega otro más adelante, basta con añadirlo aquí.
+export const paymentMethods = ['Transferencia bancaria', 'Addi']
 
 // Arma el mensaje estructurado de pedido para WhatsApp a partir del carrito
 // y los datos del cliente. El envío no se suma al total porque se calcula

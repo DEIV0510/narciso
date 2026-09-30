@@ -1,5 +1,6 @@
 import Hero from '../components/Hero'
 import PromoBanner from '../components/PromoBanner'
+import AddiBanner from '../components/AddiBanner'
 import GenderFinder from '../components/GenderFinder'
 import Catalog from '../components/Catalog'
 import GiftGuide from '../components/GiftGuide'
@@ -18,6 +19,7 @@ export default function HomePage() {
     <>
       <Hero />
       <PromoBanner />
+      <AddiBanner />
       <GenderFinder />
       <Catalog />
       <GiftGuide />
