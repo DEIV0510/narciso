@@ -307,6 +307,31 @@ const caballeroAgosto2026 = [
   // cliente las nombró como excepción, así que mantienen $60.000 sin talla.
   { title: 'Torino21', brand: 'Xerjoff', style: 'Fresco', price: 60000, size: null },
   { title: 'Unstoppable Hong Kong', brand: 'Elivi Parfums', style: 'Intenso', price: 60000, size: null },
+  // 2026-10-06: lote de 12 pedido por el cliente en una lista informal (con
+  // errores de tipeo). Cada nombre se verificó contra Fragrantica y la marca;
+  // todas con ficha completa en fragranceInfo.js y sin foto propia todavía
+  // (usan `catalog-bottle`). Correcciones y ambigüedades que conviene
+  // recordar:
+  // - "Green iris twist" = Creed Green Irish Tweed; "intesly" = Nitro Red
+  //   Intensely (Dumont); "melancolía" = Born in Roma Purple Melancholia.
+  // - Emeer (Lattafa) y Cedrat Boisé (Mancera) figuran como unisex en
+  //   Fragrantica; se dejaron en Caballero como los pidió el cliente.
+  // - "Faraón ramses" es ambiguo (Pharaoh Ramesses I o II, ambas 2025): se
+  //   eligió la I por ser la más parecida al texto; confirmar con el frasco.
+  // - "The Most Wanted" se tomó como la Eau de Parfum Intense (2021), que es
+  //   la que las tiendas llaman solo así; existen también Parfum y EDT Intense.
+  { title: 'Emeer', brand: 'Lattafa', style: 'Fresco' },
+  { title: 'Uomo Born in Roma Purple Melancholia', brand: 'Valentino', style: 'Dulce' },
+  { title: 'Champagne Blue', brand: 'Bharara', style: 'Fresco' },
+  { title: 'Loewe 7', brand: 'Loewe', style: 'Elegante' },
+  { title: 'Cedrat Boisé', brand: 'Mancera', style: 'Fresco' },
+  { title: 'Green Irish Tweed', brand: 'Creed', style: 'Fresco' },
+  { title: 'Pharaoh Ramesses I', brand: 'Bharara', style: 'Dulce' },
+  { title: 'Paradigme', brand: 'Prada', style: 'Elegante' },
+  { title: 'The Most Wanted', brand: 'Azzaro', style: 'Intenso' },
+  { title: 'Uomo Born in Roma Intense', brand: 'Valentino', style: 'Intenso' },
+  { title: 'Nitro Red Intensely', brand: 'Dumont', style: 'Fresco' },
+  { title: 'Hawas for Him', brand: 'Rasasi', style: 'Fresco' },
 ].map((p) => toProduct(p, CATEGORIES.CABALLERO, 'hombre'))
 
 const damaAgosto2026 = [
@@ -383,6 +408,13 @@ const damaAgosto2026 = [
   { title: '212 NYC', brand: 'Carolina Herrera', style: 'Fresco' },
   { title: 'Passport Paris', brand: 'Paris Hilton', style: 'Fresco' },
   { title: 'L\'Eau d\'Issey', brand: 'Issey Miyake', style: 'Fresco' },
+  // 2026-10-06 (mismo lote de la lista informal del cliente, ver arriba).
+  // "Cloud" de Ariana Grande ya existía en el catálogo y no se duplicó.
+  // Vulcan Baie figura como unisex en Fragrantica y en la mayoría de tiendas
+  // (la web de French Avenue la etiqueta "For Her"); se dejó en Dama como la
+  // pidió el cliente.
+  { title: 'Vulcan Baie', brand: 'French Avenue', style: 'Dulce' },
+  { title: 'Yum Boujee Marshmallow 81', brand: 'Kayali', style: 'Dulce' },
 ].map((p) => toProduct(p, CATEGORIES.DAMA, 'mujer'))
 
 const unisex = [
@@ -468,6 +500,12 @@ const unisex = [
   // jazmín/ambarwood/ámbar gris, se posiciona como alternativa a Baccarat
   // Rouge 540 — ficha completa en fragranceInfo.js.
   { title: 'Amber Rouge', brand: 'Orientica', style: 'Intenso' },
+  // 2026-10-06 (mismo lote de la lista informal del cliente, ver Caballero).
+  // "Qaed Al Fursan" es la versión base (caja negra); existen Unlimited y
+  // Untamed como productos aparte.
+  { title: 'Qaed Al Fursan', brand: 'Lattafa', style: 'Intenso' },
+  { title: 'Drunk Lovers', brand: 'Born To Stand Out', style: 'Intenso' },
+  { title: 'Toxic Desire', brand: 'Korbaj', style: 'Dulce' },
 ].map((p) => toProduct(p, CATEGORIES.UNISEX, 'unisex'))
 
 function slugify(...parts) {
