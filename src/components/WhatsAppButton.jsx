@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { IconWhatsApp, IconHeart } from './icons'
+import { IconWhatsApp } from './icons'
+import { FlickerFlame } from './HalloweenFx'
 import { waLink, waMessages } from '../data/site'
-import { VALENTINES_ACTIVE } from '../data/campaign'
+import { HALLOWEEN_ACTIVE } from '../data/campaign'
 
 export default function WhatsAppButton({ hideForMenu = false }) {
   const [nearFooter, setNearFooter] = useState(false)
@@ -27,18 +28,18 @@ export default function WhatsAppButton({ hideForMenu = false }) {
       aria-label="Comprar por WhatsApp"
       aria-hidden={hidden}
       tabIndex={hidden ? -1 : 0}
-      className={`group fixed bottom-[calc(1.25rem+env(safe-area-inset-bottom))] right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-ink-900 shadow-[0_8px_24px_rgba(0,0,0,0.28)] transition-all duration-200 hover:scale-105 focus-visible:scale-105 sm:bottom-[calc(1.75rem+env(safe-area-inset-bottom))] sm:right-7 ${
-        VALENTINES_ACTIVE ? 'ring-2 ring-gold-300 ring-offset-2 ring-offset-cream-50' : ''
+      className={`group fixed bottom-[calc(1.25rem+env(safe-area-inset-bottom))] right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-ink-900 shadow-[0_8px_26px_rgba(0,0,0,0.6)] transition-all duration-200 hover:scale-105 focus-visible:scale-105 sm:bottom-[calc(1.75rem+env(safe-area-inset-bottom))] sm:right-7 ${
+        HALLOWEEN_ACTIVE ? 'ring-2 ring-gold-400/70 ring-offset-2 ring-offset-night-900' : ''
       } ${hidden ? 'pointer-events-none translate-y-3 opacity-0' : 'opacity-100'}`}
     >
       <span className="absolute inset-0 rounded-full bg-[#25D366] motion-safe:animate-pulseRing" />
       <IconWhatsApp className="relative h-7 w-7" />
-      {VALENTINES_ACTIVE && (
+      {HALLOWEEN_ACTIVE && (
         <span
           aria-hidden="true"
-          className="absolute -left-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-wine-500 text-cream-50 shadow-sm"
+          className="absolute -left-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full border border-gold-400/70 bg-night-900 text-ember-400 shadow-sm"
         >
-          <IconHeart className="h-2.5 w-2.5 motion-safe:animate-heartBeat" />
+          <FlickerFlame className="h-3 w-3" />
         </span>
       )}
     </a>

@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import logo from '../assets/img/logo.webp'
 import { brand, navLinks, waLink, waMessages } from '../data/site'
-import { IconInstagram, IconTikTok, IconMenu, IconClose, IconWhatsApp, IconBag, IconHeart } from './icons'
+import { IconInstagram, IconTikTok, IconMenu, IconClose, IconWhatsApp, IconBag } from './icons'
+import { FlickerFlame } from './HalloweenFx'
 import SectionLink from './SectionLink'
 import { useCart } from '../context/CartContext'
-import { VALENTINES_ACTIVE } from '../data/campaign'
+import { HALLOWEEN_ACTIVE } from '../data/campaign'
 
 function CartButton({ className = '' }) {
   const { totalItems, openCart } = useCart()
@@ -13,13 +14,13 @@ function CartButton({ className = '' }) {
       type="button"
       onClick={openCart}
       aria-label={totalItems > 0 ? `Ver carrito, ${totalItems} productos` : 'Ver carrito'}
-      className={`relative flex items-center justify-center text-ink-600 transition-colors hover:text-gold-600 ${className}`}
+      className={`relative flex items-center justify-center text-cream-100 transition-colors hover:text-gold-300 ${className}`}
     >
       <IconBag className="h-5 w-5" />
       {totalItems > 0 && (
         <span
           key={totalItems}
-          className="absolute -right-1.5 -top-1.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-gold-500 px-1 font-body text-[10px] font-medium leading-none text-ink-900 motion-safe:animate-bump"
+          className="absolute -right-1.5 -top-1.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-gold-400 px-1 font-body text-[10px] font-medium leading-none text-night-950 shadow-[0_0_10px_rgba(233,138,60,0.55)] motion-safe:animate-bump"
         >
           {totalItems}
         </span>
@@ -41,11 +42,7 @@ export default function Header({ open, onOpenChange }) {
   }, [isOpen, setOpen])
 
   return (
-    <header
-      className={`sticky top-0 z-50 bg-cream-50/95 backdrop-blur-sm ${
-        VALENTINES_ACTIVE ? '' : 'border-b border-ink-100'
-      }`}
-    >
+    <header className="sticky top-0 z-50 border-b border-gold-500/15 bg-night-950/95 shadow-[0_10px_30px_-14px_rgba(0,0,0,0.9)] backdrop-blur-sm">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:h-20 sm:px-6 lg:px-8">
         <SectionLink
           href="#inicio"
@@ -53,11 +50,8 @@ export default function Header({ open, onOpenChange }) {
           aria-label="Gentleman Co, inicio"
         >
           <img src={logo} alt="Gentleman Co" className="h-9 w-auto sm:h-11" width={277} height={220} />
-          {VALENTINES_ACTIVE && (
-            <IconHeart
-              aria-hidden="true"
-              className="absolute -right-2 -top-1 h-3 w-3 text-wine-400 motion-safe:animate-twinkle"
-            />
+          {HALLOWEEN_ACTIVE && (
+            <FlickerFlame wrapperClassName="absolute -right-3 top-0" className="h-3.5 w-3.5 text-ember-400" />
           )}
         </SectionLink>
 
@@ -66,7 +60,7 @@ export default function Header({ open, onOpenChange }) {
             <SectionLink
               key={l.href}
               href={l.href}
-              className="font-body text-sm uppercase tracking-wide text-ink-600 transition-colors hover:text-gold-600"
+              className="hw-nav-link font-body text-sm uppercase tracking-wide text-cream-200/85 transition-colors hover:text-gold-300"
             >
               {l.label}
             </SectionLink>
@@ -79,7 +73,7 @@ export default function Header({ open, onOpenChange }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram de Gentleman Co"
-            className="text-ink-500 transition-colors hover:text-gold-600"
+            className="text-cream-200/70 transition-colors hover:text-gold-300"
           >
             <IconInstagram />
           </a>
@@ -88,7 +82,7 @@ export default function Header({ open, onOpenChange }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="TikTok de Gentleman Co"
-            className="text-ink-500 transition-colors hover:text-gold-600"
+            className="text-cream-200/70 transition-colors hover:text-gold-300"
           >
             <IconTikTok />
           </a>
@@ -97,14 +91,14 @@ export default function Header({ open, onOpenChange }) {
             href={waLink(waMessages.catalog)}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full bg-ink-900 px-5 py-2.5 font-body text-xs uppercase tracking-wide text-cream-50 transition-colors hover:bg-gold-600"
+            className="hw-btn-glow rounded-full border border-gold-400/60 px-5 py-2.5 font-body text-xs uppercase tracking-wide text-gold-200 hover:border-gold-400 hover:bg-gold-500 hover:text-night-950"
           >
             Comprar por WhatsApp
           </a>
         </div>
 
         <div className="flex items-center gap-2.5 lg:hidden">
-          <CartButton className="h-11 w-11 rounded-full border border-ink-200" />
+          <CartButton className="h-11 w-11 rounded-full border border-gold-500/30" />
           <a
             href={waLink(waMessages.catalog)}
             target="_blank"
@@ -120,19 +114,14 @@ export default function Header({ open, onOpenChange }) {
             aria-expanded={isOpen}
             aria-controls="mobile-nav"
             aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-ink-200 text-ink-700"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-gold-500/30 text-cream-100"
           >
             {isOpen ? <IconClose className="h-5 w-5" /> : <IconMenu className="h-5 w-5" />}
           </button>
         </div>
       </div>
 
-      {VALENTINES_ACTIVE && (
-        <div
-          aria-hidden="true"
-          className="h-[2px] bg-gradient-to-r from-gold-400 via-wine-400 to-gold-400"
-        />
-      )}
+      {HALLOWEEN_ACTIVE && <div aria-hidden="true" className="hw-top-line h-px" />}
 
       <div
         id="mobile-nav"
@@ -142,7 +131,7 @@ export default function Header({ open, onOpenChange }) {
         }`}
       >
         <nav
-          className="min-h-0 overflow-hidden border-t border-ink-100 bg-cream-50 px-4"
+          className="min-h-0 overflow-hidden border-t border-gold-500/15 bg-night-900 px-4"
           aria-label="Navegación móvil"
         >
           <div className="flex flex-col gap-1 py-4">
@@ -151,7 +140,7 @@ export default function Header({ open, onOpenChange }) {
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-3 font-body text-sm uppercase tracking-wide text-ink-700 hover:bg-cream-200"
+                className="rounded-lg px-3 py-3 font-body text-sm uppercase tracking-wide text-cream-100 transition-colors hover:bg-night-700 hover:text-gold-300"
               >
                 {l.label}
               </SectionLink>
@@ -162,7 +151,7 @@ export default function Header({ open, onOpenChange }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="flex h-11 w-11 items-center justify-center text-ink-500"
+                className="flex h-11 w-11 items-center justify-center text-cream-200/70 hover:text-gold-300"
               >
                 <IconInstagram />
               </a>
@@ -171,7 +160,7 @@ export default function Header({ open, onOpenChange }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="TikTok"
-                className="flex h-11 w-11 items-center justify-center text-ink-500"
+                className="flex h-11 w-11 items-center justify-center text-cream-200/70 hover:text-gold-300"
               >
                 <IconTikTok />
               </a>

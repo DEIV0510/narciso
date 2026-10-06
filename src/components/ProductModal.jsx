@@ -68,7 +68,7 @@ export default function ProductModal({ open, onClose }) {
 
   return (
     <div
-      className="fixed inset-0 z-[90] flex items-end justify-center bg-ink-900/70 backdrop-blur-sm sm:items-center sm:p-6"
+      className="fixed inset-0 z-[90] flex items-end justify-center bg-night-950/80 backdrop-blur-sm sm:items-center sm:p-6"
       role="dialog"
       aria-modal="true"
       aria-labelledby="product-modal-title"
@@ -76,7 +76,7 @@ export default function ProductModal({ open, onClose }) {
     >
       <div
         ref={panelRef}
-        className="relative max-h-[92vh] w-full max-w-3xl overflow-y-auto rounded-t-3xl bg-cream-50 sm:rounded-3xl"
+        className="relative max-h-[92vh] w-full max-w-3xl overflow-y-auto rounded-t-3xl border border-gold-500/20 bg-night-900 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)] sm:rounded-3xl"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -84,13 +84,13 @@ export default function ProductModal({ open, onClose }) {
           type="button"
           onClick={onClose}
           aria-label="Cerrar"
-          className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-ink-900/80 text-cream-50 transition-colors hover:bg-ink-900"
+          className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-gold-500/30 bg-night-950/80 text-cream-50 transition-colors hover:bg-night-700 hover:text-gold-300"
         >
           <IconX className="h-4 w-4" />
         </button>
 
         <div className="grid gap-0 sm:grid-cols-2">
-          <div className="bg-ink-900">
+          <div className="bg-night-950">
             <picture>
               <source srcSet={current.avif} type="image/avif" />
               <source srcSet={current.webp} type="image/webp" />
@@ -115,28 +115,28 @@ export default function ProductModal({ open, onClose }) {
           </div>
 
           <div className="flex flex-col p-6 sm:p-8">
-            <p className="section-eyebrow text-gold-600">Especialistas en inspiración</p>
-            <h3 id="product-modal-title" className="mt-2 font-display text-3xl text-ink-900">
+            <p className="section-eyebrow text-gold-400">Especialistas en inspiración</p>
+            <h3 id="product-modal-title" className="mt-2 font-display text-3xl text-cream-50">
               Gentleman Co
             </h3>
-            <p className="mt-3 font-body text-sm leading-relaxed text-ink-500">
+            <p className="mt-3 font-body text-sm leading-relaxed text-cream-200/80">
               Eau de parfum en spray presurizado, elaborada en Ibagué, Tolima. Una fragancia
               inspirada, pensada para quienes buscan un aroma sofisticado y memorable.
             </p>
 
-            <ul className="mt-5 space-y-2 font-body text-sm text-ink-600">
+            <ul className="mt-5 space-y-2 font-body text-sm text-cream-200/85">
               <li className="flex items-center gap-2">
-                <span className="h-1 w-1 rounded-full bg-gold-500" /> Eau de parfum / vaporisateur
+                <span className="h-1 w-1 rounded-full bg-gold-400" /> Eau de parfum / vaporisateur
               </li>
               <li className="flex items-center gap-2">
-                <span className="h-1 w-1 rounded-full bg-gold-500" /> Spray presurizado
+                <span className="h-1 w-1 rounded-full bg-gold-400" /> Spray presurizado
               </li>
               <li className="flex items-center gap-2">
-                <span className="h-1 w-1 rounded-full bg-gold-500" /> Elaborado en Ibagué, Tolima
+                <span className="h-1 w-1 rounded-full bg-gold-400" /> Elaborado en Ibagué, Tolima
               </li>
             </ul>
 
-            <div className="mt-6 inline-flex w-fit items-center rounded-full bg-gold-50 px-4 py-2 font-body text-xs uppercase tracking-wide text-gold-700">
+            <div className="mt-6 inline-flex w-fit items-center rounded-full border border-gold-500/30 bg-gold-500/10 px-4 py-2 font-body text-xs uppercase tracking-wide text-gold-200">
               Consulta disponibilidad y precio
             </div>
 

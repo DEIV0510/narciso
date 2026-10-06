@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import crownWebp from '../assets/img/crown-mark.webp'
 import crownPng from '../assets/img/crown-mark.png'
+import { HALLOWEEN_ACTIVE } from '../data/campaign'
+import { Embers } from './HalloweenFx'
 
 export default function LoadingScreen() {
   const [mounted, setMounted] = useState(true)
@@ -20,11 +22,12 @@ export default function LoadingScreen() {
   return (
     <div
       aria-hidden="true"
-      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden bg-ink-900 transition-opacity duration-300 ease-out ${
+      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden bg-night-950 transition-opacity duration-300 ease-out ${
         fading ? 'pointer-events-none opacity-0' : 'opacity-100'
       }`}
     >
-      <span className="absolute h-72 w-72 rounded-full bg-gold-500/15 blur-3xl motion-safe:animate-[ringExpand_1.8s_ease-out_infinite]" />
+      <span className="absolute h-72 w-72 rounded-full bg-ember-500/15 blur-3xl motion-safe:animate-[ringExpand_1.8s_ease-out_infinite]" />
+      <Embers density="light" />
 
       <picture>
         <source srcSet={crownWebp} type="image/webp" />
@@ -52,6 +55,15 @@ export default function LoadingScreen() {
         className="relative mt-6 h-px w-16 origin-center bg-gold-400 motion-safe:[animation:underlineIn_0.6s_cubic-bezier(0.65,0,0.35,1)_0.8s_forwards]"
         style={{ opacity: 0, transform: 'scaleX(0)' }}
       />
+
+      {HALLOWEEN_ACTIVE && (
+        <span
+          className="relative mt-4 font-body text-[10px] uppercase tracking-widest2 text-ember-300 motion-safe:animate-fadeUp sm:text-[11px] [animation-delay:900ms]"
+          style={{ opacity: 0 }}
+        >
+          Halloween Edition
+        </span>
+      )}
     </div>
   )
 }

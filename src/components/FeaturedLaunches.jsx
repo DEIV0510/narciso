@@ -28,7 +28,7 @@ const items = [
 
 const positions = [
   'left-3 top-4 sm:left-5 sm:top-6 lg:left-8 lg:top-10 lg:right-auto',
-  'left-3 top-32 sm:left-5 sm:top-36 lg:left-auto lg:right-8 lg:top-10',
+  'left-3 top-[9.75rem] sm:left-5 sm:top-[10.75rem] lg:left-auto lg:right-8 lg:top-10',
 ]
 
 export default function FeaturedLaunches() {
@@ -41,7 +41,7 @@ export default function FeaturedLaunches() {
           aria-label={`${item.brand} ${item.name}, nuevo en el catálogo. Ver ficha del producto.`}
           className={`group pointer-events-auto absolute ${positions[i % positions.length]} flex w-24 flex-col items-center gap-1.5 rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-300 sm:w-28 lg:w-32`}
         >
-          <span className="relative block aspect-square w-full overflow-hidden rounded-2xl border-2 border-gold-300/60 shadow-[0_10px_30px_-8px_rgba(0,0,0,0.7)] transition-transform duration-200 group-hover:scale-[1.05] group-focus-visible:scale-[1.05]">
+          <span className="relative block aspect-square w-full overflow-hidden rounded-2xl border-2 border-gold-300/60 shadow-[0_10px_30px_-8px_rgba(0,0,0,0.8),0_0_26px_-6px_rgba(233,138,60,0.5)] transition-transform duration-200 group-hover:scale-[1.05] group-focus-visible:scale-[1.05]">
             <picture>
               <source srcSet={item.img.avif} type="image/avif" />
               <source srcSet={item.img.webp} type="image/webp" />

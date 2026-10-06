@@ -3,34 +3,30 @@ import spotlightWebp from '../assets/img/spotlight-bottle.webp'
 import spotlightJpg from '../assets/img/spotlight-bottle.jpg'
 import Reveal from './Reveal'
 import { whyGentlemanCo, waLink, waMessages } from '../data/site'
-import { IconCheck, IconPetal } from './icons'
-import { VALENTINES_ACTIVE } from '../data/campaign'
+import { IconCheck, IconFlame } from './icons'
+import { HALLOWEEN_ACTIVE } from '../data/campaign'
 
 export default function WhyGentlemanCo() {
   return (
-    <section aria-labelledby="why-heading" className="bg-cream-100 py-16 sm:py-24">
+    <section aria-labelledby="why-heading" className="hw-top-line relative bg-night-850 py-16 sm:py-24">
       <div className="mx-auto grid max-w-6xl items-center gap-10 px-6 sm:px-8 lg:grid-cols-2 lg:gap-16 lg:px-8">
-        <Reveal
-          className={`relative order-2 overflow-hidden rounded-3xl border bg-white p-6 shadow-sm sm:p-8 lg:order-1 ${
-            VALENTINES_ACTIVE ? 'border-wine-100' : 'border-ink-900/5'
-          }`}
-        >
-          {VALENTINES_ACTIVE && (
-            <IconPetal
+        <Reveal className="relative order-2 overflow-hidden rounded-3xl border border-gold-500/20 bg-night-800 p-6 shadow-[0_24px_50px_-28px_rgba(0,0,0,0.95)] sm:p-8 lg:order-1">
+          {HALLOWEEN_ACTIVE && (
+            <IconFlame
               aria-hidden="true"
-              className="pointer-events-none absolute -right-2 -top-2 h-14 w-14 rotate-[25deg] text-wine-100"
+              className="pointer-events-none absolute -right-3 -top-3 h-20 w-20 rotate-[12deg] text-gold-500/10"
             />
           )}
           <div className="relative grid grid-cols-[1fr_auto] items-center gap-6">
             <ul className="space-y-3.5">
               {whyGentlemanCo.map((item) => (
-                <li key={item} className="flex items-center gap-2.5 font-body text-sm text-ink-700 sm:text-base">
-                  <IconCheck className="h-4 w-4 shrink-0 text-gold-600" />
+                <li key={item} className="flex items-center gap-2.5 font-body text-sm text-cream-200/90 sm:text-base">
+                  <IconCheck className="h-4 w-4 shrink-0 text-gold-400" />
                   {item}
                 </li>
               ))}
             </ul>
-            <div className="hidden w-28 shrink-0 overflow-hidden rounded-2xl sm:block">
+            <div className="hidden w-28 shrink-0 overflow-hidden rounded-2xl border border-gold-500/20 sm:block">
               <picture>
                 <source srcSet={spotlightAvif} type="image/avif" />
                 <source srcSet={spotlightWebp} type="image/webp" />
@@ -48,11 +44,11 @@ export default function WhyGentlemanCo() {
         </Reveal>
 
         <Reveal delay={100} className="order-1 lg:order-2">
-          <p className="section-eyebrow text-gold-600">¿Por qué Gentleman Co?</p>
-          <h2 id="why-heading" className="mt-3 font-display text-3xl text-balance text-ink-900 sm:text-4xl">
+          <p className="section-eyebrow text-gold-400">¿Por qué Gentleman Co?</p>
+          <h2 id="why-heading" className="mt-3 font-display text-3xl text-balance text-cream-50 sm:text-4xl">
             Calidad que se siente real.
           </h2>
-          <p className="mt-5 font-body text-base leading-relaxed text-ink-500 sm:text-lg">
+          <p className="mt-5 font-body text-base leading-relaxed text-cream-200/75 sm:text-lg">
             Todo lo que buscas en una fragancia inspirada: presentación cuidada, aroma que
             perdura y atención personalizada, sin complicaciones. Eso es Gentleman Co.
           </p>
@@ -60,7 +56,7 @@ export default function WhyGentlemanCo() {
             href={waLink(waMessages.catalog)}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-7 inline-flex items-center justify-center rounded-full bg-ink-900 px-8 py-3.5 font-body text-sm uppercase tracking-wide text-cream-50 transition-transform duration-200 hover:scale-[1.02]"
+            className="hw-btn-glow mt-7 inline-flex items-center justify-center rounded-full border border-gold-400/60 px-8 py-3.5 font-body text-sm uppercase tracking-wide text-gold-200 hover:scale-[1.02] hover:border-gold-400 hover:bg-gold-500 hover:text-night-950"
           >
             Comprar por WhatsApp
           </a>

@@ -3,8 +3,8 @@ import { CATEGORIES, brands, products, searchProducts } from '../data/products'
 import ProductCard from './ProductCard'
 import ProductRow from './ProductRow'
 import Reveal from './Reveal'
-import { IconSearch, IconHeart } from './icons'
-import { VALENTINES_ACTIVE, valentinesCopy } from '../data/campaign'
+import { IconSearch, IconPumpkin } from './icons'
+import { HALLOWEEN_ACTIVE, halloweenCopy } from '../data/campaign'
 
 const CATEGORY_FILTERS = [
   { key: 'todos', label: 'Todos' },
@@ -60,40 +60,41 @@ export default function Catalog() {
   return (
     <section
       id="catalogo"
-      className={`scroll-mt-20 border-y border-ink-100 py-16 sm:scroll-mt-24 sm:py-24 ${
-        VALENTINES_ACTIVE ? 'bg-gradient-to-b from-blush-50 via-cream-50 to-cream-50' : 'bg-cream-50'
-      }`}
+      className="hw-top-line relative scroll-mt-20 border-y border-gold-500/10 bg-night-900 py-16 sm:scroll-mt-24 sm:py-24"
     >
-      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-8">
+      {HALLOWEEN_ACTIVE && (
+        <div aria-hidden="true" className="hw-glow-top pointer-events-none absolute inset-x-0 top-0 h-80" />
+      )}
+      <div className="relative mx-auto max-w-7xl px-6 sm:px-8 lg:px-8">
         <Reveal className="mx-auto max-w-xl text-center">
-          {VALENTINES_ACTIVE && (
-            <span className="mx-auto mb-3 inline-flex w-fit items-center gap-1.5 rounded-full border border-wine-200 bg-wine-50 px-3 py-1 font-body text-[10px] uppercase tracking-widest2 text-wine-600">
-              <IconHeart className="h-3 w-3 text-wine-500 motion-safe:animate-heartBeat" />
-              {valentinesCopy.catalogEyebrow}
+          {HALLOWEEN_ACTIVE && (
+            <span className="mx-auto mb-3 inline-flex w-fit items-center gap-1.5 rounded-full border border-ember-400/40 bg-ember-500/10 px-3 py-1 font-body text-[10px] uppercase tracking-widest2 text-ember-300">
+              <IconPumpkin className="h-3.5 w-3.5 text-ember-400" />
+              {halloweenCopy.catalogEyebrow}
             </span>
           )}
-          <p className="section-eyebrow text-gold-600">Catálogo completo</p>
-          <h2 className="mt-3 font-display text-3xl text-balance text-ink-900 sm:text-4xl">
+          <p className="section-eyebrow text-gold-400">Catálogo completo</p>
+          <h2 className="mt-3 font-display text-3xl text-balance text-cream-50 sm:text-4xl">
             Descubre tu fragancia
           </h2>
-          <p className="mt-3 font-body text-sm text-ink-400 sm:text-base">
+          <p className="mt-3 font-body text-sm text-ink-300 sm:text-base">
             {products.length} fragancias inspiradas, mismo frasco Gentleman Co. Desde $55.000 COP · 50 ml.
           </p>
-          {VALENTINES_ACTIVE && (
-            <p className="mt-1 font-display italic text-sm text-wine-600">{valentinesCopy.catalogLine}</p>
+          {HALLOWEEN_ACTIVE && (
+            <p className="mt-1 font-display text-sm italic text-ember-300">{halloweenCopy.catalogLine}</p>
           )}
         </Reveal>
 
         <Reveal delay={80} className="mt-8 space-y-4 sm:mt-10">
           <div className="relative mx-auto max-w-md">
-            <IconSearch className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400" />
+            <IconSearch className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-300" />
             <input
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Buscar por nombre o marca…"
               aria-label="Buscar perfume por nombre o marca"
-              className="w-full rounded-full border border-ink-100 bg-white py-3 pl-11 pr-4 font-body text-sm text-ink-900 placeholder:text-ink-400 focus:border-gold-400"
+              className="w-full rounded-full border border-gold-500/25 bg-night-800 py-3 pl-11 pr-4 font-body text-sm text-cream-50 placeholder:text-ink-300/80 focus:border-gold-400"
             />
           </div>
 
@@ -106,8 +107,8 @@ export default function Catalog() {
                 aria-pressed={category === f.key}
                 className={`min-h-11 rounded-full border px-4 font-body text-xs uppercase tracking-wide transition-colors sm:text-sm ${
                   category === f.key
-                    ? 'border-gold-500 bg-gold-500 text-ink-900'
-                    : 'border-ink-100 bg-white text-ink-600 hover:border-ink-300'
+                    ? 'border-gold-500 bg-gold-500 text-night-950'
+                    : 'border-gold-500/25 bg-night-800 text-cream-200/85 hover:border-gold-400/70 hover:text-gold-200'
                 }`}
               >
                 {f.label}
@@ -116,12 +117,12 @@ export default function Catalog() {
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-3">
-            <label className="flex items-center gap-2 font-body text-xs text-ink-500">
+            <label className="flex items-center gap-2 font-body text-xs text-ink-300">
               Marca
               <select
                 value={brand}
                 onChange={(e) => setBrand(e.target.value)}
-                className="min-h-11 rounded-full border border-ink-100 bg-white px-3 font-body text-xs text-ink-900 sm:text-sm"
+                className="min-h-11 rounded-full border border-gold-500/25 bg-night-800 px-3 font-body text-xs text-cream-100 sm:text-sm"
               >
                 <option value="todas">Todas</option>
                 {brands.map((b) => (
@@ -132,12 +133,12 @@ export default function Catalog() {
               </select>
             </label>
 
-            <label className="flex items-center gap-2 font-body text-xs text-ink-500">
+            <label className="flex items-center gap-2 font-body text-xs text-ink-300">
               Ordenar
               <select
                 value={sort}
                 onChange={(e) => setSort(e.target.value)}
-                className="min-h-11 rounded-full border border-ink-100 bg-white px-3 font-body text-xs text-ink-900 sm:text-sm"
+                className="min-h-11 rounded-full border border-gold-500/25 bg-night-800 px-3 font-body text-xs text-cream-100 sm:text-sm"
               >
                 {SORTS.map((s) => (
                   <option key={s.key} value={s.key}>
@@ -150,7 +151,7 @@ export default function Catalog() {
         </Reveal>
 
         {totalCount === 0 ? (
-          <p className="mt-16 text-center font-body text-sm text-ink-400">
+          <p className="mt-16 text-center font-body text-sm text-ink-300">
             No encontramos fragancias con ese criterio. Prueba con otro nombre o marca.
           </p>
         ) : (
@@ -160,10 +161,11 @@ export default function Catalog() {
                 section.items.length > 0 && (
                   <div key={section.key}>
                     <div className="mb-4 flex items-baseline gap-3 sm:mb-6">
-                      <h3 className="whitespace-nowrap font-display text-xl text-ink-900 sm:text-2xl">
+                      <h3 className="whitespace-nowrap font-display text-xl text-cream-50 sm:text-2xl">
                         {section.label}
                       </h3>
-                      <span className="font-body text-xs text-ink-400">{section.items.length}</span>
+                      <span className="font-body text-xs text-ink-300">{section.items.length}</span>
+                      <span aria-hidden="true" className="h-px flex-1 bg-gradient-to-r from-gold-500/30 to-transparent" />
                     </div>
 
                     <ProductRow>

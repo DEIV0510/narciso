@@ -1,17 +1,24 @@
 import { brand, navLinks, waLink, waMessages } from '../data/site'
-import { IconInstagram, IconTikTok, IconHeart } from './icons'
+import { IconInstagram, IconTikTok } from './icons'
 import SectionLink from './SectionLink'
-import { VALENTINES_ACTIVE, valentinesCopy } from '../data/campaign'
+import { HALLOWEEN_ACTIVE, halloweenCopy } from '../data/campaign'
+import { Grain, FlickerFlame } from './HalloweenFx'
+import { Branch } from './HalloweenArt'
 
 export default function Footer() {
   const year = new Date().getFullYear()
   return (
-    <footer className="bg-ink-900 pt-14 sm:pt-16">
-      {VALENTINES_ACTIVE && (
-        <div aria-hidden="true" className="h-[2px] bg-gradient-to-r from-gold-500 via-wine-400 to-gold-500" />
+    <footer className="hw-top-line relative overflow-hidden bg-night-950 pt-14 sm:pt-16">
+      {HALLOWEEN_ACTIVE && (
+        <>
+          <div aria-hidden="true" className="hw-glow-top pointer-events-none absolute inset-0 opacity-70" />
+          <Grain />
+          <Branch className="absolute -right-6 top-0 h-40 w-auto text-night-700 opacity-80 sm:h-52" />
+          <Branch flip className="absolute -left-6 top-0 hidden h-40 w-auto text-night-700 opacity-60 sm:block sm:h-48" />
+        </>
       )}
-      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-8">
-        <div className="grid gap-10 border-b border-cream-50/10 pb-12 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="relative mx-auto max-w-7xl px-6 sm:px-8 lg:px-8">
+        <div className="grid gap-10 border-b border-gold-500/15 pb-12 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <p className="font-display text-xl text-cream-50">GENTLEMAN CO</p>
             <p className="mt-2 font-body text-sm text-ink-300">Perfumería de alta calidad</p>
@@ -85,10 +92,10 @@ export default function Footer() {
         <p className="py-6 text-center font-body text-xs text-ink-300">
           © {year} Gentleman Co. Todos los derechos reservados.
         </p>
-        {VALENTINES_ACTIVE && (
-          <p className="-mt-4 flex items-center justify-center gap-1.5 pb-6 font-display italic text-xs text-wine-300">
-            <IconHeart className="h-3 w-3" />
-            {valentinesCopy.footerNote}
+        {HALLOWEEN_ACTIVE && (
+          <p className="-mt-4 flex items-center justify-center gap-1.5 pb-6 font-display text-xs italic text-ember-300">
+            <FlickerFlame className="h-3 w-3" />
+            {halloweenCopy.footerNote}
           </p>
         )}
       </div>

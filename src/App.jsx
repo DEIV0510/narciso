@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import LoadingScreen from './components/LoadingScreen'
 import Header from './components/Header'
-import ValentinePromoBar from './components/ValentinePromoBar'
+import HalloweenPromoBar from './components/HalloweenPromoBar'
 import ScrollManager from './components/ScrollManager'
 import Footer from './components/Footer'
 import WhatsAppButton from './components/WhatsAppButton'
@@ -21,7 +21,7 @@ export default function App() {
       <LoadingScreen />
       <ScrollManager />
       <Header open={menuOpen} onOpenChange={setMenuOpen} />
-      <ValentinePromoBar />
+      <HalloweenPromoBar />
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />

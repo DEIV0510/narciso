@@ -49,14 +49,14 @@ export default function CraftProcess() {
   }
 
   return (
-    <section id="proceso" className="scroll-mt-20 bg-cream-100 py-16 sm:scroll-mt-24 sm:py-24">
+    <section id="proceso" className="hw-top-line relative scroll-mt-20 bg-night-850 py-16 sm:scroll-mt-24 sm:py-24">
       <div className="mx-auto max-w-2xl px-6 text-center sm:px-8">
         <Reveal>
-          <p className="section-eyebrow text-gold-600">Hecho a mano</p>
-          <h2 className="mt-3 font-display text-3xl text-balance text-ink-900 sm:text-4xl">
+          <p className="section-eyebrow text-gold-400">Hecho a mano</p>
+          <h2 className="mt-3 font-display text-3xl text-balance text-cream-50 sm:text-4xl">
             Así nace cada fragancia
           </h2>
-          <p className="mt-4 font-body text-base leading-relaxed text-ink-500 sm:text-lg">
+          <p className="mt-4 font-body text-base leading-relaxed text-cream-200/75 sm:text-lg">
             Cada frasco se dosifica, diluye y envasa a mano en Ibagué. Así se ve el
             proceso real, de principio a fin.
           </p>
@@ -64,7 +64,7 @@ export default function CraftProcess() {
       </div>
 
       <Reveal delay={100} className="mx-auto mt-10 max-w-sm px-6 sm:mt-12 sm:px-8">
-        <div className="overflow-hidden rounded-3xl bg-ink-900 shadow-lg">
+        <div className="overflow-hidden rounded-3xl border border-gold-500/25 bg-night-950 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.95),0_0_60px_-26px_rgba(233,138,60,0.4)]">
           <div className="relative aspect-[4/5] w-full">
             {playing ? (
               <video
@@ -95,13 +95,13 @@ export default function CraftProcess() {
                     loading="lazy"
                   />
                 </picture>
-                <span className="absolute inset-0 bg-ink-900/20 transition-colors group-hover:bg-ink-900/35" />
+                <span className="absolute inset-0 bg-night-950/35 transition-colors group-hover:bg-night-950/50" />
                 <span className="absolute inset-0 flex items-center justify-center">
-                  <span className="flex h-16 w-16 items-center justify-center rounded-full bg-gold-500 text-ink-900 shadow-lg transition-transform duration-200 group-hover:scale-110 sm:h-20 sm:w-20">
+                  <span className="flex h-16 w-16 items-center justify-center rounded-full bg-gold-500 text-night-950 shadow-[0_0_40px_rgba(233,138,60,0.45)] transition-transform duration-200 group-hover:scale-110 sm:h-20 sm:w-20">
                     <IconPlay className="h-6 w-6 translate-x-0.5 sm:h-7 sm:w-7" />
                   </span>
                 </span>
-                <span className="absolute bottom-4 left-4 rounded-full bg-ink-900/70 px-3 py-1.5 font-body text-[11px] uppercase tracking-wide text-cream-50">
+                <span className="absolute bottom-4 left-4 rounded-full border border-gold-500/30 bg-night-950/75 px-3 py-1.5 font-body text-[11px] uppercase tracking-wide text-cream-50">
                   {current.label}
                 </span>
               </button>
@@ -123,12 +123,12 @@ export default function CraftProcess() {
             >
               <span
                 className={`h-12 w-12 overflow-hidden rounded-full border-2 transition-colors ${
-                  active === i ? 'border-gold-500' : 'border-transparent'
+                  active === i ? 'border-gold-400' : 'border-transparent'
                 }`}
               >
                 <img src={clip.poster.jpg} alt="" className="h-full w-full object-cover" loading="lazy" />
               </span>
-              <span className="font-body text-[10px] uppercase tracking-wide text-ink-500 group-hover:text-ink-900">
+              <span className="font-body text-[10px] uppercase tracking-wide text-ink-300 group-hover:text-cream-50">
                 {clip.label}
               </span>
             </button>

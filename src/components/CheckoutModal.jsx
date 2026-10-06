@@ -3,8 +3,8 @@ import { formatCOP } from '../data/products'
 import { buildOrderMessage, paymentMethods } from '../data/cart'
 import { brand, waLink } from '../data/site'
 import { useCart } from '../context/CartContext'
-import { IconWhatsApp, IconChevronRight, IconX, IconHeart } from './icons'
-import { VALENTINES_ACTIVE } from '../data/campaign'
+import { IconWhatsApp, IconChevronRight, IconX, IconFlame } from './icons'
+import { HALLOWEEN_ACTIVE } from '../data/campaign'
 
 const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
@@ -103,7 +103,7 @@ export default function CheckoutModal() {
 
   return (
     <div
-      className="fixed inset-0 z-[97] flex items-end justify-center bg-ink-900/70 backdrop-blur-sm sm:items-center sm:p-6"
+      className="fixed inset-0 z-[97] flex items-end justify-center bg-night-950/80 backdrop-blur-sm sm:items-center sm:p-6"
       role="dialog"
       aria-modal="true"
       aria-labelledby="checkout-title"
@@ -111,57 +111,57 @@ export default function CheckoutModal() {
     >
       <div
         ref={panelRef}
-        className="relative flex max-h-[94vh] w-full max-w-lg flex-col overflow-y-auto rounded-t-3xl bg-cream-50 sm:rounded-3xl"
+        className="relative flex max-h-[94vh] w-full max-w-lg flex-col overflow-y-auto rounded-t-3xl border border-gold-500/20 bg-night-900 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)] sm:rounded-3xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between border-b border-ink-100 px-6 py-5 sm:px-8">
+        <div className="flex items-center justify-between border-b border-gold-500/15 px-6 py-5 sm:px-8">
           <div>
             <button
               type="button"
               onClick={handleBack}
-              className="flex items-center gap-1 font-body text-xs uppercase tracking-wide text-ink-400 hover:text-ink-700"
+              className="flex items-center gap-1 font-body text-xs uppercase tracking-wide text-ink-300 hover:text-cream-50"
             >
               <IconChevronRight className="h-3.5 w-3.5 rotate-180" />
               Volver al carrito
             </button>
-            <h2 id="checkout-title" className="mt-1.5 flex items-center gap-2 font-display text-2xl text-ink-900">
+            <h2 id="checkout-title" className="mt-1.5 flex items-center gap-2 font-display text-2xl text-cream-50">
               Finalizar compra
-              {VALENTINES_ACTIVE && <IconHeart className="h-4 w-4 text-wine-400" />}
+              {HALLOWEEN_ACTIVE && <IconFlame className="h-4 w-4 text-ember-400" />}
             </h2>
           </div>
           <button
             type="button"
             onClick={closeCheckout}
             aria-label="Cerrar"
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-ink-100 text-ink-600 transition-colors hover:bg-cream-200"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gold-500/30 text-cream-100 transition-colors hover:bg-night-700 hover:text-gold-300"
           >
             <IconX className="h-4 w-4" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-6 px-6 py-6 sm:px-8">
-          <div className={`rounded-2xl border bg-white p-4 ${VALENTINES_ACTIVE ? 'border-wine-100' : 'border-ink-100'}`}>
-            <p className="font-body text-xs uppercase tracking-wide text-ink-400">Resumen del pedido</p>
+          <div className="rounded-2xl border border-gold-500/20 bg-night-800 p-4">
+            <p className="font-body text-xs uppercase tracking-wide text-ink-300">Resumen del pedido</p>
             <ul className="mt-3 space-y-2">
               {items.map((item) => (
-                <li key={item.lineId} className="flex items-center justify-between gap-3 font-body text-sm text-ink-600">
+                <li key={item.lineId} className="flex items-center justify-between gap-3 font-body text-sm text-cream-200/85">
                   <span className="min-w-0 truncate">
                     {item.qty} × {item.title}
                   </span>
-                  <span className="shrink-0 tabular-nums text-ink-900">{formatCOP(item.price * item.qty)}</span>
+                  <span className="shrink-0 tabular-nums text-cream-50">{formatCOP(item.price * item.qty)}</span>
                 </li>
               ))}
             </ul>
-            <div className="mt-3 flex items-center justify-between border-t border-ink-100 pt-3">
-              <span className="font-display text-sm text-ink-900">Subtotal</span>
-              <span className="font-display text-lg text-gold-600 tabular-nums">{formatCOP(subtotal)}</span>
+            <div className="mt-3 flex items-center justify-between border-t border-gold-500/15 pt-3">
+              <span className="font-display text-sm text-cream-50">Subtotal</span>
+              <span className="font-display text-lg tabular-nums text-gold-300">{formatCOP(subtotal)}</span>
             </div>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
             {FIELDS.map((f, i) => (
               <label key={f.key} className={`flex flex-col gap-1.5 ${f.key === 'address' ? 'sm:col-span-2' : ''}`}>
-                <span className="font-body text-xs uppercase tracking-wide text-ink-500">{f.label}</span>
+                <span className="font-body text-xs uppercase tracking-wide text-ink-300">{f.label}</span>
                 <input
                   ref={i === 0 ? firstFieldRef : undefined}
                   name={f.key}
@@ -170,29 +170,29 @@ export default function CheckoutModal() {
                   value={customer[f.key]}
                   onChange={setField(f.key)}
                   aria-invalid={errors[f.key] ? 'true' : undefined}
-                  className={`h-12 rounded-xl border bg-white px-4 font-body text-sm text-ink-900 outline-none transition-colors focus:border-gold-500 ${
-                    errors[f.key] ? 'border-red-400' : 'border-ink-100'
+                  className={`h-12 rounded-xl border bg-night-800 px-4 font-body text-sm text-cream-50 outline-none transition-colors focus:border-gold-400 ${
+                    errors[f.key] ? 'border-red-400' : 'border-gold-500/20'
                   }`}
                 />
-                {errors[f.key] && <span className="font-body text-xs text-red-500">Este campo es obligatorio</span>}
+                {errors[f.key] && <span className="font-body text-xs text-red-400">Este campo es obligatorio</span>}
               </label>
             ))}
           </div>
 
           <label className="flex flex-col gap-1.5">
-            <span className="font-body text-xs uppercase tracking-wide text-ink-500">Indicaciones adicionales</span>
+            <span className="font-body text-xs uppercase tracking-wide text-ink-300">Indicaciones adicionales</span>
             <textarea
               name="notes"
               rows={2}
               value={customer.notes}
               onChange={setField('notes')}
               placeholder="Punto de referencia, horario de entrega, etc. (opcional)"
-              className="resize-none rounded-xl border border-ink-100 bg-white px-4 py-3 font-body text-sm text-ink-900 outline-none transition-colors focus:border-gold-500"
+              className="resize-none rounded-xl border border-gold-500/20 bg-night-800 px-4 py-3 font-body text-sm text-cream-50 outline-none transition-colors placeholder:text-ink-300/80 focus:border-gold-400"
             />
           </label>
 
           <div>
-            <span className="font-body text-xs uppercase tracking-wide text-ink-500">Método de pago</span>
+            <span className="font-body text-xs uppercase tracking-wide text-ink-300">Método de pago</span>
             <div className="mt-2 flex flex-wrap gap-2">
               {paymentMethods.map((method) => (
                 <button
@@ -202,8 +202,8 @@ export default function CheckoutModal() {
                   aria-pressed={customer.paymentMethod === method}
                   className={`rounded-full border px-4 py-2.5 font-body text-sm transition-colors ${
                     customer.paymentMethod === method
-                      ? 'border-gold-500 bg-gold-50 text-gold-700'
-                      : 'border-ink-100 text-ink-600 hover:border-ink-200'
+                      ? 'border-gold-400 bg-gold-500/15 text-gold-200'
+                      : 'border-gold-500/20 text-cream-200/85 hover:border-gold-400/60'
                   }`}
                 >
                   {method}
@@ -212,9 +212,9 @@ export default function CheckoutModal() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between border-t border-ink-100 pt-5">
-            <span className="font-display text-base text-ink-900">Total del pedido</span>
-            <span className="font-display text-2xl text-gold-600 tabular-nums">{formatCOP(subtotal)}</span>
+          <div className="flex items-center justify-between border-t border-gold-500/15 pt-5">
+            <span className="font-display text-base text-cream-50">Total del pedido</span>
+            <span className="font-display text-2xl tabular-nums text-gold-300">{formatCOP(subtotal)}</span>
           </div>
 
           <button
@@ -224,7 +224,7 @@ export default function CheckoutModal() {
             <IconWhatsApp className="h-4 w-4" />
             Confirmar y enviar por WhatsApp
           </button>
-          <p className="-mt-3 text-center font-body text-xs text-ink-400">
+          <p className="-mt-3 text-center font-body text-xs text-ink-300">
             Tu pedido se enviará a {brand.name} por WhatsApp para confirmar disponibilidad y coordinar el envío.
           </p>
         </form>

@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import { formatCOP } from '../data/products'
 import { useCart } from '../context/CartContext'
 import CartItemRow from './CartItemRow'
-import { IconBag, IconX, IconHeart } from './icons'
-import { VALENTINES_ACTIVE } from '../data/campaign'
+import { IconBag, IconX, IconFlame } from './icons'
+import { HALLOWEEN_ACTIVE } from '../data/campaign'
 
 const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
@@ -59,26 +59,26 @@ export default function CartDrawer() {
       aria-labelledby="cart-drawer-title"
       {...(drawerOpen ? {} : { inert: '' })}
     >
-      <div className="absolute inset-0 bg-ink-900/60 backdrop-blur-sm" onClick={closeCart} />
+      <div className="absolute inset-0 bg-night-950/75 backdrop-blur-sm" onClick={closeCart} />
 
       <div
         ref={panelRef}
-        className={`absolute inset-y-0 right-0 flex h-full w-full max-w-md flex-col bg-cream-50 shadow-[-16px_0_48px_rgba(0,0,0,0.18)] transition-transform duration-300 ease-out ${
+        className={`absolute inset-y-0 right-0 flex h-full w-full max-w-md flex-col overflow-hidden border-l border-gold-500/20 bg-night-900 shadow-[-24px_0_60px_rgba(0,0,0,0.75)] transition-transform duration-300 ease-out ${
           drawerOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div
-          className={`flex items-center justify-between border-b px-5 py-4 sm:px-7 ${
-            VALENTINES_ACTIVE ? 'border-wine-100' : 'border-ink-100'
-          }`}
-        >
+        {HALLOWEEN_ACTIVE && (
+          <div aria-hidden="true" className="hw-glow-top pointer-events-none absolute inset-x-0 top-0 h-44" />
+        )}
+
+        <div className="relative flex items-center justify-between border-b border-gold-500/15 px-5 py-4 sm:px-7">
           <div>
-            <h2 id="cart-drawer-title" className="flex items-center gap-2 font-display text-xl text-ink-900">
+            <h2 id="cart-drawer-title" className="flex items-center gap-2 font-display text-xl text-cream-50">
               Tu carrito
-              {VALENTINES_ACTIVE && <IconHeart className="h-4 w-4 text-wine-400" />}
+              {HALLOWEEN_ACTIVE && <IconFlame className="h-4 w-4 text-ember-400" />}
             </h2>
             {!isEmpty && (
-              <p className="mt-0.5 font-body text-xs text-ink-400">
+              <p className="mt-0.5 font-body text-xs text-ink-300">
                 {items.reduce((sum, i) => sum + i.qty, 0)} {items.reduce((sum, i) => sum + i.qty, 0) === 1 ? 'producto' : 'productos'}
               </p>
             )}
@@ -88,67 +88,63 @@ export default function CartDrawer() {
             type="button"
             onClick={closeCart}
             aria-label="Cerrar carrito"
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-ink-100 text-ink-600 transition-colors hover:bg-cream-200"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gold-500/30 text-cream-100 transition-colors hover:bg-night-700 hover:text-gold-300"
           >
             <IconX className="h-4 w-4" />
           </button>
         </div>
 
         {isEmpty ? (
-          <div className="flex flex-1 flex-col items-center justify-center px-8 text-center">
-            <span
-              className={`flex h-20 w-20 items-center justify-center rounded-full ${
-                VALENTINES_ACTIVE ? 'bg-wine-50 text-wine-400' : 'bg-gold-50 text-gold-500'
-              }`}
-            >
+          <div className="relative flex flex-1 flex-col items-center justify-center px-8 text-center">
+            <span className="flex h-20 w-20 items-center justify-center rounded-full bg-ember-500/10 text-ember-300 ring-1 ring-gold-500/25">
               <IconBag className="h-9 w-9" />
             </span>
-            <p className="mt-6 font-display text-xl text-ink-900">Tu colección está esperando.</p>
-            <p className="mt-2 font-body text-sm leading-relaxed text-ink-400">
+            <p className="mt-6 font-display text-xl text-cream-50">Tu colección está esperando.</p>
+            <p className="mt-2 font-body text-sm leading-relaxed text-ink-300">
               Aún no has elegido tu próxima fragancia. Explora el catálogo y encuentra la tuya.
             </p>
             <Link
               to="/#catalogo"
               onClick={closeCart}
-              className="mt-7 inline-flex items-center justify-center rounded-full bg-ink-900 px-8 py-3.5 font-body text-xs uppercase tracking-wide text-cream-50 transition-transform duration-200 hover:scale-[1.02] hover:bg-gold-600"
+              className="hw-btn-glow mt-7 inline-flex items-center justify-center rounded-full bg-gold-500 px-8 py-3.5 font-body text-xs uppercase tracking-wide text-night-950 hover:bg-gold-400"
             >
               Explorar perfumes
             </Link>
           </div>
         ) : (
           <>
-            <ul className="flex-1 divide-y divide-ink-100 overflow-y-auto px-5 sm:px-7">
+            <ul className="relative flex-1 divide-y divide-gold-500/10 overflow-y-auto px-5 sm:px-7">
               {items.map((item) => (
                 <CartItemRow key={item.lineId} item={item} />
               ))}
             </ul>
 
-            <div className="border-t border-ink-100 px-5 py-5 sm:px-7">
+            <div className="relative border-t border-gold-500/15 bg-night-900 px-5 py-5 sm:px-7">
               <div className="space-y-2 font-body text-sm">
-                <div className="flex items-center justify-between text-ink-600">
+                <div className="flex items-center justify-between text-cream-200/85">
                   <span>Subtotal</span>
                   <span className="tabular-nums">{formatCOP(subtotal)}</span>
                 </div>
-                <div className="flex items-center justify-between text-ink-400">
+                <div className="flex items-center justify-between text-ink-300">
                   <span>Envío</span>
                   <span>Calcular al finalizar</span>
                 </div>
               </div>
-              <div className="mt-3 flex items-center justify-between border-t border-ink-100 pt-3">
-                <span className="font-display text-base text-ink-900">Total</span>
-                <span className="font-display text-2xl text-gold-600 tabular-nums">{formatCOP(subtotal)}</span>
+              <div className="mt-3 flex items-center justify-between border-t border-gold-500/15 pt-3">
+                <span className="font-display text-base text-cream-50">Total</span>
+                <span className="font-display text-2xl tabular-nums text-gold-300">{formatCOP(subtotal)}</span>
               </div>
 
               <button
                 type="button"
                 onClick={openCheckout}
-                className={`mt-5 flex w-full items-center justify-center gap-2 rounded-full py-4 font-body text-sm uppercase tracking-wide text-ink-900 transition-transform duration-200 hover:scale-[1.01] ${
-                  VALENTINES_ACTIVE
-                    ? 'bg-gradient-to-r from-gold-500 via-gold-400 to-wine-300 hover:from-gold-400 hover:to-wine-200'
+                className={`hw-btn-glow mt-5 flex w-full items-center justify-center gap-2 rounded-full py-4 font-body text-sm uppercase tracking-wide text-night-950 hover:scale-[1.01] ${
+                  HALLOWEEN_ACTIVE
+                    ? 'bg-gradient-to-r from-gold-500 via-gold-400 to-ember-400 hover:from-gold-400 hover:to-ember-300'
                     : 'bg-gold-500 hover:bg-gold-400'
                 }`}
               >
-                {VALENTINES_ACTIVE && <IconHeart className="h-3.5 w-3.5" />}
+                {HALLOWEEN_ACTIVE && <IconFlame className="h-3.5 w-3.5" />}
                 Finalizar compra
               </button>
             </div>

@@ -4,6 +4,9 @@
 
 html {
   scroll-behavior: smooth;
+  color-scheme: dark;
+  background-color: #0b0907;
+  scrollbar-color: #4a3a22 #0b0907;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -21,17 +24,35 @@ html {
 }
 
 ::selection {
-  background-color: #b4863a;
-  color: #f8f3ea;
+  background-color: #c9a24b;
+  color: #0b0907;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0b0907;
+}
+::-webkit-scrollbar-thumb {
+  background: #3b2f1d;
+  border: 2px solid #0b0907;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #5b4521;
 }
 
 :focus-visible {
-  outline: 2px solid #b4863a;
+  outline: 2px solid #d8b264;
   outline-offset: 3px;
 }
 
 body {
   overflow-x: clip;
+  background-color: #0b0907;
+  color: #f0e8d9;
 }
 
 .reveal {
@@ -106,3 +127,378 @@ body {
   animation: shimmerSweep 1.6s ease-in-out 0.15s 2;
 }
 
+/* ==========================================================================
+   Halloween Edition — capa de ambientación (ver data/campaign.js).
+   Todo el movimiento usa solo transform/opacity (se compone en GPU), sin
+   filter/blur animado ni variables dentro de @keyframes. Las capas son
+   decorativas (aria-hidden, pointer-events none) y se apagan con
+   prefers-reduced-motion.
+   ========================================================================== */
+
+/* Grano fino tileable: da textura de piedra/tela a las zonas oscuras sin
+   velar los negros (el mosaico solo trae puntos claros con alfa). */
+.hw-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url('./assets/img/grain.webp');
+  background-size: 256px 256px;
+  opacity: 0.28;
+}
+
+/* Telas negras: pliegues de luz muy tenues, estáticos. */
+.hw-fabric {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    102deg,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.022) 38px,
+    rgba(255, 255, 255, 0) 92px,
+    rgba(0, 0, 0, 0.18) 150px
+  );
+}
+
+/* Luces de ambiente reutilizables (gradientes estáticos, cero coste en scroll). */
+.hw-glow-top {
+  background: radial-gradient(70% 55% at 50% 0%, rgba(178, 85, 26, 0.2), transparent 72%);
+}
+.hw-glow-warm {
+  background:
+    radial-gradient(55% 60% at 80% 60%, rgba(220, 146, 44, 0.2), transparent 70%),
+    radial-gradient(45% 55% at 8% 8%, rgba(138, 64, 21, 0.28), transparent 68%);
+}
+.hw-glow-burgundy {
+  background:
+    radial-gradient(60% 85% at 12% 15%, rgba(79, 21, 29, 0.6), transparent 70%),
+    radial-gradient(50% 65% at 92% 95%, rgba(138, 64, 21, 0.28), transparent 70%);
+}
+
+/* Línea superior de sección: hilo dorado con un destello de brasa al centro. */
+.hw-top-line {
+  position: relative;
+}
+.hw-top-line::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: min(72%, 860px);
+  height: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgba(201, 162, 75, 0.5), transparent);
+  pointer-events: none;
+}
+.hw-top-line::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  width: 150px;
+  height: 5px;
+  transform: translateX(-50%);
+  background: radial-gradient(closest-side, rgba(233, 138, 60, 0.55), transparent);
+  pointer-events: none;
+}
+
+/* Tarjetas: elevación cinematográfica con brillo ámbar al pasar el cursor. */
+.hw-card {
+  position: relative;
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.4s ease;
+}
+.hw-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(110% 55% at 50% 100%, rgba(233, 138, 60, 0.24), transparent 62%);
+}
+@media (hover: hover) {
+  .hw-card:hover,
+  .hw-card:focus-within {
+    transform: translateY(-4px);
+    border-color: rgba(201, 162, 75, 0.55);
+  }
+  .hw-card:hover::after,
+  .hw-card:focus-within::after {
+    opacity: 1;
+  }
+}
+
+/* Navegación: subrayado dorado que crece desde el centro. */
+.hw-nav-link {
+  position: relative;
+}
+.hw-nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -7px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #d8b264, transparent);
+  transform: scaleX(0);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hw-nav-link:hover::after,
+.hw-nav-link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Botones: halo ámbar al pasar el cursor (solo box-shadow en hover). */
+.hw-btn-glow {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.35s ease,
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+@media (hover: hover) {
+  .hw-btn-glow:hover {
+    box-shadow: 0 10px 34px -8px rgba(233, 138, 60, 0.55);
+  }
+}
+
+.hw-glow-text {
+  text-shadow: 0 2px 30px rgba(233, 138, 60, 0.2);
+}
+
+.hw-gold-text {
+  background-image: linear-gradient(100deg, #b4863a 0%, #f3e6c4 36%, #d8b264 54%, #b4863a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Brasas: partículas diminutas que suben con una leve deriva. Posición
+   horizontal, duración y retardo se fijan por elemento (estilo en línea). */
+.hw-ember {
+  position: absolute;
+  bottom: -8px;
+  width: 3px;
+  height: 3px;
+  border-radius: 9999px;
+  background: #f2a766;
+  box-shadow: 0 0 7px 1px rgba(242, 167, 102, 0.75);
+  will-change: transform, opacity;
+  animation: hwEmberA 10s linear infinite;
+}
+.hw-ember--b {
+  width: 2px;
+  height: 2px;
+  animation-name: hwEmberB;
+}
+.hw-ember--c {
+  background: #ecae52;
+  box-shadow: 0 0 8px 1px rgba(236, 174, 82, 0.7);
+  animation-name: hwEmberC;
+}
+@keyframes hwEmberA {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.7);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  55% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate3d(26px, -340px, 0) scale(1);
+    opacity: 0;
+  }
+}
+@keyframes hwEmberB {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.8);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.8;
+  }
+  60% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate3d(-34px, -280px, 0) scale(0.9);
+    opacity: 0;
+  }
+}
+@keyframes hwEmberC {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.6);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.85;
+  }
+  50% {
+    transform: translate3d(14px, -210px, 0) scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate3d(-8px, -420px, 0) scale(0.8);
+    opacity: 0;
+  }
+}
+
+/* Humo: manchas de bruma muy suaves que derivan despacio (gradiente ya
+   difuminado, sin filter: blur). */
+.hw-smoke {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 9999px;
+  background: radial-gradient(closest-side, rgba(214, 196, 170, 0.2), rgba(214, 196, 170, 0.08) 55%, transparent 100%);
+  will-change: transform, opacity;
+}
+.hw-smoke--a {
+  width: 92%;
+  height: 44%;
+  left: -22%;
+  bottom: -8%;
+  animation: hwSmokeA 26s ease-in-out infinite alternate;
+}
+.hw-smoke--b {
+  width: 82%;
+  height: 38%;
+  right: -26%;
+  bottom: 10%;
+  animation: hwSmokeB 32s ease-in-out infinite alternate;
+}
+.hw-smoke--c {
+  width: 74%;
+  height: 32%;
+  left: 8%;
+  bottom: -12%;
+  animation: hwSmokeC 38s ease-in-out infinite alternate;
+}
+@keyframes hwSmokeA {
+  from {
+    transform: translate3d(-4%, 3%, 0) scale(1);
+    opacity: 0.55;
+  }
+  to {
+    transform: translate3d(16%, -10%, 0) scale(1.25);
+    opacity: 0.95;
+  }
+}
+@keyframes hwSmokeB {
+  from {
+    transform: translate3d(6%, 2%, 0) scale(1.1);
+    opacity: 0.7;
+  }
+  to {
+    transform: translate3d(-18%, -8%, 0) scale(0.95);
+    opacity: 0.4;
+  }
+}
+@keyframes hwSmokeC {
+  from {
+    transform: translate3d(-10%, 6%, 0) scale(0.95);
+    opacity: 0.35;
+  }
+  to {
+    transform: translate3d(12%, -4%, 0) scale(1.2);
+    opacity: 0.75;
+  }
+}
+
+/* Llama: parpadeo de escala/opacidad sobre un contenedor HTML (no sobre el svg). */
+.hw-flicker {
+  transform-origin: 50% 92%;
+  will-change: transform, opacity;
+  animation: hwFlicker 2.8s ease-in-out infinite;
+}
+@keyframes hwFlicker {
+  0%,
+  100% {
+    transform: scale(1, 1);
+    opacity: 1;
+  }
+  18% {
+    transform: scale(0.93, 1.08);
+    opacity: 0.88;
+  }
+  42% {
+    transform: scale(1.05, 0.95);
+    opacity: 1;
+  }
+  63% {
+    transform: scale(0.96, 1.05);
+    opacity: 0.9;
+  }
+  82% {
+    transform: scale(1.02, 0.98);
+    opacity: 0.96;
+  }
+}
+
+/* Respiración de luz (solo opacidad). */
+.hw-breathe {
+  will-change: opacity;
+  animation: hwBreathe 7s ease-in-out infinite;
+}
+@keyframes hwBreathe {
+  0%,
+  100% {
+    opacity: 0.78;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Paralaje muy ligero (solo Chrome/Edge con scroll-driven animations; el resto
+   simplemente no lo anima). Las capas de ambiente se desplazan a distinta
+   velocidad mientras se baja por el primer pantallazo. */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .hw-par-slow {
+      animation: hwParSlow linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 100vh;
+    }
+    .hw-par-fast {
+      animation: hwParFast linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 100vh;
+    }
+  }
+}
+@keyframes hwParSlow {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -26px, 0);
+  }
+}
+@keyframes hwParFast {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -64px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hw-ember {
+    display: none;
+  }
+  .hw-smoke,
+  .hw-flicker,
+  .hw-breathe,
+  .hw-par-slow,
+  .hw-par-fast {
+    animation: none !important;
+  }
+}

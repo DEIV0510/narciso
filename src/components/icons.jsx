@@ -98,30 +98,42 @@ export function IconLeaf({ className = 'h-6 w-6' }) {
   )
 }
 
-export function IconHeart({ className = 'h-6 w-6', ...rest }) {
+// Llama de vela: acento de la ambientación de Halloween (ver data/campaign.js).
+export function IconFlame({ className = 'h-6 w-6', ...rest }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true" {...rest}>
       <path
-        d="M12 20s-7.2-4.5-9.3-9A5 5 0 0 1 12 6a5 5 0 0 1 9.3 5c-2.1 4.5-9.3 9-9.3 9Z"
+        d="M12 2.6c.4 2.7 2.2 4.2 3.6 6 1.2 1.6 1.9 3.2 1.9 5a5.5 5.5 0 0 1-11 0c0-1.6.6-3 1.6-4.1.4 1.2 1.2 2 2.1 2.3-.4-3.3.1-6.3 1.8-9.2Z"
         stroke="currentColor"
         strokeWidth="1.4"
         strokeLinejoin="round"
+      />
+      <path
+        d="M12 20a2.4 2.4 0 0 1-2.4-2.5c0-1.4 1-2.2 2.4-3.6 1.4 1.4 2.4 2.2 2.4 3.6A2.4 2.4 0 0 1 12 20Z"
+        fill="currentColor"
+        opacity=".55"
       />
     </svg>
   )
 }
 
-// Pétalo minimalista para la ambientación de San Valentín (ver data/campaign.js).
-export function IconPetal({ className = 'h-6 w-6', ...rest }) {
+// Calabaza de trazo mínimo (sin cara): acento de la ambientación de Halloween.
+export function IconPumpkin({ className = 'h-6 w-6', ...rest }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true" {...rest}>
       <path
-        d="M12 3c4 2.4 6 6 6 9.5A6 6 0 0 1 6 12.5C6 9 8 5.4 12 3Z"
+        d="M12 7.2c-1.3-1.1-3.4-1.5-5-.6C4.7 7.9 3.3 10.4 3.5 13c.2 3 2.3 5.4 4.8 5.8 1.2.2 2.3-.2 3.7-1.1 1.4.9 2.5 1.3 3.7 1.1 2.5-.4 4.6-2.8 4.8-5.8.2-2.6-1.2-5.1-3.5-6.4-1.6-.9-3.7-.5-5 .6Z"
         stroke="currentColor"
-        strokeWidth="1.3"
+        strokeWidth="1.4"
         strokeLinejoin="round"
       />
-      <path d="M12 5.5V19" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
+      <path
+        d="M12 7.2c-.9 1.6-1.4 3.6-1.4 5.9s.5 4.1 1.4 5.8M12 7.2c.9 1.6 1.4 3.6 1.4 5.9s-.5 4.1-1.4 5.8"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+      />
+      <path d="M12 7.2c0-1.4.5-2.6 1.6-3.6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   )
 }

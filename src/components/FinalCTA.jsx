@@ -1,15 +1,19 @@
 import Reveal from './Reveal'
 import { waLink, waMessages } from '../data/site'
-import { IconHeart } from './icons'
-import { VALENTINES_ACTIVE } from '../data/campaign'
+import { HALLOWEEN_ACTIVE } from '../data/campaign'
+import { Grain } from './HalloweenFx'
+import { Pumpkin, Branch } from './HalloweenArt'
 
 export default function FinalCTA() {
   return (
-    <section className="relative overflow-hidden bg-gold-500 py-16 sm:py-20">
-      {VALENTINES_ACTIVE && (
+    <section className="relative overflow-hidden bg-[linear-gradient(135deg,#8a6526_0%,#d8b264_36%,#b4863a_62%,#7a5a22_100%)] py-16 sm:py-20">
+      {HALLOWEEN_ACTIVE && (
         <>
-          <IconHeart className="pointer-events-none absolute left-[8%] top-[20%] h-6 w-6 text-ink-900/10" aria-hidden="true" />
-          <IconHeart className="pointer-events-none absolute right-[10%] bottom-[18%] h-8 w-8 text-ink-900/10" aria-hidden="true" />
+          <Grain />
+          <Branch flip className="absolute -left-8 -top-3 h-40 w-auto text-night-950 opacity-80 sm:h-52" />
+          <Branch className="absolute -right-8 -bottom-5 h-40 w-auto rotate-180 text-night-950 opacity-80 sm:h-52" />
+          <Pumpkin className="absolute -bottom-3 left-[5%] w-16 sm:left-[9%] sm:w-24" />
+          <Pumpkin className="absolute -bottom-4 right-[7%] hidden w-20 sm:block sm:w-28" />
         </>
       )}
       <div className="relative mx-auto max-w-2xl px-6 text-center sm:px-8">
@@ -24,7 +28,7 @@ export default function FinalCTA() {
             href={waLink(waMessages.order)}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-8 inline-flex items-center justify-center rounded-full bg-ink-900 px-10 py-4 font-body text-sm uppercase tracking-wide text-cream-50 transition-transform duration-200 hover:scale-[1.03] focus-visible:outline-ink-900"
+            className="hw-btn-glow mt-8 inline-flex items-center justify-center rounded-full bg-night-950 px-10 py-4 font-body text-sm uppercase tracking-wide text-gold-100 hover:scale-[1.03] focus-visible:outline-ink-900"
           >
             Comprar por WhatsApp
           </a>

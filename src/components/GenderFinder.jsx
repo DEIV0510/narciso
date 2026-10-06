@@ -8,8 +8,8 @@ import genderUnisexAvif from '../assets/img/gender-unisex.avif'
 import genderUnisexWebp from '../assets/img/gender-unisex.webp'
 import genderUnisexJpg from '../assets/img/gender-unisex.jpg'
 import Reveal from './Reveal'
-import { IconArrowRight, IconHeart } from './icons'
-import { VALENTINES_ACTIVE } from '../data/campaign'
+import { IconArrowRight, IconFlame } from './icons'
+import { HALLOWEEN_ACTIVE } from '../data/campaign'
 
 const cards = [
   {
@@ -39,10 +39,10 @@ function goToCategory(category) {
 
 export default function GenderFinder() {
   return (
-    <section aria-labelledby="genero-heading" className="bg-cream-50 py-14 sm:py-20">
+    <section aria-labelledby="genero-heading" className="hw-top-line relative bg-night-900 py-14 sm:py-20">
       <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-8">
         <Reveal className="text-center">
-          <h2 id="genero-heading" className="font-display text-2xl text-ink-900 sm:text-3xl">
+          <h2 id="genero-heading" className="font-display text-2xl text-cream-50 sm:text-3xl">
             Tu fragancia empieza aquí
           </h2>
         </Reveal>
@@ -53,7 +53,7 @@ export default function GenderFinder() {
               key={card.label}
               type="button"
               onClick={() => goToCategory(card.category)}
-              className="group relative block aspect-[4/5] w-full overflow-hidden rounded-3xl text-left"
+              className="hw-card group relative block aspect-[4/5] w-full overflow-hidden rounded-3xl border border-gold-500/20 text-left shadow-[0_24px_50px_-28px_rgba(0,0,0,0.95)]"
             >
               <CardImage card={card} />
             </button>
@@ -79,17 +79,16 @@ function CardImage({ card }) {
           height={1000}
         />
       </picture>
-      <span
-        className={`pointer-events-none absolute inset-0 bg-gradient-to-t to-transparent ${
-          VALENTINES_ACTIVE ? 'from-wine-900/70 via-ink-900/10' : 'from-ink-900/70 via-ink-900/5'
-        }`}
-      />
-      {VALENTINES_ACTIVE && (
-        <span className="pointer-events-none absolute left-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-cream-50/20 text-cream-50 backdrop-blur-sm">
-          <IconHeart className="h-3.5 w-3.5" />
-        </span>
+      <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-night-950/85 via-night-950/15 to-transparent" />
+      {HALLOWEEN_ACTIVE && (
+        <>
+          <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_100%,rgba(233,138,60,0.22),transparent_60%)]" />
+          <span className="pointer-events-none absolute left-4 top-4 flex h-8 w-8 items-center justify-center rounded-full border border-gold-400/40 bg-night-950/55 text-ember-300 backdrop-blur-sm">
+            <IconFlame className="h-3.5 w-3.5" />
+          </span>
+        </>
       )}
-      <span className="absolute bottom-4 right-4 inline-flex items-center gap-1.5 rounded-full bg-cream-50 px-4 py-2 font-body text-xs uppercase tracking-wide text-ink-900 shadow-md transition-transform duration-200 group-hover:translate-x-0.5">
+      <span className="absolute bottom-4 right-4 inline-flex items-center gap-1.5 rounded-full border border-gold-400/50 bg-night-950/75 px-4 py-2 font-body text-xs uppercase tracking-wide text-cream-50 backdrop-blur-sm transition-all duration-200 group-hover:translate-x-0.5 group-hover:border-gold-400 group-hover:bg-gold-500 group-hover:text-night-950">
         {card.label}
         <IconArrowRight className="h-3.5 w-3.5" />
       </span>

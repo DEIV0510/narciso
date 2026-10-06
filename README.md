@@ -591,6 +591,50 @@ reemplazo.
   tallas — sencillamente no aparece hasta que el cliente tenga tallas
   reales que cargar en `products.js`.
 
+## Edición Halloween (octubre 2026)
+
+Transformación puramente visual de toda la ambientación (negro profundo,
+dorado metálico y crema como base; brasa/ámbar/borgoña solo como luz y
+acento). **No cambia contenido ni funcionalidad**: catálogo, precios, notas,
+botones, carrito, checkout y métodos de pago son los mismos. Solo cambiaron
+los rótulos de campaña que antes decían "San Valentín" (`data/campaign.js`,
+`halloweenCopy`) y el mensaje de WhatsApp de `PromoBanner` (dejó de nombrar
+San Valentín).
+
+- **Interruptor**: `HALLOWEEN_ACTIVE` en `src/data/campaign.js`. En `false`
+  desaparecen el humo, las brasas, las siluetas, la barra de campaña, la
+  sección `GiftGuide` y los rótulos; la paleta oscura base queda.
+- **Paleta**: `night` (lienzo), `ember`/`amber` (luz) y `wine` (borgoña de
+  profundidad) en `tailwind.config.js`; `ink`, `gold` y `cream` no cambian.
+- **Ambiente**: clases `.hw-*` en `src/index.css` (grano tileable,
+  pliegues de tela, humo, brasas, parpadeo de llama, respiración de luz,
+  tarjetas con elevación y halo, subrayado de navegación, paralaje muy
+  ligero con `animation-timeline: scroll()` solo en navegadores que lo
+  soportan). Componentes: `HalloweenFx.jsx` (brasas, humo, grano, llama),
+  `HalloweenArt.jsx` (calabaza oscura con la corona de la marca tallada,
+  rama seca y vela, en SVG estático) y `HalloweenPromoBar.jsx`.
+- **Rendimiento**: sin librerías nuevas; todo el movimiento es
+  `transform`/`opacity` en CSS, las capas animadas se montan al entrar al
+  viewport (`hooks/useInView.js`) y todo se apaga con
+  `prefers-reduced-motion`. Medido contra la versión anterior (San Valentín)
+  con la CPU 4× más lenta: mismo coste en reposo (~8 recálculos de estilo/s
+  y ~90 ms/s de hilo principal frente a ~140 ms/s), CLS ≈ 0 y sin
+  desbordes horizontales de 360 a 1440 px.
+- Las fotos de producto no se tocaron: solo cambian fondo, bordes, sombras,
+  hover y brillo de las tarjetas.
+
+### Lote de 17 fragancias (6 de octubre de 2026)
+
+Lista informal del cliente verificada contra Fragrantica y la web de cada
+marca (6 agentes en paralelo), con ficha completa en `fragranceInfo.js` y
+foto genérica `catalog-bottle` hasta que el cliente mande fotos propias:
+12 en Caballero, 2 en Dama y 3 en Unisex (catálogo: 283 productos). "Cloud"
+de Ariana Grande ya existía y no se duplicó. Decisiones a confirmar con el
+cliente: "Faraón ramses" se tomó como Bharara Pharaoh Ramesses **I** (existe
+también la II); "The Most Wanted" como la Eau de Parfum Intense (2021);
+Emeer, Cedrat Boisé y Vulcan Baie figuran como unisex en Fragrantica pero
+se dejaron en la sección que pidió el cliente.
+
 ## Estructura
 
 ```
@@ -599,14 +643,18 @@ src/
                 WhyGentlemanCo, ProductSpotlight, ProductModal, CraftProcess,
                 Experience, FindYourFragrance, BrandSection, Location,
                 Socials, FinalCTA, Footer, WhatsAppButton, LoadingScreen,
-                Breadcrumbs, CartDrawer, CartItemRow, CartToast, CheckoutModal
+                Breadcrumbs, CartDrawer, CartItemRow, CartToast, CheckoutModal,
+                HalloweenFx, HalloweenArt, HalloweenPromoBar, GiftGuide,
+                PromoBanner, AddiBanner, FeaturedLaunches
   context/CartContext.jsx  estado global del carrito (persistido en localStorage)
   pages/            HomePage, ProductDetailPage (ficha individual /perfumes/:slug)
   data/site.js      marca, WhatsApp, enlaces
   data/cart.js      buildOrderMessage (mensaje de pedido estructurado para WhatsApp)
-  data/products.js  catálogo (262 productos), formatCOP, searchProducts,
+  data/products.js  catálogo (283 productos), formatCOP, searchProducts,
                     getProductById, getRelatedProducts
-  data/fragranceInfo.js  perfil olfativo real por fragancia — 259 de los 262
+  data/fragranceInfo.js  perfil olfativo real por fragancia — 280 de los 283
                     productos, ver "Fichas de perfil olfativo completas"
-  hooks/            useReveal (scroll reveal), useDocumentMeta (SEO por página)
+  data/campaign.js  interruptor y rótulos de la campaña estacional (Halloween)
+  hooks/            useReveal (scroll reveal), useInView (monta efectos al ver
+                    la sección), useDocumentMeta (SEO por página)
 ```

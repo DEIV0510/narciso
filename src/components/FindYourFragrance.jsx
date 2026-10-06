@@ -4,8 +4,8 @@ import Reveal from './Reveal'
 import { products, formatCOP } from '../data/products'
 import { getProductImage } from '../data/productImages'
 import { waLink } from '../data/site'
-import { IconArrowRight, IconWhatsApp, IconHeart } from './icons'
-import { VALENTINES_ACTIVE } from '../data/campaign'
+import { IconArrowRight, IconWhatsApp, IconFlame } from './icons'
+import { HALLOWEEN_ACTIVE } from '../data/campaign'
 
 const GENDERS = [
   { key: 'hombre', label: 'Hombre' },
@@ -37,19 +37,19 @@ export default function FindYourFragrance() {
   }
 
   return (
-    <section id="encuentra" className="scroll-mt-20 bg-cream-50 py-16 sm:scroll-mt-24 sm:py-24">
+    <section id="encuentra" className="hw-top-line relative scroll-mt-20 bg-night-900 py-16 sm:scroll-mt-24 sm:py-24">
       <div className="mx-auto max-w-2xl px-6 sm:px-8">
         <Reveal className="text-center">
-          <p className="section-eyebrow text-gold-600">Encuentra tu fragancia</p>
-          <h2 className="mt-3 font-display text-3xl text-balance text-ink-900 sm:text-4xl">
+          <p className="section-eyebrow text-gold-400">Encuentra tu fragancia</p>
+          <h2 className="mt-3 font-display text-3xl text-balance text-cream-50 sm:text-4xl">
             ¿Buscas una fragancia para ti?
           </h2>
-          <p className="mt-3 font-body text-sm text-ink-400 sm:text-base">
+          <p className="mt-3 font-body text-sm text-ink-300 sm:text-base">
             Responde 2 preguntas rápidas y te mostramos opciones reales de nuestro catálogo.
           </p>
-          {VALENTINES_ACTIVE && (
-            <p className="mt-1 flex items-center justify-center gap-1.5 font-display italic text-sm text-wine-600">
-              <IconHeart className="h-3.5 w-3.5" />
+          {HALLOWEEN_ACTIVE && (
+            <p className="mt-1 flex items-center justify-center gap-1.5 font-display text-sm italic text-ember-300">
+              <IconFlame className="h-3.5 w-3.5" />
               Encuentra el aroma perfecto para regalar
             </p>
           )}
@@ -57,19 +57,17 @@ export default function FindYourFragrance() {
 
         <Reveal
           delay={100}
-          className={`mt-8 rounded-3xl border bg-white p-6 shadow-sm sm:mt-10 sm:p-10 ${
-            VALENTINES_ACTIVE ? 'border-wine-100' : 'border-ink-100'
-          }`}
+          className="mt-8 rounded-3xl border border-gold-500/20 bg-night-800 p-6 shadow-[0_30px_60px_-34px_rgba(0,0,0,0.95)] sm:mt-10 sm:p-10"
         >
           <div className="mx-auto flex max-w-[10rem] items-center gap-2">
-            <span className={`h-1 flex-1 rounded-full ${step >= 0 ? 'bg-gold-500' : 'bg-ink-100'}`} />
-            <span className={`h-1 flex-1 rounded-full ${step >= 1 ? 'bg-gold-500' : 'bg-ink-100'}`} />
-            <span className={`h-1 flex-1 rounded-full ${step >= 2 ? 'bg-gold-500' : 'bg-ink-100'}`} />
+            <span className={`h-1 flex-1 rounded-full ${step >= 0 ? 'bg-gold-500' : 'bg-night-600'}`} />
+            <span className={`h-1 flex-1 rounded-full ${step >= 1 ? 'bg-gold-500' : 'bg-night-600'}`} />
+            <span className={`h-1 flex-1 rounded-full ${step >= 2 ? 'bg-gold-500' : 'bg-night-600'}`} />
           </div>
 
           {step === 0 && (
             <div className="mt-6 text-center">
-              <p className="font-display text-lg text-ink-900">¿Para quién buscas la fragancia?</p>
+              <p className="font-display text-lg text-cream-50">¿Para quién buscas la fragancia?</p>
               <div className="mt-5 grid grid-cols-3 gap-2 sm:gap-3">
                 {GENDERS.map((g) => (
                   <button
@@ -79,7 +77,7 @@ export default function FindYourFragrance() {
                       setGender(g.key)
                       setStep(1)
                     }}
-                    className="rounded-2xl border border-ink-100 py-5 font-body text-sm uppercase tracking-wide text-ink-700 transition-colors hover:border-gold-400 hover:text-ink-900"
+                    className="rounded-2xl border border-gold-500/20 py-5 font-body text-sm uppercase tracking-wide text-cream-200/85 transition-colors hover:border-gold-400 hover:bg-gold-500/5 hover:text-gold-200"
                   >
                     {g.label}
                   </button>
@@ -90,7 +88,7 @@ export default function FindYourFragrance() {
 
           {step === 1 && (
             <div className="mt-6 text-center">
-              <p className="font-display text-lg text-ink-900">¿Qué estilo prefieres?</p>
+              <p className="font-display text-lg text-cream-50">¿Qué estilo prefieres?</p>
               <div className="mt-5 grid grid-cols-2 gap-3">
                 {STYLES.map((s) => (
                   <button
@@ -100,7 +98,7 @@ export default function FindYourFragrance() {
                       setStyle(s.key)
                       setStep(2)
                     }}
-                    className="rounded-2xl border border-ink-100 py-5 font-body text-sm uppercase tracking-wide text-ink-700 transition-colors hover:border-gold-400 hover:text-ink-900"
+                    className="rounded-2xl border border-gold-500/20 py-5 font-body text-sm uppercase tracking-wide text-cream-200/85 transition-colors hover:border-gold-400 hover:bg-gold-500/5 hover:text-gold-200"
                   >
                     {s.label}
                   </button>
@@ -109,7 +107,7 @@ export default function FindYourFragrance() {
               <button
                 type="button"
                 onClick={() => setStep(0)}
-                className="mt-5 font-body text-xs uppercase tracking-wide text-ink-400 hover:text-ink-700"
+                className="mt-5 font-body text-xs uppercase tracking-wide text-ink-300 hover:text-cream-50"
               >
                 ← Volver
               </button>
@@ -118,12 +116,12 @@ export default function FindYourFragrance() {
 
           {step === 2 && (
             <div className="mt-6">
-              <p className="text-center font-display text-lg text-ink-900">
+              <p className="text-center font-display text-lg text-cream-50">
                 Estilo {style} · Para {GENDERS.find((g) => g.key === gender)?.label.toLowerCase()}
               </p>
 
               {results.length === 0 ? (
-                <p className="mt-4 text-center font-body text-sm text-ink-400">
+                <p className="mt-4 text-center font-body text-sm text-ink-300">
                   No encontramos una combinación exacta — escríbenos por WhatsApp y te ayudamos a elegir.
                 </p>
               ) : (
@@ -134,10 +132,10 @@ export default function FindYourFragrance() {
                     return (
                       <div
                         key={p.id}
-                        className="group relative overflow-hidden rounded-2xl border border-ink-100 bg-cream-50 transition-shadow hover:shadow-md"
+                        className="hw-card group relative overflow-hidden rounded-2xl border border-gold-500/20 bg-night-900"
                       >
                         <Link to={`/perfumes/${p.id}`} className="block">
-                          <span className="block aspect-square w-full overflow-hidden bg-white">
+                          <span className="block aspect-square w-full overflow-hidden bg-ink-900">
                             <picture>
                               <source srcSet={img.avif} type="image/avif" />
                               <source srcSet={img.webp} type="image/webp" />
@@ -152,10 +150,10 @@ export default function FindYourFragrance() {
                             </picture>
                           </span>
                           <span className="block p-2.5">
-                            <span className="line-clamp-2 block font-display text-xs leading-tight text-ink-900">
+                            <span className="line-clamp-2 block font-display text-xs leading-tight text-cream-50">
                               {p.title}
                             </span>
-                            <span className="mt-1 block font-display text-xs text-gold-600">{formatCOP(p.price)}</span>
+                            <span className="mt-1 block font-display text-xs text-gold-300">{formatCOP(p.price)}</span>
                           </span>
                         </Link>
                         <a
@@ -176,7 +174,7 @@ export default function FindYourFragrance() {
               <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
                 <a
                   href="#catalogo"
-                  className="inline-flex items-center gap-1.5 font-body text-xs uppercase tracking-wide text-ink-600 hover:text-ink-900"
+                  className="inline-flex items-center gap-1.5 font-body text-xs uppercase tracking-wide text-cream-200/85 hover:text-gold-300"
                 >
                   Ver catálogo completo
                   <IconArrowRight className="h-3.5 w-3.5" />
@@ -184,7 +182,7 @@ export default function FindYourFragrance() {
                 <button
                   type="button"
                   onClick={restart}
-                  className="font-body text-xs uppercase tracking-wide text-ink-400 hover:text-ink-700"
+                  className="font-body text-xs uppercase tracking-wide text-ink-300 hover:text-cream-50"
                 >
                   Volver a empezar
                 </button>
