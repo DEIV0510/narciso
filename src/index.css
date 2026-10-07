@@ -5,8 +5,8 @@
 html {
   scroll-behavior: smooth;
   color-scheme: dark;
-  background-color: #0b0907;
-  scrollbar-color: #4a3a22 #0b0907;
+  background-color: #080808;
+  scrollbar-color: #5a3a17 #080808;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -24,8 +24,8 @@ html {
 }
 
 ::selection {
-  background-color: #c9a24b;
-  color: #0b0907;
+  background-color: #c9a45c;
+  color: #080808;
 }
 
 ::-webkit-scrollbar {
@@ -33,26 +33,26 @@ html {
   height: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #0b0907;
+  background: #080808;
 }
 ::-webkit-scrollbar-thumb {
-  background: #3b2f1d;
-  border: 2px solid #0b0907;
+  background: #3d2a16;
+  border: 2px solid #080808;
   border-radius: 8px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #5b4521;
+  background: #6b4419;
 }
 
 :focus-visible {
-  outline: 2px solid #d8b264;
+  outline: 2px solid #e8c77a;
   outline-offset: 3px;
 }
 
 body {
   overflow-x: clip;
-  background-color: #0b0907;
-  color: #f0e8d9;
+  background-color: #080808;
+  color: #ede5d5;
 }
 
 .reveal {
@@ -119,7 +119,7 @@ body {
 }
 
 .shimmer-text {
-  background-image: linear-gradient(100deg, #c9a24b 30%, #f3e6c4 48%, #d8b264 56%, #c9a24b 75%);
+  background-image: linear-gradient(100deg, #c9a45c 30%, #f6ead0 48%, #e8c77a 56%, #c9a45c 75%);
   background-size: 250% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -129,20 +129,28 @@ body {
 
 /* ==========================================================================
    Halloween Edition — capa de ambientación (ver data/campaign.js).
+   Paleta: negro #080808 / carbón #151515, dorado #C9A45C / #E8C77A, crema
+   #EDE5D5, naranja Halloween #FF6A00 / ámbar #C85A00, borgoña #4A0D16.
    Todo el movimiento usa solo transform/opacity (se compone en GPU), sin
    filter/blur animado ni variables dentro de @keyframes. Las capas son
-   decorativas (aria-hidden, pointer-events none) y se apagan con
-   prefers-reduced-motion.
+   decorativas (aria-hidden, pointer-events none) y se apagan o quedan quietas
+   con prefers-reduced-motion.
    ========================================================================== */
 
-/* Grano fino tileable: da textura de piedra/tela a las zonas oscuras sin
-   velar los negros (el mosaico solo trae puntos claros con alfa). */
+/* Grano fino tileable: textura de piedra/tela en las zonas oscuras sin velar
+   los negros (el mosaico solo trae puntos claros con alfa).
+   Va como MÁSCARA sobre un color fijo (el mismo de los puntos), no como
+   background-image: así Chrome no lo toma como candidato a LCP (una capa
+   decorativa grande "ganaba" al frasco y al titular). Se ve idéntico. */
 .hw-grain {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image: url('./assets/img/grain.webp');
-  background-size: 256px 256px;
+  background-color: rgb(239, 233, 217);
+  -webkit-mask-image: url('./assets/img/grain.webp');
+  -webkit-mask-size: 256px 256px;
+  mask-image: url('./assets/img/grain.webp');
+  mask-size: 256px 256px;
   opacity: 0.28;
 }
 
@@ -160,22 +168,25 @@ body {
   );
 }
 
-/* Luces de ambiente reutilizables (gradientes estáticos, cero coste en scroll). */
+/* Luces de ambiente (gradientes estáticos, cero coste en scroll). */
 .hw-glow-top {
-  background: radial-gradient(70% 55% at 50% 0%, rgba(178, 85, 26, 0.2), transparent 72%);
+  background: radial-gradient(70% 55% at 50% 0%, rgba(255, 106, 0, 0.15), transparent 72%);
+}
+.hw-glow-bottom {
+  background: radial-gradient(80% 60% at 50% 100%, rgba(255, 106, 0, 0.17), transparent 70%);
 }
 .hw-glow-warm {
   background:
-    radial-gradient(55% 60% at 80% 60%, rgba(220, 146, 44, 0.2), transparent 70%),
-    radial-gradient(45% 55% at 8% 8%, rgba(138, 64, 21, 0.28), transparent 68%);
+    radial-gradient(55% 60% at 80% 62%, rgba(255, 106, 0, 0.18), transparent 70%),
+    radial-gradient(45% 55% at 8% 8%, rgba(200, 90, 0, 0.16), transparent 68%);
 }
 .hw-glow-burgundy {
   background:
-    radial-gradient(60% 85% at 12% 15%, rgba(79, 21, 29, 0.6), transparent 70%),
-    radial-gradient(50% 65% at 92% 95%, rgba(138, 64, 21, 0.28), transparent 70%);
+    radial-gradient(60% 85% at 12% 15%, rgba(74, 13, 22, 0.8), transparent 70%),
+    radial-gradient(50% 65% at 92% 95%, rgba(200, 90, 0, 0.22), transparent 70%);
 }
 
-/* Línea superior de sección: hilo dorado con un destello de brasa al centro. */
+/* Línea superior de sección: hilo dorado con un destello naranja al centro. */
 .hw-top-line {
   position: relative;
 }
@@ -187,7 +198,7 @@ body {
   width: min(72%, 860px);
   height: 1px;
   transform: translateX(-50%);
-  background: linear-gradient(90deg, transparent, rgba(201, 162, 75, 0.5), transparent);
+  background: linear-gradient(90deg, transparent, rgba(201, 164, 92, 0.5), transparent);
   pointer-events: none;
 }
 .hw-top-line::after {
@@ -198,16 +209,17 @@ body {
   width: 150px;
   height: 5px;
   transform: translateX(-50%);
-  background: radial-gradient(closest-side, rgba(233, 138, 60, 0.55), transparent);
+  background: radial-gradient(closest-side, rgba(255, 106, 0, 0.6), transparent);
   pointer-events: none;
 }
 
-/* Tarjetas: elevación cinematográfica con brillo ámbar al pasar el cursor. */
+/* Tarjetas: elevación cinematográfica con brillo naranja al pasar el cursor. */
 .hw-card {
   position: relative;
   transition:
     transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.4s ease;
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
 }
 .hw-card::after {
   content: '';
@@ -217,13 +229,17 @@ body {
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.4s ease;
-  background: radial-gradient(110% 55% at 50% 100%, rgba(233, 138, 60, 0.24), transparent 62%);
+  background: radial-gradient(110% 55% at 50% 100%, rgba(255, 106, 0, 0.26), transparent 62%);
+  box-shadow: inset 0 0 0 1px rgba(255, 138, 46, 0.32);
 }
 @media (hover: hover) {
   .hw-card:hover,
   .hw-card:focus-within {
     transform: translateY(-4px);
-    border-color: rgba(201, 162, 75, 0.55);
+    border-color: rgba(232, 199, 122, 0.55);
+    box-shadow:
+      0 26px 50px -24px rgba(0, 0, 0, 0.95),
+      0 0 46px -14px rgba(255, 106, 0, 0.5);
   }
   .hw-card:hover::after,
   .hw-card:focus-within::after {
@@ -231,7 +247,7 @@ body {
   }
 }
 
-/* Navegación: subrayado dorado que crece desde el centro. */
+/* Navegación: subrayado dorado→naranja que crece desde el centro. */
 .hw-nav-link {
   position: relative;
 }
@@ -242,7 +258,7 @@ body {
   right: 0;
   bottom: -7px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, #d8b264, transparent);
+  background: linear-gradient(90deg, transparent, #e8c77a 28%, #ff6a00 50%, #e8c77a 72%, transparent);
   transform: scaleX(0);
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -250,8 +266,11 @@ body {
 .hw-nav-link:focus-visible::after {
   transform: scaleX(1);
 }
+.hw-nav-link:hover {
+  text-shadow: 0 0 14px rgba(255, 106, 0, 0.5);
+}
 
-/* Botones: halo ámbar al pasar el cursor (solo box-shadow en hover). */
+/* Botones: halo naranja al pasar el cursor (solo box-shadow en hover). */
 .hw-btn-glow {
   transition:
     transform 0.25s ease,
@@ -262,19 +281,52 @@ body {
 }
 @media (hover: hover) {
   .hw-btn-glow:hover {
-    box-shadow: 0 10px 34px -8px rgba(233, 138, 60, 0.55);
+    box-shadow: 0 10px 34px -8px rgba(255, 106, 0, 0.6);
+  }
+}
+
+/* CTA de campaña: naranja Halloween con texto negro (contraste 7:1). */
+.hw-btn-orange {
+  background-image: linear-gradient(135deg, #ff8a2e 0%, #ff6a00 46%, #c85a00 100%);
+  color: #080808;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 231, 211, 0.45),
+    0 10px 30px -12px rgba(255, 106, 0, 0.6);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.35s ease;
+}
+@media (hover: hover) {
+  .hw-btn-orange:hover {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 231, 211, 0.6),
+      0 14px 44px -8px rgba(255, 106, 0, 0.85);
   }
 }
 
 .hw-glow-text {
-  text-shadow: 0 2px 30px rgba(233, 138, 60, 0.2);
+  text-shadow: 0 2px 30px rgba(255, 106, 0, 0.22);
 }
 
 .hw-gold-text {
-  background-image: linear-gradient(100deg, #b4863a 0%, #f3e6c4 36%, #d8b264 54%, #b4863a 100%);
+  background-image: linear-gradient(100deg, #a8843f 0%, #f6ead0 36%, #e8c77a 54%, #a8843f 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+/* Rótulos góticos de temporada: naranja con resplandor de vela. */
+.hw-orange-text {
+  color: #ff8a2e;
+  text-shadow:
+    0 0 2px rgba(255, 106, 0, 0.5),
+    0 0 22px rgba(255, 106, 0, 0.5);
+}
+
+/* Arco de ventana gótica para marcos de foto (esquinas superiores elípticas). */
+.hw-arch {
+  border-top-left-radius: 50% 22%;
+  border-top-right-radius: 50% 22%;
 }
 
 /* Brasas: partículas diminutas que suben con una leve deriva. Posición
@@ -285,8 +337,8 @@ body {
   width: 3px;
   height: 3px;
   border-radius: 9999px;
-  background: #f2a766;
-  box-shadow: 0 0 7px 1px rgba(242, 167, 102, 0.75);
+  background: #ffa65e;
+  box-shadow: 0 0 7px 1px rgba(255, 106, 0, 0.75);
   will-change: transform, opacity;
   animation: hwEmberA 10s linear infinite;
 }
@@ -296,8 +348,8 @@ body {
   animation-name: hwEmberB;
 }
 .hw-ember--c {
-  background: #ecae52;
-  box-shadow: 0 0 8px 1px rgba(236, 174, 82, 0.7);
+  background: #e8c77a;
+  box-shadow: 0 0 8px 1px rgba(232, 199, 122, 0.7);
   animation-name: hwEmberC;
 }
 @keyframes hwEmberA {
@@ -350,13 +402,49 @@ body {
   }
 }
 
+/* Polvo dorado: motas que flotan en el sitio (header, footer, tarjetas). */
+.hw-mote {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 9999px;
+  background: #e8c77a;
+  box-shadow: 0 0 6px 1px rgba(232, 199, 122, 0.6);
+  will-change: transform, opacity;
+  animation: hwMote 9s ease-in-out infinite;
+}
+.hw-mote--orange {
+  background: #ffa65e;
+  box-shadow: 0 0 6px 1px rgba(255, 106, 0, 0.65);
+}
+@keyframes hwMote {
+  0% {
+    transform: translate3d(0, 6px, 0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.9;
+  }
+  50% {
+    transform: translate3d(10px, -8px, 0);
+    opacity: 0.45;
+  }
+  80% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate3d(-6px, -16px, 0);
+    opacity: 0;
+  }
+}
+
 /* Humo: manchas de bruma muy suaves que derivan despacio (gradiente ya
    difuminado, sin filter: blur). */
 .hw-smoke {
   position: absolute;
   pointer-events: none;
   border-radius: 9999px;
-  background: radial-gradient(closest-side, rgba(214, 196, 170, 0.2), rgba(214, 196, 170, 0.08) 55%, transparent 100%);
+  background: radial-gradient(closest-side, rgba(214, 206, 192, 0.2), rgba(214, 206, 192, 0.08) 55%, transparent 100%);
   will-change: transform, opacity;
 }
 .hw-smoke--a {
@@ -411,37 +499,123 @@ body {
   }
 }
 
-/* Llama: parpadeo de escala/opacidad sobre un contenedor HTML (no sobre el svg). */
+/* Niebla rasante: textura repetible en x (scripts/generate-fog.mjs) en una
+   capa del doble de ancho que se desplaza media capa en bucle. Como el grano,
+   la textura va de MÁSCARA sobre el color de la niebla (no cuenta para LCP),
+   intersecada con un degradado vertical para que se deshaga también hacia
+   abajo y no deje un borde recto al terminar la sección (es igual en todo el
+   ancho y viaja con la capa sin notarse). */
+.hw-fog {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 200%;
+  height: 100%;
+  background-color: rgb(236, 230, 220);
+  -webkit-mask-image: url('./assets/img/fog.webp'), linear-gradient(to bottom, #000 30%, transparent 96%);
+  -webkit-mask-size: 50% 100%, 100% 100%;
+  -webkit-mask-repeat: repeat-x, no-repeat;
+  -webkit-mask-position: 0 100%, 0 0;
+  -webkit-mask-composite: source-in;
+  mask-image: url('./assets/img/fog.webp'), linear-gradient(to bottom, #000 30%, transparent 96%);
+  mask-size: 50% 100%, 100% 100%;
+  mask-repeat: repeat-x, no-repeat;
+  mask-position: 0 100%, 0 0;
+  mask-composite: intersect;
+  opacity: 0.28;
+  will-change: transform;
+  animation: hwFogDrift 90s linear infinite;
+}
+.hw-fog--front {
+  height: 72%;
+  opacity: 0.24;
+  -webkit-mask-position: 37% 100%, 0 0;
+  mask-position: 37% 100%, 0 0;
+  animation-duration: 56s;
+  animation-direction: reverse;
+}
+@keyframes hwFogDrift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* IMPORTANTE (rendimiento): React escucha `animationiteration` en la raíz, y
+   con ese listener Chrome despierta al hilo principal en CADA vuelta de una
+   animación infinita (medido: 3 aleteos de 0,42 s = ~50 recálculos de estilo
+   por segundo). Por eso las animaciones infinitas tienen vueltas largas —
+   varios aleteos/parpadeos dentro de un solo ciclo de keyframes — y las de
+   secciones fuera de pantalla se pausan (ver [data-hw-idle] más abajo). */
+
+/* Llama: parpadeo de escala/opacidad sobre un contenedor HTML (no sobre el svg).
+   Tres parpadeos distintos dentro de un ciclo de 8,4 s. */
 .hw-flicker {
   transform-origin: 50% 92%;
   will-change: transform, opacity;
-  animation: hwFlicker 2.8s ease-in-out infinite;
+  animation: hwFlicker 8.4s ease-in-out infinite;
 }
 @keyframes hwFlicker {
   0%,
+  33.3%,
+  66.6%,
   100% {
     transform: scale(1, 1);
     opacity: 1;
   }
-  18% {
+  6% {
     transform: scale(0.93, 1.08);
     opacity: 0.88;
   }
-  42% {
+  14% {
     transform: scale(1.05, 0.95);
     opacity: 1;
   }
-  63% {
+  21% {
     transform: scale(0.96, 1.05);
     opacity: 0.9;
   }
-  82% {
+  27% {
+    transform: scale(1.02, 0.98);
+    opacity: 0.96;
+  }
+  39% {
+    transform: scale(0.95, 1.06);
+    opacity: 0.9;
+  }
+  47% {
+    transform: scale(1.04, 0.96);
+    opacity: 1;
+  }
+  55% {
+    transform: scale(0.97, 1.04);
+    opacity: 0.92;
+  }
+  61% {
+    transform: scale(1.01, 0.99);
+    opacity: 0.97;
+  }
+  72% {
+    transform: scale(0.94, 1.07);
+    opacity: 0.87;
+  }
+  80% {
+    transform: scale(1.06, 0.94);
+    opacity: 1;
+  }
+  88% {
+    transform: scale(0.96, 1.05);
+    opacity: 0.9;
+  }
+  94% {
     transform: scale(1.02, 0.98);
     opacity: 0.96;
   }
 }
 
-/* Respiración de luz (solo opacidad). */
+/* Respiración de luz (solo opacidad): la luz naranja que pulsa muy suave. */
 .hw-breathe {
   will-change: opacity;
   animation: hwBreathe 7s ease-in-out infinite;
@@ -449,16 +623,302 @@ body {
 @keyframes hwBreathe {
   0%,
   100% {
-    opacity: 0.78;
+    opacity: 0.72;
   }
   50% {
     opacity: 1;
   }
 }
 
+/* Luna llena "de cosecha": disco crema con mares y borde ámbar, halo naranja.
+   Gradientes y sombras estáticos; el movimiento (si lo hay) va en un
+   contenedor aparte. */
+.hw-moon {
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle at 30% 26%, rgba(255, 252, 244, 0.55), transparent 34%),
+    radial-gradient(16% 13% at 31% 44%, rgba(140, 104, 66, 0.3), transparent 72%),
+    radial-gradient(20% 15% at 58% 30%, rgba(140, 104, 66, 0.22), transparent 72%),
+    radial-gradient(24% 19% at 63% 63%, rgba(140, 104, 66, 0.28), transparent 72%),
+    radial-gradient(11% 9% at 42% 71%, rgba(140, 104, 66, 0.22), transparent 72%),
+    radial-gradient(7% 7% at 76% 45%, rgba(120, 88, 54, 0.3), transparent 72%),
+    radial-gradient(5% 5% at 24% 60%, rgba(120, 88, 54, 0.26), transparent 72%),
+    radial-gradient(4% 4% at 52% 48%, rgba(120, 88, 54, 0.22), transparent 72%),
+    radial-gradient(circle at 50% 50%, #f7efdf 0%, #efdcb8 52%, #e2b97c 78%, #c98a3c 94%, #a8612a 100%);
+  box-shadow:
+    0 0 30px 4px rgba(255, 214, 160, 0.3),
+    0 0 90px 24px rgba(255, 138, 46, 0.22),
+    0 0 220px 70px rgba(255, 106, 0, 0.12);
+}
+.hw-moon--soft {
+  box-shadow:
+    0 0 24px 3px rgba(255, 214, 160, 0.26),
+    0 0 70px 18px rgba(255, 138, 46, 0.18);
+}
+/* Textura de la luna: el mismo grano como máscara. Ojo: Chrome cuenta las
+   imágenes de máscara de un pseudo-elemento como candidatas a LCP; la luna de
+   la pantalla de carga usa .hw-moon--plain (sin textura) para no "ganarle"
+   al titular en móvil. */
+.hw-moon--plain::after {
+  display: none;
+}
+.hw-moon::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: rgb(239, 233, 217);
+  -webkit-mask-image: url('./assets/img/grain.webp');
+  -webkit-mask-size: 128px 128px;
+  mask-image: url('./assets/img/grain.webp');
+  mask-size: 128px 128px;
+  opacity: 0.4;
+  mix-blend-mode: multiply;
+}
+
+/* Murciélagos: aleteo (escala vertical) y vuelo estacionario lento. Seis
+   aleteos de 0,84 s dentro de un ciclo de 5,04 s (ver nota de rendimiento). */
+.hw-flap {
+  transform-origin: 50% 40%;
+  will-change: transform;
+  animation: hwFlap 5.04s ease-in-out infinite;
+}
+@keyframes hwFlap {
+  0%,
+  16.66%,
+  33.33%,
+  50%,
+  66.66%,
+  83.33%,
+  100% {
+    transform: scaleY(1);
+  }
+  8.33%,
+  25%,
+  41.66%,
+  58.33%,
+  75%,
+  91.66% {
+    transform: scaleY(0.42);
+  }
+}
+.hw-hover {
+  will-change: transform;
+  animation: hwHover 6s ease-in-out infinite alternate;
+}
+@keyframes hwHover {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(14px, -10px, 0);
+  }
+}
+
+/* Bandada que cruza una vez el fondo al entrar la sección (ver BatFlight). El
+   contenedor ocupa todo el ancho: translateX(%) recorre la sección entera. */
+.hw-batflight {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  will-change: transform, opacity;
+  animation: hwBatCross 3.6s cubic-bezier(0.45, 0.05, 0.55, 0.95) both;
+}
+.hw-batflight--rtl {
+  animation-direction: reverse;
+}
+@keyframes hwBatCross {
+  0% {
+    transform: translate3d(-14%, 0, 0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  86% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(108%, 0, 0);
+    opacity: 0;
+  }
+}
+.hw-batflight__bob {
+  animation: hwBatBob 3.6s ease-in-out both;
+}
+@keyframes hwBatBob {
+  0%,
+  50%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  25%,
+  75% {
+    transform: translate3d(0, -24px, 0);
+  }
+}
+/* Aleteo rápido del vuelo: 11 aleteos en una sola vuelta de 3,52 s. */
+.hw-batflight__flap {
+  transform-origin: 50% 40%;
+  animation: hwFlapFast 3.52s linear both;
+}
+@keyframes hwFlapFast {
+  0%,
+  9.09%,
+  18.18%,
+  27.27%,
+  36.36%,
+  45.45%,
+  54.55%,
+  63.64%,
+  72.73%,
+  81.82%,
+  90.91%,
+  100% {
+    transform: scaleY(1);
+  }
+  4.55%,
+  13.64%,
+  22.73%,
+  31.82%,
+  40.91%,
+  50%,
+  59.09%,
+  68.18%,
+  77.27%,
+  86.36%,
+  95.45% {
+    transform: scaleY(0.42);
+  }
+}
+
+/* Araña que baja por su hilo al entrar en pantalla y luego se mece. El hilo
+   es largo y lo recorta el contenedor: al bajar, siempre nace del borde. */
+.hw-spider-drop {
+  animation: hwSpiderDrop 2.4s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+}
+@keyframes hwSpiderDrop {
+  from {
+    transform: translate3d(0, -100%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+.hw-spider-bob {
+  will-change: transform;
+  animation: hwSpiderBob 5s ease-in-out 2.4s infinite alternate;
+}
+@keyframes hwSpiderBob {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 9px, 0);
+  }
+}
+
+/* Telarañas y apariciones: entran con un fundido cuando su sección se ve. */
+.hw-appear {
+  opacity: 0;
+  transition: opacity 1.4s ease 0.2s;
+}
+.hw-appear.is-in {
+  opacity: 1;
+}
+
+/* Luna/objetos que suben al aparecer (una vez). */
+.hw-rise {
+  animation: hwRise 1.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes hwRise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 36px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Destello dorado (estrella de 4 puntas) sobre metales: tapa del frasco. */
+.hw-glint {
+  transform-origin: center;
+  will-change: transform, opacity;
+  animation: hwGlint 5.5s ease-in-out infinite;
+}
+@keyframes hwGlint {
+  0%,
+  68%,
+  100% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  77% {
+    transform: scale(1) rotate(45deg);
+    opacity: 1;
+  }
+  86% {
+    transform: scale(0.2) rotate(90deg);
+    opacity: 0;
+  }
+}
+
+/* Barrido de luz cinematográfico (una vez, al terminar la pantalla de carga). */
+.hw-sweep {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 196, 120, 0.14) 50%, transparent 65%);
+  animation: hwSweep 2.6s cubic-bezier(0.4, 0, 0.2, 1) 1.4s both;
+}
+@keyframes hwSweep {
+  from {
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+/* Muro de piedra de mansión (sillares con junta), estático. */
+.hw-stone {
+  background-color: #0b0a09;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='132' viewBox='0 0 260 132'%3E%3Crect width='260' height='132' fill='%23090807'/%3E%3Crect x='2' y='2' width='126' height='62' rx='3' fill='%23151311'/%3E%3Crect x='132' y='2' width='126' height='62' rx='3' fill='%23121010'/%3E%3Crect x='-63' y='68' width='126' height='62' rx='3' fill='%23131110'/%3E%3Crect x='67' y='68' width='126' height='62' rx='3' fill='%23161412'/%3E%3Crect x='197' y='68' width='126' height='62' rx='3' fill='%23131110'/%3E%3Cpath d='M4 3h122M134 3h122M69 69h122M199 69h61M0 69h61' stroke='%23fff2dc' stroke-opacity='.05'/%3E%3C/svg%3E");
+  background-size: 260px 132px;
+}
+
+/* Madera negra (repisa): veta fina y canto con brillo cálido. */
+.hw-wood {
+  background-color: #120d09;
+  background-image:
+    linear-gradient(180deg, rgba(255, 196, 140, 0.14) 0, transparent 3px),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.025) 0 2px,
+      transparent 2px 9px,
+      rgba(0, 0, 0, 0.28) 9px 10px,
+      transparent 10px 23px
+    ),
+    linear-gradient(180deg, #1d150e, #0a0705);
+}
+
+/* Banner HTML de la promo: tipografía relativa al ancho de la tarjeta. */
+.hw-promo {
+  container-type: inline-size;
+}
+.hw-promo-feat-label {
+  display: none;
+}
+@container (min-width: 420px) {
+  .hw-promo-feat-label {
+    display: block;
+  }
+}
+
 /* Paralaje muy ligero (solo Chrome/Edge con scroll-driven animations; el resto
-   simplemente no lo anima). Las capas de ambiente se desplazan a distinta
-   velocidad mientras se baja por el primer pantallazo. */
+   simplemente no lo anima). */
 @supports (animation-timeline: scroll()) {
   @media (prefers-reduced-motion: no-preference) {
     .hw-par-slow {
@@ -470,6 +930,16 @@ body {
       animation: hwParFast linear both;
       animation-timeline: scroll(root block);
       animation-range: 0 100vh;
+    }
+  }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Cada elemento se desplaza según su propio paso por la pantalla. */
+    .hw-par-view {
+      animation: hwParView linear both;
+      animation-timeline: view();
+      animation-range: cover;
     }
   }
 }
@@ -489,16 +959,51 @@ body {
     transform: translate3d(0, -64px, 0);
   }
 }
+@keyframes hwParView {
+  from {
+    transform: translate3d(0, 44px, 0);
+  }
+  to {
+    transform: translate3d(0, -44px, 0);
+  }
+}
+
+/* Secciones lejos de la pantalla (hooks/usePauseOffscreen.js): sus
+   animaciones de ambiente se pausan — no consumen ni despiertan al hilo
+   principal. Los reveals de contenido siguen libres para que nada quede
+   oculto. */
+[data-hw-idle] *:not(.reveal-in) {
+  animation-play-state: paused !important;
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .hw-ember {
+  .hw-ember,
+  .hw-mote,
+  .hw-batflight {
     display: none;
   }
   .hw-smoke,
+  .hw-fog,
   .hw-flicker,
   .hw-breathe,
+  .hw-flap,
+  .hw-hover,
+  .hw-glint,
+  .hw-sweep,
+  .hw-spider-drop,
+  .hw-spider-bob,
+  .hw-rise,
   .hw-par-slow,
-  .hw-par-fast {
+  .hw-par-fast,
+  .hw-par-view {
     animation: none !important;
+  }
+  .hw-glint,
+  .hw-sweep {
+    opacity: 0;
+  }
+  .hw-appear {
+    opacity: 1;
+    transition: none;
   }
 }

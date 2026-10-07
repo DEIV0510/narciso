@@ -12,7 +12,11 @@ import studioPosterWebp from '../assets/img/studio-poster.webp'
 import studioPosterJpg from '../assets/img/studio-poster.jpg'
 import studioVideo from '../assets/video/studio.mp4'
 import Reveal from './Reveal'
+import SectionDivider from './SectionDivider'
+import { Embers } from './HalloweenFx'
+import { Candle, Cobweb, BatFlight } from './HalloweenArt'
 import { IconPlay } from './icons'
+import { HALLOWEEN_ACTIVE } from '../data/campaign'
 
 const clips = [
   {
@@ -49,8 +53,24 @@ export default function CraftProcess() {
   }
 
   return (
-    <section id="proceso" className="hw-top-line relative scroll-mt-20 bg-night-850 py-16 sm:scroll-mt-24 sm:py-24">
-      <div className="mx-auto max-w-2xl px-6 text-center sm:px-8">
+    <section
+      id="proceso"
+      className={`relative scroll-mt-20 overflow-hidden bg-night-900 py-16 sm:scroll-mt-24 sm:py-24 ${
+        HALLOWEEN_ACTIVE ? 'pt-24 sm:pt-28' : 'hw-top-line'
+      }`}
+    >
+      {HALLOWEEN_ACTIVE && (
+        <>
+          <SectionDivider icon="bat" />
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(45%_50%_at_50%_62%,rgba(255,106,0,0.12),transparent_72%)]"
+          />
+          <BatFlight rtl count={4} className="h-1/2" />
+          <Embers density="light" />
+        </>
+      )}
+      <div className="relative mx-auto max-w-2xl px-6 text-center sm:px-8">
         <Reveal>
           <p className="section-eyebrow text-gold-400">Hecho a mano</p>
           <h2 className="mt-3 font-display text-3xl text-balance text-cream-50 sm:text-4xl">
@@ -63,8 +83,19 @@ export default function CraftProcess() {
         </Reveal>
       </div>
 
-      <Reveal delay={100} className="mx-auto mt-10 max-w-sm px-6 sm:mt-12 sm:px-8">
-        <div className="overflow-hidden rounded-3xl border border-gold-500/25 bg-night-950 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.95),0_0_60px_-26px_rgba(233,138,60,0.4)]">
+      <Reveal delay={100} className="relative mx-auto mt-10 max-w-sm px-6 sm:mt-12 sm:px-8">
+        {HALLOWEEN_ACTIVE && (
+          <>
+            <Candle className="absolute -left-4 bottom-24 hidden h-28 w-8 sm:block" />
+            <Candle className="absolute -left-12 bottom-24 hidden h-20 w-7 md:block" />
+            <Candle className="absolute -right-4 bottom-24 hidden h-24 w-7 sm:block" />
+            <Candle tone="black" className="absolute -right-11 bottom-24 hidden h-16 w-6 md:block" />
+          </>
+        )}
+        <div className="relative overflow-hidden rounded-3xl border border-gold-500/30 bg-night-950 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.95),0_0_60px_-26px_rgba(255,106,0,0.5)]">
+          {HALLOWEEN_ACTIVE && !playing && (
+            <Cobweb className="pointer-events-none absolute left-0 top-0 z-10 h-24 w-24 text-cream-200/30" />
+          )}
           <div className="relative aspect-[4/5] w-full">
             {playing ? (
               <video
@@ -97,7 +128,11 @@ export default function CraftProcess() {
                 </picture>
                 <span className="absolute inset-0 bg-night-950/35 transition-colors group-hover:bg-night-950/50" />
                 <span className="absolute inset-0 flex items-center justify-center">
-                  <span className="flex h-16 w-16 items-center justify-center rounded-full bg-gold-500 text-night-950 shadow-[0_0_40px_rgba(233,138,60,0.45)] transition-transform duration-200 group-hover:scale-110 sm:h-20 sm:w-20">
+                  <span
+                    className={`flex h-16 w-16 items-center justify-center rounded-full text-night-950 transition-transform duration-200 group-hover:scale-110 sm:h-20 sm:w-20 ${
+                      HALLOWEEN_ACTIVE ? 'hw-btn-orange' : 'bg-gold-500 shadow-[0_0_40px_rgba(233,138,60,0.45)]'
+                    }`}
+                  >
                     <IconPlay className="h-6 w-6 translate-x-0.5 sm:h-7 sm:w-7" />
                   </span>
                 </span>
@@ -123,7 +158,11 @@ export default function CraftProcess() {
             >
               <span
                 className={`h-12 w-12 overflow-hidden rounded-full border-2 transition-colors ${
-                  active === i ? 'border-gold-400' : 'border-transparent'
+                  active === i
+                    ? HALLOWEEN_ACTIVE
+                      ? 'border-ember-500 shadow-[0_0_16px_-2px_rgba(255,106,0,0.7)]'
+                      : 'border-gold-400'
+                    : 'border-transparent'
                 }`}
               >
                 <img src={clip.poster.jpg} alt="" className="h-full w-full object-cover" loading="lazy" />

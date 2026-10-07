@@ -1,8 +1,18 @@
 import { useEffect, useState } from 'react'
 import crownWebp from '../assets/img/crown-mark.webp'
 import crownPng from '../assets/img/crown-mark.png'
-import { HALLOWEEN_ACTIVE } from '../data/campaign'
+import { HALLOWEEN_ACTIVE, halloweenCopy } from '../data/campaign'
 import { Embers } from './HalloweenFx'
+import { Bats } from './HalloweenArt'
+
+// Pantalla de carga (1,3 s). En la edición Halloween la corona aparece delante
+// de una luna de cosecha con murciélagos y el rótulo gótico de temporada: lo
+// primero que ve el visitante ya dice "Halloween".
+const BATS = [
+  { left: '-12%', top: '18%', w: '18%', delay: '-0.3s' },
+  { left: '78%', top: '8%', w: '12%', delay: '-1.4s' },
+  { left: '66%', top: '70%', w: '9%', delay: '-2.1s' },
+]
 
 export default function LoadingScreen() {
   const [mounted, setMounted] = useState(true)
@@ -26,7 +36,15 @@ export default function LoadingScreen() {
         fading ? 'pointer-events-none opacity-0' : 'opacity-100'
       }`}
     >
-      <span className="absolute h-72 w-72 rounded-full bg-ember-500/15 blur-3xl motion-safe:animate-[ringExpand_1.8s_ease-out_infinite]" />
+      {HALLOWEEN_ACTIVE ? (
+        <>
+          <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_50%_at_50%_100%,rgba(255,106,0,0.22),transparent_70%)]" />
+          <span className="hw-moon hw-moon--plain absolute left-1/2 top-1/2 aspect-square w-56 -translate-x-1/2 -translate-y-[62%] opacity-30 sm:w-72" />
+          <Bats rim bats={BATS} className="absolute left-1/2 top-1/2 aspect-square w-56 -translate-x-1/2 -translate-y-[62%] sm:w-72" />
+        </>
+      ) : (
+        <span className="absolute h-72 w-72 rounded-full bg-ember-500/15 blur-3xl motion-safe:animate-[ringExpand_1.8s_ease-out_infinite]" />
+      )}
       <Embers density="light" />
 
       <picture>
@@ -58,10 +76,10 @@ export default function LoadingScreen() {
 
       {HALLOWEEN_ACTIVE && (
         <span
-          className="relative mt-4 font-body text-[10px] uppercase tracking-widest2 text-ember-300 motion-safe:animate-fadeUp sm:text-[11px] [animation-delay:900ms]"
+          className="hw-orange-text relative mt-4 font-gothic text-2xl tracking-wide motion-safe:animate-fadeUp sm:text-3xl [animation-delay:860ms]"
           style={{ opacity: 0 }}
         >
-          Halloween Edition
+          {halloweenCopy.heroEyebrow}
         </span>
       )}
     </div>

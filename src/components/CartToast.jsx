@@ -11,11 +11,11 @@ export default function CartToast() {
     >
       <div
         key={toast?.id}
-        className={`flex items-center gap-2.5 rounded-full border border-gold-500/35 bg-night-800 px-5 py-3 shadow-[0_12px_32px_rgba(0,0,0,0.7),0_0_24px_-6px_rgba(233,138,60,0.35)] transition-all duration-300 ease-out ${
+        className={`flex items-center gap-2.5 rounded-full border border-gold-500/35 bg-night-900 px-5 py-3 shadow-[0_12px_32px_rgba(0,0,0,0.7),0_0_28px_-6px_rgba(255,106,0,0.5)] transition-all duration-300 ease-out ${
           toast ? 'translate-y-0 opacity-100 motion-safe:animate-fadeUp' : 'translate-y-3 opacity-0'
         }`}
       >
-        <span className="flex h-5 w-5 shrink-0 items-center justify-center text-gold-300">
+        <span className="flex h-5 w-5 shrink-0 items-center justify-center text-ember-400">
           <IconCheck className="h-4 w-4" />
         </span>
         <span className="font-body text-xs text-cream-50 sm:text-sm">{toast?.message}</span>

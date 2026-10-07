@@ -1,11 +1,19 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Reveal from './Reveal'
+import SectionDivider from './SectionDivider'
+import { Motes } from './HalloweenFx'
+import { Cobweb, Spider } from './HalloweenArt'
 import { products, formatCOP } from '../data/products'
 import { getProductImage } from '../data/productImages'
 import { waLink } from '../data/site'
 import { IconArrowRight, IconWhatsApp, IconFlame } from './icons'
 import { HALLOWEEN_ACTIVE } from '../data/campaign'
+
+// Botón de opción del cuestionario: dorado en reposo, brillo naranja al pasar.
+const OPTION_CLASS = `rounded-2xl border border-gold-500/20 bg-night-900/60 py-5 font-body text-sm uppercase tracking-wide text-cream-200/85 transition-all duration-200 hover:border-ember-500/70 hover:bg-ember-500/10 hover:text-gold-200 ${
+  HALLOWEEN_ACTIVE ? 'hover:shadow-[0_0_26px_-8px_rgba(255,106,0,0.7)]' : ''
+}`
 
 const GENDERS = [
   { key: 'hombre', label: 'Hombre' },
@@ -37,8 +45,23 @@ export default function FindYourFragrance() {
   }
 
   return (
-    <section id="encuentra" className="hw-top-line relative scroll-mt-20 bg-night-900 py-16 sm:scroll-mt-24 sm:py-24">
-      <div className="mx-auto max-w-2xl px-6 sm:px-8">
+    <section
+      id="encuentra"
+      className={`relative scroll-mt-20 overflow-hidden bg-night-900 py-16 sm:scroll-mt-24 sm:py-24 ${
+        HALLOWEEN_ACTIVE ? 'pt-24 sm:pt-28' : 'hw-top-line'
+      }`}
+    >
+      {HALLOWEEN_ACTIVE && (
+        <>
+          <SectionDivider icon="spider" />
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(50%_55%_at_50%_58%,rgba(255,106,0,0.1),transparent_72%)]"
+          />
+          <Motes count={6} />
+        </>
+      )}
+      <div className="relative mx-auto max-w-2xl px-6 sm:px-8">
         <Reveal className="text-center">
           <p className="section-eyebrow text-gold-400">Encuentra tu fragancia</p>
           <h2 className="mt-3 font-display text-3xl text-balance text-cream-50 sm:text-4xl">
@@ -57,16 +80,31 @@ export default function FindYourFragrance() {
 
         <Reveal
           delay={100}
-          className="mt-8 rounded-3xl border border-gold-500/20 bg-night-800 p-6 shadow-[0_30px_60px_-34px_rgba(0,0,0,0.95)] sm:mt-10 sm:p-10"
+          className="relative mt-8 overflow-hidden rounded-3xl border border-gold-500/25 bg-night-800 p-6 shadow-[0_30px_60px_-34px_rgba(0,0,0,0.95),0_0_60px_-34px_rgba(255,106,0,0.5)] sm:mt-10 sm:p-10"
         >
-          <div className="mx-auto flex max-w-[10rem] items-center gap-2">
-            <span className={`h-1 flex-1 rounded-full ${step >= 0 ? 'bg-gold-500' : 'bg-night-600'}`} />
-            <span className={`h-1 flex-1 rounded-full ${step >= 1 ? 'bg-gold-500' : 'bg-night-600'}`} />
-            <span className={`h-1 flex-1 rounded-full ${step >= 2 ? 'bg-gold-500' : 'bg-night-600'}`} />
+          {HALLOWEEN_ACTIVE && (
+            <>
+              <Cobweb className="pointer-events-none absolute left-0 top-0 h-24 w-24 text-cream-200/25" />
+              <Spider className="absolute right-[12%] top-0 hidden sm:block" drop={64} size={22} />
+            </>
+          )}
+          <div className="relative mx-auto flex max-w-[10rem] items-center gap-2">
+            {[0, 1, 2].map((s) => (
+              <span
+                key={s}
+                className={`h-1 flex-1 rounded-full ${
+                  step >= s
+                    ? HALLOWEEN_ACTIVE
+                      ? 'bg-ember-500 shadow-[0_0_10px_rgba(255,106,0,0.7)]'
+                      : 'bg-gold-500'
+                    : 'bg-night-600'
+                }`}
+              />
+            ))}
           </div>
 
           {step === 0 && (
-            <div className="mt-6 text-center">
+            <div className="relative mt-6 text-center">
               <p className="font-display text-lg text-cream-50">¿Para quién buscas la fragancia?</p>
               <div className="mt-5 grid grid-cols-3 gap-2 sm:gap-3">
                 {GENDERS.map((g) => (
@@ -77,7 +115,7 @@ export default function FindYourFragrance() {
                       setGender(g.key)
                       setStep(1)
                     }}
-                    className="rounded-2xl border border-gold-500/20 py-5 font-body text-sm uppercase tracking-wide text-cream-200/85 transition-colors hover:border-gold-400 hover:bg-gold-500/5 hover:text-gold-200"
+                    className={OPTION_CLASS}
                   >
                     {g.label}
                   </button>
@@ -87,7 +125,7 @@ export default function FindYourFragrance() {
           )}
 
           {step === 1 && (
-            <div className="mt-6 text-center">
+            <div className="relative mt-6 text-center">
               <p className="font-display text-lg text-cream-50">¿Qué estilo prefieres?</p>
               <div className="mt-5 grid grid-cols-2 gap-3">
                 {STYLES.map((s) => (
@@ -98,7 +136,7 @@ export default function FindYourFragrance() {
                       setStyle(s.key)
                       setStep(2)
                     }}
-                    className="rounded-2xl border border-gold-500/20 py-5 font-body text-sm uppercase tracking-wide text-cream-200/85 transition-colors hover:border-gold-400 hover:bg-gold-500/5 hover:text-gold-200"
+                    className={OPTION_CLASS}
                   >
                     {s.label}
                   </button>
@@ -115,7 +153,7 @@ export default function FindYourFragrance() {
           )}
 
           {step === 2 && (
-            <div className="mt-6">
+            <div className="relative mt-6">
               <p className="text-center font-display text-lg text-cream-50">
                 Estilo {style} · Para {GENDERS.find((g) => g.key === gender)?.label.toLowerCase()}
               </p>

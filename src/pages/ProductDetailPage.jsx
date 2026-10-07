@@ -17,8 +17,10 @@ import { getFragranceInfo } from '../data/fragranceInfo'
 import { waLink } from '../data/site'
 import { useCart, DEFAULT_SIZE_LABEL } from '../context/CartContext'
 import useDocumentMeta from '../hooks/useDocumentMeta'
-import { IconWhatsApp, IconBagPlus, IconFlame } from '../components/icons'
-import { Embers } from '../components/HalloweenFx'
+import { IconWhatsApp, IconBagPlus, IconPumpkin } from '../components/icons'
+import { Embers, Fog, Motes } from '../components/HalloweenFx'
+import { Cobweb, Moon, Bats } from '../components/HalloweenArt'
+import AddiOption from '../components/AddiOption'
 import { HALLOWEEN_ACTIVE, halloweenCopy } from '../data/campaign'
 
 // La primera foto (principal) es la real de ESTE producto (ver
@@ -83,9 +85,13 @@ export default function ProductDetailPage() {
   const current = gallery[active]
 
   return (
-    <div className="relative bg-night-900 pb-16 pt-6 sm:pb-24 sm:pt-8">
+    <div className="relative overflow-hidden bg-night-950 pb-16 pt-6 sm:pb-24 sm:pt-8">
       {HALLOWEEN_ACTIVE && (
-        <div aria-hidden="true" className="hw-glow-top pointer-events-none absolute inset-x-0 top-0 h-72" />
+        <>
+          <div aria-hidden="true" className="hw-glow-top pointer-events-none absolute inset-x-0 top-0 h-80" />
+          <Motes count={6} className="h-[32rem]" />
+          <Fog className="inset-x-0 bottom-0 h-48" />
+        </>
       )}
       <div className="relative mx-auto max-w-6xl px-6 sm:px-8 lg:px-8">
         <Breadcrumbs
@@ -102,12 +108,26 @@ export default function ProductDetailPage() {
           <div className="order-1 lg:order-2">
             <div className="relative">
               <Reveal>
-                <div className="relative overflow-hidden rounded-3xl border border-gold-500/25 bg-ink-900 shadow-[0_30px_70px_-34px_rgba(0,0,0,0.95),0_0_70px_-32px_rgba(233,138,60,0.4)]">
+                <div
+                  className={`relative overflow-hidden rounded-3xl border border-gold-500/30 shadow-[0_30px_70px_-34px_rgba(0,0,0,0.95),0_0_70px_-30px_rgba(255,106,0,0.45)] ${
+                    HALLOWEEN_ACTIVE
+                      ? 'bg-[radial-gradient(65%_55%_at_50%_72%,rgba(255,106,0,0.2),transparent_70%),linear-gradient(180deg,#131211,#080808)]'
+                      : 'bg-ink-900'
+                  }`}
+                >
                   {HALLOWEEN_ACTIVE && (
-                    <div
-                      aria-hidden="true"
-                      className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(233,138,60,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(180,134,58,0.1),transparent_55%)]"
-                    />
+                    <>
+                      <Moon soft className="absolute right-[7%] top-[6%] aspect-square w-[22%] opacity-90" />
+                      <Bats
+                        rim
+                        bats={[
+                          { left: '-40%', top: '50%', w: '34%', delay: '-0.7s' },
+                          { left: '60%', top: '-14%', w: '22%', delay: '-2.2s' },
+                        ]}
+                        className="absolute right-[7%] top-[6%] aspect-square w-[22%]"
+                      />
+                      <Cobweb className="absolute left-0 top-0 h-24 w-24 text-cream-200/25 sm:h-32 sm:w-32" />
+                    </>
                   )}
                   <picture>
                     <source srcSet={current.avif} type="image/avif" />
@@ -115,7 +135,7 @@ export default function ProductDetailPage() {
                     <img
                       src={current.jpg}
                       alt={`${current.alt} — ${product.fullName}`}
-                      className="aspect-square w-full object-contain p-8 sm:p-10"
+                      className="relative aspect-square w-full object-contain p-8 sm:p-10"
                       loading="eager"
                       fetchpriority="high"
                       width={900}
@@ -134,8 +154,12 @@ export default function ProductDetailPage() {
                   onClick={() => setActive(i)}
                   aria-label={`Ver imagen: ${g.alt}`}
                   aria-pressed={active === i}
-                  className={`h-16 w-16 shrink-0 overflow-hidden rounded-xl border-2 bg-ink-900 transition-colors sm:h-20 sm:w-20 ${
-                    active === i ? 'border-gold-400' : 'border-gold-500/20 hover:border-gold-500/50'
+                  className={`h-16 w-16 shrink-0 overflow-hidden rounded-xl border-2 bg-night-800 transition-all sm:h-20 sm:w-20 ${
+                    active === i
+                      ? HALLOWEEN_ACTIVE
+                        ? 'border-ember-500 shadow-[0_0_16px_-4px_rgba(255,106,0,0.8)]'
+                        : 'border-gold-400'
+                      : 'border-gold-500/20 hover:border-gold-500/50'
                   }`}
                 >
                   <img src={g.jpg} alt="" className="h-full w-full object-contain p-1.5" />
@@ -157,8 +181,8 @@ export default function ProductDetailPage() {
                 </span>
               )}
               {HALLOWEEN_ACTIVE && (
-                <span className="inline-flex w-fit items-center gap-1 rounded-full border border-ember-400/30 bg-ember-500/10 px-3 py-1 font-body text-[11px] uppercase tracking-wide text-ember-300">
-                  <IconFlame className="h-3 w-3" />
+                <span className="inline-flex w-fit items-center gap-1 rounded-full border border-ember-500/40 bg-ember-500/10 px-3 py-1 font-body text-[11px] uppercase tracking-wide text-ember-300">
+                  <IconPumpkin className="h-3.5 w-3.5" />
                   {halloweenCopy.giftBadge}
                 </span>
               )}
@@ -207,7 +231,9 @@ export default function ProductDetailPage() {
                 <button
                   type="button"
                   onClick={handleAddToCart}
-                  className="hw-btn-glow flex w-full items-center justify-center gap-2 rounded-full bg-gold-500 py-4 font-body text-sm uppercase tracking-wide text-night-950 hover:scale-[1.01] hover:bg-gold-400 sm:w-fit sm:px-10"
+                  className={`flex w-full items-center justify-center gap-2 rounded-full py-4 font-body text-sm uppercase tracking-wide hover:scale-[1.01] sm:w-fit sm:px-10 ${
+                    HALLOWEEN_ACTIVE ? 'hw-btn-orange font-medium' : 'hw-btn-glow bg-gold-500 text-night-950 hover:bg-gold-400'
+                  }`}
                 >
                   <IconBagPlus className="h-4 w-4" />
                   Agregar al carrito
@@ -223,6 +249,13 @@ export default function ProductDetailPage() {
                   Comprar por WhatsApp
                 </a>
               </div>
+              <AddiOption
+                variant="button"
+                name={product.fullName}
+                price={size.price}
+                sizeLabel={size.label !== DEFAULT_SIZE_LABEL ? size.label : undefined}
+                className="mt-3"
+              />
             </div>
 
             {(info?.topNotes?.length || info?.heartNotes?.length || info?.baseNotes?.length) && (

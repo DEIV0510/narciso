@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom'
 import { formatCOP } from '../data/products'
 import { useCart } from '../context/CartContext'
 import CartItemRow from './CartItemRow'
-import { IconBag, IconX, IconFlame } from './icons'
+import { AddiBadge } from './AddiOption'
+import { Motes } from './HalloweenFx'
+import { Cobweb } from './HalloweenArt'
+import { IconBag, IconX, IconPumpkin } from './icons'
 import { HALLOWEEN_ACTIVE } from '../data/campaign'
 
 const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
@@ -59,23 +62,27 @@ export default function CartDrawer() {
       aria-labelledby="cart-drawer-title"
       {...(drawerOpen ? {} : { inert: '' })}
     >
-      <div className="absolute inset-0 bg-night-950/75 backdrop-blur-sm" onClick={closeCart} />
+      <div className="absolute inset-0 bg-night-950/80 backdrop-blur-sm" onClick={closeCart} />
 
       <div
         ref={panelRef}
-        className={`absolute inset-y-0 right-0 flex h-full w-full max-w-md flex-col overflow-hidden border-l border-gold-500/20 bg-night-900 shadow-[-24px_0_60px_rgba(0,0,0,0.75)] transition-transform duration-300 ease-out ${
+        className={`absolute inset-y-0 right-0 flex h-full w-full max-w-md flex-col overflow-hidden border-l border-gold-500/25 bg-night-950 shadow-[-24px_0_60px_rgba(0,0,0,0.75)] transition-transform duration-300 ease-out ${
           drawerOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        {HALLOWEEN_ACTIVE && (
-          <div aria-hidden="true" className="hw-glow-top pointer-events-none absolute inset-x-0 top-0 h-44" />
+        {HALLOWEEN_ACTIVE && drawerOpen && (
+          <>
+            <div aria-hidden="true" className="hw-glow-top pointer-events-none absolute inset-x-0 top-0 h-56" />
+            <Cobweb corner="tr" dew={false} className="absolute right-0 top-0 h-24 w-24 text-cream-200/25" />
+            <Motes count={5} className="h-28" />
+          </>
         )}
 
         <div className="relative flex items-center justify-between border-b border-gold-500/15 px-5 py-4 sm:px-7">
           <div>
             <h2 id="cart-drawer-title" className="flex items-center gap-2 font-display text-xl text-cream-50">
+              {HALLOWEEN_ACTIVE && <IconPumpkin className="h-5 w-5 text-ember-500 [filter:drop-shadow(0_0_6px_rgba(255,106,0,0.7))]" />}
               Tu carrito
-              {HALLOWEEN_ACTIVE && <IconFlame className="h-4 w-4 text-ember-400" />}
             </h2>
             {!isEmpty && (
               <p className="mt-0.5 font-body text-xs text-ink-300">
@@ -88,7 +95,7 @@ export default function CartDrawer() {
             type="button"
             onClick={closeCart}
             aria-label="Cerrar carrito"
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gold-500/30 text-cream-100 transition-colors hover:bg-night-700 hover:text-gold-300"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gold-500/30 bg-night-950 text-cream-100 transition-colors hover:border-ember-500 hover:text-ember-300"
           >
             <IconX className="h-4 w-4" />
           </button>
@@ -96,7 +103,7 @@ export default function CartDrawer() {
 
         {isEmpty ? (
           <div className="relative flex flex-1 flex-col items-center justify-center px-8 text-center">
-            <span className="flex h-20 w-20 items-center justify-center rounded-full bg-ember-500/10 text-ember-300 ring-1 ring-gold-500/25">
+            <span className="flex h-20 w-20 items-center justify-center rounded-full bg-ember-500/10 text-ember-300 shadow-[0_0_40px_-10px_rgba(255,106,0,0.7)] ring-1 ring-gold-500/25">
               <IconBag className="h-9 w-9" />
             </span>
             <p className="mt-6 font-display text-xl text-cream-50">Tu colección está esperando.</p>
@@ -106,7 +113,9 @@ export default function CartDrawer() {
             <Link
               to="/#catalogo"
               onClick={closeCart}
-              className="hw-btn-glow mt-7 inline-flex items-center justify-center rounded-full bg-gold-500 px-8 py-3.5 font-body text-xs uppercase tracking-wide text-night-950 hover:bg-gold-400"
+              className={`mt-7 inline-flex items-center justify-center rounded-full px-8 py-3.5 font-body text-xs uppercase tracking-wide ${
+                HALLOWEEN_ACTIVE ? 'hw-btn-orange font-medium' : 'hw-btn-glow bg-gold-500 text-night-950 hover:bg-gold-400'
+              }`}
             >
               Explorar perfumes
             </Link>
@@ -119,7 +128,7 @@ export default function CartDrawer() {
               ))}
             </ul>
 
-            <div className="relative border-t border-gold-500/15 bg-night-900 px-5 py-5 sm:px-7">
+            <div className="relative border-t border-gold-500/20 bg-night-900 px-5 py-5 sm:px-7">
               <div className="space-y-2 font-body text-sm">
                 <div className="flex items-center justify-between text-cream-200/85">
                   <span>Subtotal</span>
@@ -138,15 +147,17 @@ export default function CartDrawer() {
               <button
                 type="button"
                 onClick={openCheckout}
-                className={`hw-btn-glow mt-5 flex w-full items-center justify-center gap-2 rounded-full py-4 font-body text-sm uppercase tracking-wide text-night-950 hover:scale-[1.01] ${
-                  HALLOWEEN_ACTIVE
-                    ? 'bg-gradient-to-r from-gold-500 via-gold-400 to-ember-400 hover:from-gold-400 hover:to-ember-300'
-                    : 'bg-gold-500 hover:bg-gold-400'
+                className={`mt-5 flex w-full items-center justify-center gap-2 rounded-full py-4 font-body text-sm uppercase tracking-wide hover:scale-[1.01] ${
+                  HALLOWEEN_ACTIVE ? 'hw-btn-orange font-medium' : 'hw-btn-glow bg-gold-500 text-night-950 hover:bg-gold-400'
                 }`}
               >
-                {HALLOWEEN_ACTIVE && <IconFlame className="h-3.5 w-3.5" />}
+                {HALLOWEEN_ACTIVE && <IconPumpkin className="h-4 w-4" />}
                 Finalizar compra
               </button>
+              <p className="mt-3 flex flex-wrap items-center justify-center gap-1.5 text-center font-body text-xs text-ink-300">
+                Paga por transferencia o hasta en 3 cuotas con
+                <AddiBadge />
+              </p>
             </div>
           </>
         )}

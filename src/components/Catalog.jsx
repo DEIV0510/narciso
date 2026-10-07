@@ -3,7 +3,10 @@ import { CATEGORIES, brands, products, searchProducts } from '../data/products'
 import ProductCard from './ProductCard'
 import ProductRow from './ProductRow'
 import Reveal from './Reveal'
-import { IconSearch, IconPumpkin } from './icons'
+import SectionDivider from './SectionDivider'
+import { HalloweenMark, Motes } from './HalloweenFx'
+import { Cobweb, Spider } from './HalloweenArt'
+import { IconSearch, IconFlame, IconRose, IconMoon } from './icons'
 import { HALLOWEEN_ACTIVE, halloweenCopy } from '../data/campaign'
 
 const CATEGORY_FILTERS = [
@@ -21,9 +24,9 @@ const SORTS = [
 ]
 
 const SECTION_DEFS = [
-  { key: CATEGORIES.CABALLERO, label: 'Perfumería Caballero', filterKey: 'caballero' },
-  { key: CATEGORIES.DAMA, label: 'Perfumería Dama', filterKey: 'dama' },
-  { key: CATEGORIES.UNISEX, label: 'Perfumería Unisex', filterKey: 'unisex' },
+  { key: CATEGORIES.CABALLERO, label: 'Perfumería Caballero', filterKey: 'caballero', Icon: IconFlame },
+  { key: CATEGORIES.DAMA, label: 'Perfumería Dama', filterKey: 'dama', Icon: IconRose },
+  { key: CATEGORIES.UNISEX, label: 'Perfumería Unisex', filterKey: 'unisex', Icon: IconMoon },
 ]
 
 export default function Catalog() {
@@ -60,18 +63,24 @@ export default function Catalog() {
   return (
     <section
       id="catalogo"
-      className="hw-top-line relative scroll-mt-20 border-y border-gold-500/10 bg-night-900 py-16 sm:scroll-mt-24 sm:py-24"
+      className={`relative scroll-mt-20 overflow-hidden border-y border-gold-500/10 bg-night-950 py-16 sm:scroll-mt-24 sm:py-24 ${
+        HALLOWEEN_ACTIVE ? 'pt-24 sm:pt-28' : 'hw-top-line'
+      }`}
     >
       {HALLOWEEN_ACTIVE && (
-        <div aria-hidden="true" className="hw-glow-top pointer-events-none absolute inset-x-0 top-0 h-80" />
+        <>
+          <div aria-hidden="true" className="hw-glow-top pointer-events-none absolute inset-x-0 top-0 h-96" />
+          <SectionDivider icon="spider" />
+          <Cobweb className="absolute left-0 top-0 hidden h-44 w-44 text-cream-200/20 md:block" />
+          <Cobweb corner="tr" className="absolute right-0 top-0 h-28 w-28 text-cream-200/20 md:h-40 md:w-40" />
+          <Spider className="absolute right-[9%] top-0 hidden md:block" drop={150} size={26} />
+          <Motes className="h-[28rem]" />
+        </>
       )}
       <div className="relative mx-auto max-w-7xl px-6 sm:px-8 lg:px-8">
         <Reveal className="mx-auto max-w-xl text-center">
           {HALLOWEEN_ACTIVE && (
-            <span className="mx-auto mb-3 inline-flex w-fit items-center gap-1.5 rounded-full border border-ember-400/40 bg-ember-500/10 px-3 py-1 font-body text-[10px] uppercase tracking-widest2 text-ember-300">
-              <IconPumpkin className="h-3.5 w-3.5 text-ember-400" />
-              {halloweenCopy.catalogEyebrow}
-            </span>
+            <HalloweenMark className="mx-auto mb-3 justify-center text-2xl sm:text-[1.7rem]" />
           )}
           <p className="section-eyebrow text-gold-400">Catálogo completo</p>
           <h2 className="mt-3 font-display text-3xl text-balance text-cream-50 sm:text-4xl">
@@ -160,17 +169,27 @@ export default function Catalog() {
               (section) =>
                 section.items.length > 0 && (
                   <div key={section.key}>
-                    <div className="mb-4 flex items-baseline gap-3 sm:mb-6">
+                    <div className="mb-4 flex items-center gap-3 sm:mb-6">
+                      {HALLOWEEN_ACTIVE && (
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-gold-500/30 bg-night-900 text-ember-400 shadow-[0_0_16px_-4px_rgba(255,106,0,0.7)]">
+                          <section.Icon className="h-4 w-4" />
+                        </span>
+                      )}
                       <h3 className="whitespace-nowrap font-display text-xl text-cream-50 sm:text-2xl">
                         {section.label}
                       </h3>
                       <span className="font-body text-xs text-ink-300">{section.items.length}</span>
-                      <span aria-hidden="true" className="h-px flex-1 bg-gradient-to-r from-gold-500/30 to-transparent" />
+                      <span
+                        aria-hidden="true"
+                        className={`h-px flex-1 bg-gradient-to-r to-transparent ${
+                          HALLOWEEN_ACTIVE ? 'from-ember-500/45 via-gold-500/20' : 'from-gold-500/30'
+                        }`}
+                      />
                     </div>
 
                     <ProductRow>
                       {section.items.map((product, i) => (
-                        <ProductCard key={product.id} product={product} eager={i < 4} />
+                        <ProductCard key={product.id} product={product} eager={i < 4} web={HALLOWEEN_ACTIVE && i % 3 === 1} />
                       ))}
                     </ProductRow>
                   </div>

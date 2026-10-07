@@ -10,6 +10,9 @@ import labelWebp from '../assets/img/label-detail.webp'
 import labelJpg from '../assets/img/label-detail.jpg'
 import { waLink, waMessages } from '../data/site'
 import { IconX } from './icons'
+import AddiOption from './AddiOption'
+import { Cobweb } from './HalloweenArt'
+import { HALLOWEEN_ACTIVE } from '../data/campaign'
 
 const gallery = [
   { avif: spotlightAvif, webp: spotlightWebp, jpg: spotlightJpg, alt: 'Frasco de Gentleman Co sobre madera' },
@@ -76,9 +79,12 @@ export default function ProductModal({ open, onClose }) {
     >
       <div
         ref={panelRef}
-        className="relative max-h-[92vh] w-full max-w-3xl overflow-y-auto rounded-t-3xl border border-gold-500/20 bg-night-900 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)] sm:rounded-3xl"
+        className="relative max-h-[92vh] w-full max-w-3xl overflow-y-auto rounded-t-3xl border border-gold-500/25 bg-night-950 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9),0_0_70px_-30px_rgba(255,106,0,0.45)] sm:rounded-3xl"
         onClick={(e) => e.stopPropagation()}
       >
+        {HALLOWEEN_ACTIVE && (
+          <Cobweb corner="tr" dew={false} className="pointer-events-none absolute right-0 top-0 z-[5] h-24 w-24 text-cream-200/20" />
+        )}
         <button
           ref={closeBtnRef}
           type="button"
@@ -105,7 +111,7 @@ export default function ProductModal({ open, onClose }) {
                   aria-label={`Ver imagen ${i + 1}`}
                   aria-pressed={active === i}
                   className={`h-14 w-14 overflow-hidden rounded-lg border-2 transition-colors ${
-                    active === i ? 'border-gold-400' : 'border-transparent opacity-70'
+                    active === i ? (HALLOWEEN_ACTIVE ? 'border-ember-500' : 'border-gold-400') : 'border-transparent opacity-70'
                   }`}
                 >
                   <img src={g.jpg} alt="" className="h-full w-full object-cover" />
@@ -148,6 +154,7 @@ export default function ProductModal({ open, onClose }) {
             >
               Comprar por WhatsApp
             </a>
+            <AddiOption variant="button" className="mt-3 sm:w-full" />
           </div>
         </div>
       </div>

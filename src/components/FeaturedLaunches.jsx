@@ -5,6 +5,7 @@ import xerjoffJpg from '../assets/img/launch-xerjoff-torino21.jpg'
 import eliviAvif from '../assets/img/launch-elivi-unstoppable-hong-kong.avif'
 import eliviWebp from '../assets/img/launch-elivi-unstoppable-hong-kong.webp'
 import eliviJpg from '../assets/img/launch-elivi-unstoppable-hong-kong.jpg'
+import { HALLOWEEN_ACTIVE } from '../data/campaign'
 
 // Tarjetas flotantes con foto sobre el hero para los 2 lanzamientos recientes
 // (Torino21, Unstoppable Hong Kong). Antes decían "Próximamente" y enlazaban
@@ -26,9 +27,11 @@ const items = [
   },
 ]
 
+// Columna izquierda del escenario del hero (a la derecha van la luna y las
+// velas de la edición Halloween; abajo a la izquierda, la calabaza).
 const positions = [
-  'left-3 top-4 sm:left-5 sm:top-6 lg:left-8 lg:top-10 lg:right-auto',
-  'left-3 top-[9.75rem] sm:left-5 sm:top-[10.75rem] lg:left-auto lg:right-8 lg:top-10',
+  'left-3 top-4 sm:left-5 sm:top-6 lg:left-8 lg:top-10',
+  'left-3 top-[9.75rem] sm:left-5 sm:top-[10.75rem] lg:left-8 lg:top-[14rem]',
 ]
 
 export default function FeaturedLaunches() {
@@ -54,7 +57,11 @@ export default function FeaturedLaunches() {
                 loading="lazy"
               />
             </picture>
-            <span className="absolute -left-1 top-3 -rotate-[10deg] rounded-sm bg-gold-400 px-2 py-0.5 font-body text-[8px] font-semibold uppercase tracking-wide text-ink-900 shadow-md sm:text-[9px]">
+            <span
+              className={`absolute -left-1 top-3 -rotate-[10deg] rounded-sm px-2 py-0.5 font-body text-[8px] font-semibold uppercase tracking-wide text-ink-900 shadow-md sm:text-[9px] ${
+                HALLOWEEN_ACTIVE ? 'bg-ember-500 shadow-[0_0_14px_rgba(255,106,0,0.6)]' : 'bg-gold-400'
+              }`}
+            >
               Nuevo
             </span>
           </span>

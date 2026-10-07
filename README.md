@@ -593,35 +593,93 @@ reemplazo.
 
 ## Edición Halloween (octubre 2026)
 
-Transformación puramente visual de toda la ambientación (negro profundo,
-dorado metálico y crema como base; brasa/ámbar/borgoña solo como luz y
-acento). **No cambia contenido ni funcionalidad**: catálogo, precios, notas,
-botones, carrito, checkout y métodos de pago son los mismos. Solo cambiaron
-los rótulos de campaña que antes decían "San Valentín" (`data/campaign.js`,
-`halloweenCopy`) y el mensaje de WhatsApp de `PromoBanner` (dejó de nombrar
-San Valentín).
+Transformación puramente visual de toda la ambientación. **No cambia
+contenido ni funcionalidad**: catálogo, precios, notas, categorías, botones,
+carrito, checkout, WhatsApp, Addi y métodos de pago son los mismos. Solo
+cambian los rótulos de campaña (`data/campaign.js`, `halloweenCopy`), que
+antes decían "San Valentín".
+
+**Segunda versión (6 de octubre, "mucho más evidente")**: la primera quedó
+demasiado sutil; ahora Halloween se reconoce en los primeros segundos sin
+dejar de ser perfumería premium.
 
 - **Interruptor**: `HALLOWEEN_ACTIVE` en `src/data/campaign.js`. En `false`
-  desaparecen el humo, las brasas, las siluetas, la barra de campaña, la
-  sección `GiftGuide` y los rótulos; la paleta oscura base queda.
-- **Paleta**: `night` (lienzo), `ember`/`amber` (luz) y `wine` (borgoña de
-  profundidad) en `tailwind.config.js`; `ink`, `gold` y `cream` no cambian.
-- **Ambiente**: clases `.hw-*` en `src/index.css` (grano tileable,
-  pliegues de tela, humo, brasas, parpadeo de llama, respiración de luz,
-  tarjetas con elevación y halo, subrayado de navegación, paralaje muy
-  ligero con `animation-timeline: scroll()` solo en navegadores que lo
-  soportan). Componentes: `HalloweenFx.jsx` (brasas, humo, grano, llama),
-  `HalloweenArt.jsx` (calabaza oscura con la corona de la marca tallada,
-  rama seca y vela, en SVG estático) y `HalloweenPromoBar.jsx`.
+  desaparecen la escena nocturna del hero (vuelve la foto del mostrador),
+  luna, murciélagos, arañas, telarañas, velas, calabazas, niebla, brasas,
+  separadores, la barra superior, `GiftGuide`, los rótulos y el banner HTML
+  de la promo (vuelve la imagen original del cliente).
+- **Paleta** (`tailwind.config.js`): negro `#080808` / carbón `#151515`
+  (`night`), dorado `#C9A45C` / `#E8C77A` (`gold`), crema `#EDE5D5`
+  (`cream`), naranja Halloween `#FF6A00` / ámbar `#C85A00` (`ember`) y
+  borgoña `#4A0D16` (`wine`). El naranja es acento (luces, CTA clave), no
+  fondo. `addi` = azul de marca de Addi, solo para su distintivo.
+- **Tipografía**: se mantienen Playfair Display + Jost; los rótulos
+  "Halloween Edition" usan **Grenze Gotisch** (gótica sutil) recortada con
+  `text=` en Google Fonts (~11 KB).
+- **Dónde va cada cosa**: barra superior negra con calabaza/luna/murciélago
+  encima del header; header con luz naranja, polvo dorado, lunas entre
+  enlaces y telarañas en las esquinas (≥1400 px); **hero** con escena
+  cinematográfica (frasco real recortado del catálogo sobre mesa negra,
+  luna de cosecha, rama, murciélagos, velas, calabaza tallada, niebla,
+  brasas, destello en la tapa, barrido de luz al entrar y paralaje);
+  banners lado a lado (`PromoStrip`) con la promo 3×$130.000 recompuesta en
+  HTML (misma información, escena nocturna) y el de Addi ambientado por
+  encima sin tocar la pieza; categorías con arco gótico y noche propia
+  (Hombre fuego/humo, Mujer borgoña/rosas/velas, Unisex luna); tarjetas de
+  producto con foco de vela, filo naranja, mini icono por categoría y
+  telaraña en una de cada tres; separadores temáticos entre secciones
+  (`SectionDivider`: araña, luna, calabaza, vela, calavera, murciélago,
+  rosa); producto destacado como "mansión" (muro de piedra, arco gótico,
+  esquineras doradas, repisa de madera negra y velas); murciélagos que
+  cruzan el fondo una vez al llegar a ciertas secciones; FinalCTA con luna
+  y calabazas; footer con niebla, polvo dorado y calavera en medallón;
+  carrito y checkout negros con detalles naranja/dorado.
+- **Código**: clases `.hw-*` en `src/index.css`; `HalloweenFx.jsx`
+  (brasas, polvo, humo, niebla, grano, llama, rótulo gótico),
+  `HalloweenArt.jsx` (luna, murciélagos, bandada, araña, telaraña,
+  calabazas, rama, vela, rosa, destello — SVG/CSS estáticos),
+  `SectionDivider.jsx`, `HalloweenPromoBar.jsx`. Niebla:
+  `src/assets/img/fog.webp` (12 KB, repetible en x) generada con
+  `scripts/generate-fog.mjs`.
 - **Rendimiento**: sin librerías nuevas; todo el movimiento es
-  `transform`/`opacity` en CSS, las capas animadas se montan al entrar al
-  viewport (`hooks/useInView.js`) y todo se apaga con
-  `prefers-reduced-motion`. Medido contra la versión anterior (San Valentín)
-  con la CPU 4× más lenta: mismo coste en reposo (~8 recálculos de estilo/s
-  y ~90 ms/s de hilo principal frente a ~140 ms/s), CLS ≈ 0 y sin
-  desbordes horizontales de 360 a 1440 px.
-- Las fotos de producto no se tocaron: solo cambian fondo, bordes, sombras,
-  hover y brillo de las tarjetas.
+  `transform`/`opacity`, las capas se montan al verse
+  (`hooks/useInView.js`) y todo queda quieto con `prefers-reduced-motion`.
+  Ojo: React escucha `animationiteration` en la raíz y con eso Chrome
+  despierta al hilo principal en **cada vuelta** de una animación infinita
+  (3 aleteos de 0,42 s = ~50 recálculos de estilo/s). Por eso las
+  animaciones infinitas tienen vueltas largas (varios aleteos/parpadeos por
+  ciclo de keyframes) y `hooks/usePauseOffscreen.js` pausa las de las
+  secciones lejos de la pantalla (`[data-hw-idle]`); también la marquesina
+  de la barra superior, que lejos del viewport Chrome animaba en el hilo
+  principal (~125 recálculos/s al llegar al footer, ya pasaba en la v1).
+  Medido con la CPU 4× más lenta (ms/s de hilo principal en reposo, v1 →
+  v2): móvil arriba 156 → 318 (recálculos 9,2 → 8,9), producto destacado
+  198 → 125, footer 988 → 305; escritorio arriba 163 → 369, producto
+  destacado 276 → 153, footer 299 → 304. En el build de producción, móvil
+  arriba: 171 ms/s. LCP sin scroll (build local): frasco del hero ~1,1 s en
+  escritorio/tablet, titular en móvil; la niebla, el grano y la textura de
+  la luna van como `mask-image` sobre color (las imágenes de fondo
+  decorativas competían por el LCP). CLS ≤ 0,005, sin desbordes de 360 a
+  1920 px y, con `prefers-reduced-motion`, ninguna animación corriendo.
+- Las fotos de producto no se tocaron (el frasco del hero es la misma foto
+  recortada que usan las tarjetas del catálogo).
+
+## Banners y opción de compra con Addi (6 de octubre de 2026)
+
+- **Banners más pequeños**: la promo y el banner de Addi iban a todo el
+  ancho (~725 px de alto cada uno en escritorio); ahora `PromoStrip` los
+  pone lado a lado desde 640 px (~532 × 355 px cada uno) y apilados en
+  móvil. `BannerCard` sirve una versión de 960 px (`*-960.*`, generadas con
+  `scripts/optimize-banners.mjs` desde `source-material/`) y la original de
+  1536 px solo a pantallas retina (`srcSet`/`sizes`).
+- **Addi al comprar**: además del checkout, cada punto de compra ofrece
+  pagar con Addi (`AddiOption.jsx`): línea "Hasta 3 cuotas con Addi" en
+  cada tarjeta del catálogo, botón en la ficha de producto y en el modal de
+  la fragancia insignia, nota en el carrito y, en el checkout, la opción
+  Addi con "Hasta 3 cuotas · 0% de interés". Todo abre WhatsApp con el
+  mensaje listo (producto, presentación, precio y "pagar con Addi"); el
+  pedido del checkout sigue diciendo `Método de pago: Addi`. Datos de Addi
+  tomados del banner oficial del cliente (hasta 3 cuotas, 0% de interés).
 
 ### Lote de 17 fragancias (6 de octubre de 2026)
 
@@ -645,7 +703,8 @@ src/
                 Socials, FinalCTA, Footer, WhatsAppButton, LoadingScreen,
                 Breadcrumbs, CartDrawer, CartItemRow, CartToast, CheckoutModal,
                 HalloweenFx, HalloweenArt, HalloweenPromoBar, GiftGuide,
-                PromoBanner, AddiBanner, FeaturedLaunches
+                SectionDivider, PromoStrip, PromoBanner, AddiBanner,
+                BannerCard, AddiOption, FeaturedLaunches
   context/CartContext.jsx  estado global del carrito (persistido en localStorage)
   pages/            HomePage, ProductDetailPage (ficha individual /perfumes/:slug)
   data/site.js      marca, WhatsApp, enlaces
@@ -656,5 +715,6 @@ src/
                     productos, ver "Fichas de perfil olfativo completas"
   data/campaign.js  interruptor y rótulos de la campaña estacional (Halloween)
   hooks/            useReveal (scroll reveal), useInView (monta efectos al ver
-                    la sección), useDocumentMeta (SEO por página)
+                    la sección), usePauseOffscreen (pausa animaciones fuera de
+                    pantalla), useDocumentMeta (SEO por página)
 ```

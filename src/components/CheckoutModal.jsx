@@ -3,8 +3,17 @@ import { formatCOP } from '../data/products'
 import { buildOrderMessage, paymentMethods } from '../data/cart'
 import { brand, waLink } from '../data/site'
 import { useCart } from '../context/CartContext'
-import { IconWhatsApp, IconChevronRight, IconX, IconFlame } from './icons'
+import { AddiBadge } from './AddiOption'
+import { Cobweb } from './HalloweenArt'
+import { IconWhatsApp, IconChevronRight, IconX, IconPumpkin } from './icons'
 import { HALLOWEEN_ACTIVE } from '../data/campaign'
+
+// Detalle visible bajo un método de pago (datos del banner oficial de Addi).
+// El valor que viaja en el mensaje de WhatsApp sigue siendo el nombre de
+// data/cart.js ("Método de pago: Addi").
+const PAYMENT_DETAIL = {
+  Addi: 'Hasta 3 cuotas · 0% de interés',
+}
 
 const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
@@ -111,10 +120,16 @@ export default function CheckoutModal() {
     >
       <div
         ref={panelRef}
-        className="relative flex max-h-[94vh] w-full max-w-lg flex-col overflow-y-auto rounded-t-3xl border border-gold-500/20 bg-night-900 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)] sm:rounded-3xl"
+        className="relative flex max-h-[94vh] w-full max-w-lg flex-col overflow-y-auto rounded-t-3xl border border-gold-500/25 bg-night-950 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9),0_0_70px_-30px_rgba(255,106,0,0.45)] sm:rounded-3xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between border-b border-gold-500/15 px-6 py-5 sm:px-8">
+        {HALLOWEEN_ACTIVE && (
+          <>
+            <div aria-hidden="true" className="hw-glow-top pointer-events-none absolute inset-x-0 top-0 h-48" />
+            <Cobweb dew={false} className="absolute left-0 top-0 h-20 w-20 text-cream-200/20" />
+          </>
+        )}
+        <div className="relative flex items-center justify-between border-b border-gold-500/15 px-6 py-5 sm:px-8">
           <div>
             <button
               type="button"
@@ -126,7 +141,9 @@ export default function CheckoutModal() {
             </button>
             <h2 id="checkout-title" className="mt-1.5 flex items-center gap-2 font-display text-2xl text-cream-50">
               Finalizar compra
-              {HALLOWEEN_ACTIVE && <IconFlame className="h-4 w-4 text-ember-400" />}
+              {HALLOWEEN_ACTIVE && (
+                <IconPumpkin className="h-5 w-5 text-ember-500 [filter:drop-shadow(0_0_6px_rgba(255,106,0,0.7))]" />
+              )}
             </h2>
           </div>
           <button
@@ -139,7 +156,7 @@ export default function CheckoutModal() {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-6 px-6 py-6 sm:px-8">
+        <form onSubmit={handleSubmit} className="relative flex flex-col gap-6 px-6 py-6 sm:px-8">
           <div className="rounded-2xl border border-gold-500/20 bg-night-800 p-4">
             <p className="font-body text-xs uppercase tracking-wide text-ink-300">Resumen del pedido</p>
             <ul className="mt-3 space-y-2">
@@ -193,23 +210,44 @@ export default function CheckoutModal() {
 
           <div>
             <span className="font-body text-xs uppercase tracking-wide text-ink-300">Método de pago</span>
-            <div className="mt-2 flex flex-wrap gap-2">
-              {paymentMethods.map((method) => (
-                <button
-                  key={method}
-                  type="button"
-                  onClick={() => setCustomer((c) => ({ ...c, paymentMethod: method }))}
-                  aria-pressed={customer.paymentMethod === method}
-                  className={`rounded-full border px-4 py-2.5 font-body text-sm transition-colors ${
-                    customer.paymentMethod === method
-                      ? 'border-gold-400 bg-gold-500/15 text-gold-200'
-                      : 'border-gold-500/20 text-cream-200/85 hover:border-gold-400/60'
-                  }`}
-                >
-                  {method}
-                </button>
-              ))}
+            <div className="mt-2 grid gap-2 sm:grid-cols-2">
+              {paymentMethods.map((method) => {
+                const selected = customer.paymentMethod === method
+                return (
+                  <button
+                    key={method}
+                    type="button"
+                    onClick={() => setCustomer((c) => ({ ...c, paymentMethod: method }))}
+                    aria-pressed={selected}
+                    className={`flex min-h-[3.5rem] flex-col items-start justify-center gap-0.5 rounded-2xl border px-4 py-2.5 text-left font-body transition-all ${
+                      selected
+                        ? 'border-gold-400 bg-gold-500/10 shadow-[0_0_26px_-10px_rgba(255,106,0,0.8)]'
+                        : 'border-gold-500/20 hover:border-gold-400/60'
+                    }`}
+                  >
+                    <span className={`flex items-center gap-2 text-sm ${selected ? 'text-gold-200' : 'text-cream-200/90'}`}>
+                      <span
+                        aria-hidden="true"
+                        className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border ${
+                          selected ? 'border-ember-500' : 'border-gold-500/40'
+                        }`}
+                      >
+                        {selected && <span className="h-2 w-2 rounded-full bg-ember-500" />}
+                      </span>
+                      {method === 'Addi' ? <AddiBadge /> : method}
+                    </span>
+                    {PAYMENT_DETAIL[method] && (
+                      <span className="pl-6 text-[11px] leading-snug text-ink-300">{PAYMENT_DETAIL[method]}</span>
+                    )}
+                  </button>
+                )
+              })}
             </div>
+            {customer.paymentMethod === 'Addi' && (
+              <p className="mt-2 font-body text-xs leading-relaxed text-cream-200/75">
+                Al confirmar, coordinamos contigo por WhatsApp el pago en cuotas con Addi.
+              </p>
+            )}
           </div>
 
           <div className="flex items-center justify-between border-t border-gold-500/15 pt-5">

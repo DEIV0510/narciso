@@ -41,12 +41,12 @@ export default function ProductRow({ children }) {
         {children}
       </div>
       <span
-        className={`pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-night-900 to-transparent transition-opacity duration-300 sm:w-16 ${
+        className={`pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-night-950 to-transparent transition-opacity duration-300 sm:w-16 ${
           edges.start ? 'opacity-0' : 'opacity-100'
         }`}
       />
       <span
-        className={`pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-night-900 to-transparent transition-opacity duration-300 sm:w-16 ${
+        className={`pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-night-950 to-transparent transition-opacity duration-300 sm:w-16 ${
           edges.end ? 'opacity-0' : 'opacity-100'
         }`}
       />
@@ -54,7 +54,7 @@ export default function ProductRow({ children }) {
         type="button"
         onClick={scrollPrev}
         aria-label="Ver fragancias anteriores"
-        className="absolute left-1 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-gold-500/40 bg-night-800 text-gold-300 shadow-lg shadow-black/60 transition-all hover:scale-105 hover:bg-gold-500 hover:text-night-950 sm:flex"
+        className="absolute left-1 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-gold-500/40 bg-night-800 text-gold-300 shadow-lg shadow-black/60 transition-all hover:scale-105 hover:border-ember-500 hover:bg-ember-500 hover:text-night-950 hover:shadow-[0_0_22px_-4px_rgba(255,106,0,0.8)] sm:flex"
       >
         <IconChevronRight className="h-5 w-5 rotate-180" />
       </button>
@@ -62,7 +62,7 @@ export default function ProductRow({ children }) {
         type="button"
         onClick={scrollNext}
         aria-label="Ver más fragancias"
-        className="absolute right-1 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-gold-500/40 bg-night-800 text-gold-300 shadow-lg shadow-black/60 transition-all hover:scale-105 hover:bg-gold-500 hover:text-night-950 sm:flex"
+        className="absolute right-1 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-gold-500/40 bg-night-800 text-gold-300 shadow-lg shadow-black/60 transition-all hover:scale-105 hover:border-ember-500 hover:bg-ember-500 hover:text-night-950 hover:shadow-[0_0_22px_-4px_rgba(255,106,0,0.8)] sm:flex"
       >
         <IconChevronRight className="h-5 w-5" />
       </button>

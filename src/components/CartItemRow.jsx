@@ -28,7 +28,7 @@ export default function CartItemRow({ item }) {
         leaving ? 'pointer-events-none -translate-x-2 opacity-0' : 'opacity-100'
       }`}
     >
-      <div className="h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-ink-900 ring-1 ring-gold-500/20">
+      <div className="h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-[radial-gradient(70%_60%_at_50%_72%,rgba(255,106,0,0.16),transparent_70%),linear-gradient(180deg,#131211,#080808)] ring-1 ring-gold-500/25">
         <picture>
           <source srcSet={img.avif} type="image/avif" />
           <source srcSet={img.webp} type="image/webp" />
@@ -70,7 +70,7 @@ export default function CartItemRow({ item }) {
               type="button"
               onClick={handleDecrement}
               aria-label="Disminuir cantidad"
-              className="flex h-7 w-7 items-center justify-center rounded-full text-cream-200 transition-colors hover:bg-night-700"
+              className="flex h-7 w-7 items-center justify-center rounded-full text-cream-200 transition-colors hover:bg-ember-500 hover:text-night-950"
             >
               <IconMinus className="h-3.5 w-3.5" />
             </button>
@@ -79,7 +79,7 @@ export default function CartItemRow({ item }) {
               type="button"
               onClick={() => incrementItem(item.lineId)}
               aria-label="Aumentar cantidad"
-              className="flex h-7 w-7 items-center justify-center rounded-full text-cream-200 transition-colors hover:bg-night-700"
+              className="flex h-7 w-7 items-center justify-center rounded-full text-cream-200 transition-colors hover:bg-ember-500 hover:text-night-950"
             >
               <IconPlus className="h-3.5 w-3.5" />
             </button>

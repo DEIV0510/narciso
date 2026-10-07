@@ -12,16 +12,18 @@ import CartToast from './components/CartToast'
 import { CartProvider } from './context/CartContext'
 import HomePage from './pages/HomePage'
 import ProductDetailPage from './pages/ProductDetailPage'
+import usePauseOffscreen from './hooks/usePauseOffscreen'
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false)
+  usePauseOffscreen()
 
   return (
     <CartProvider>
       <LoadingScreen />
       <ScrollManager />
-      <Header open={menuOpen} onOpenChange={setMenuOpen} />
       <HalloweenPromoBar />
+      <Header open={menuOpen} onOpenChange={setMenuOpen} />
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />

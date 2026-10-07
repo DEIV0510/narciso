@@ -1,10 +1,13 @@
 import { brand, navLinks, waLink, waMessages } from '../data/site'
-import { IconInstagram, IconTikTok } from './icons'
+import { IconInstagram, IconTikTok, IconSkull } from './icons'
 import SectionLink from './SectionLink'
 import { HALLOWEEN_ACTIVE, halloweenCopy } from '../data/campaign'
-import { Grain, FlickerFlame } from './HalloweenFx'
+import { Grain, Motes, Fog } from './HalloweenFx'
 import { Branch } from './HalloweenArt'
 
+// Cierre en la edición Halloween: noche, niebla al ras, polvo dorado, ramas y
+// un emblema gótico (calavera fina en medallón dorado). La luna grande queda
+// justo arriba, en FinalCTA.
 export default function Footer() {
   const year = new Date().getFullYear()
   return (
@@ -13,8 +16,10 @@ export default function Footer() {
         <>
           <div aria-hidden="true" className="hw-glow-top pointer-events-none absolute inset-0 opacity-70" />
           <Grain />
+          <Motes />
           <Branch className="absolute -right-6 top-0 h-40 w-auto text-night-700 opacity-80 sm:h-52" />
           <Branch flip className="absolute -left-6 top-0 hidden h-40 w-auto text-night-700 opacity-60 sm:block sm:h-48" />
+          <Fog className="inset-x-0 bottom-0 h-32" />
         </>
       )}
       <div className="relative mx-auto max-w-7xl px-6 sm:px-8 lg:px-8">
@@ -89,12 +94,21 @@ export default function Footer() {
           </div>
         </div>
 
-        <p className="py-6 text-center font-body text-xs text-ink-300">
+        {HALLOWEEN_ACTIVE && (
+          <div aria-hidden="true" className="flex items-center justify-center gap-3 pt-8">
+            <span className="h-px w-16 bg-gradient-to-r from-transparent to-gold-500/50 sm:w-24" />
+            <span className="relative flex h-10 w-10 items-center justify-center rounded-full border border-gold-500/40 text-gold-300">
+              <span className="absolute inset-[-8px] rounded-full bg-[radial-gradient(closest-side,rgba(255,106,0,0.35),transparent)]" />
+              <IconSkull className="relative h-5 w-5" />
+            </span>
+            <span className="h-px w-16 bg-gradient-to-l from-transparent to-gold-500/50 sm:w-24" />
+          </div>
+        )}
+        <p className={`text-center font-body text-xs text-ink-300 ${HALLOWEEN_ACTIVE ? 'pt-5' : 'py-6'}`}>
           © {year} Gentleman Co. Todos los derechos reservados.
         </p>
         {HALLOWEEN_ACTIVE && (
-          <p className="-mt-4 flex items-center justify-center gap-1.5 pb-6 font-display text-xs italic text-ember-300">
-            <FlickerFlame className="h-3 w-3" />
+          <p className="pb-10 pt-2 text-center font-gothic text-base tracking-wide text-ember-400 [text-shadow:0_0_16px_rgba(255,106,0,0.45)]">
             {halloweenCopy.footerNote}
           </p>
         )}
