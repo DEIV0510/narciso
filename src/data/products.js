@@ -93,6 +93,17 @@ export const CATEGORIES = {
 // Con esta corrección, los 262 productos ya tienen foto propia — ver
 // ProductCard.jsx y ProductDetailPage.jsx, que resuelven `image` con
 // `import.meta.glob` sobre `src/assets/img/products/`.
+//
+// 2026-10-10 — fotos de los 17 agregados el 2026-10-06: el material que
+// llegó (`Downloads\Catalogo Perfumes\Nuevos sin fondo`, v2 del 7 de
+// octubre) trae el fondo dorado vacío y un recorte del frasco real de cada
+// inspiración, pero NO el frasco Narciso. Se compusieron con la misma
+// distribución que el resto (Narciso nítido adelante, inspiración
+// desenfocada atrás) usando `source-material/botella-oficial.png` — ver
+// `scripts/compose-nuevos-octubre.mjs` y `source-material/nuevos-octubre-2026/`.
+// El recorte de "Cloud" (Ariana Grande) que venía en el mismo lote no se
+// usó: ese producto ya tenía foto propia del cliente. Catálogo: 283 de 283
+// con foto propia.
 const PRODUCTS_WITH_OWN_PHOTO = new Set([
   '1-million-elixir-paco-rabanne-hombre', '1-million-lucky-paco-rabanne-hombre', '1-million-paco-rabanne-hombre', '1-million-prive-paco-rabanne-hombre', '212-nyc-carolina-herrera-hombre', '212-nyc-carolina-herrera-mujer',
   '212-sexy-carolina-herrera-mujer', '212-sexy-men-carolina-herrera-hombre', '212-vip-black-carolina-herrera-hombre', '212-vip-black-extra-carolina-herrera-hombre', '212-vip-black-i-love-ny-carolina-herrera-hombre', '212-vip-black-red-carolina-herrera-hombre',
@@ -137,6 +148,12 @@ const PRODUCTS_WITH_OWN_PHOTO = new Set([
   'torino21-xerjoff-hombre', 'toy-boy-moschino-hombre', 'ultra-male-jean-paul-gaultier-hombre', 'unstoppable-hong-kong-elivi-parfums-hombre', 'uomo-born-in-roma-extradose-valentino-hombre', 'uomo-born-in-roma-green-stravaganza-valentino-hombre', 'uomo-born-in-roma-valentino-hombre', 'uomo-valentino-hombre',
   'vega-ahli-unisex', 'velvet-petals-victoria-s-secret-mujer', 'very-good-girl-glam-carolina-herrera-mujer', 'voyage-nautica-hombre', 'yara-candy-lattafa-mujer', 'yara-lattafa-mujer',
   'y-eau-de-parfum-yves-saint-laurent-hombre', 'yara-moi-lattafa-mujer', 'yara-tous-lattafa-mujer', 'yum-yum-armaf-mujer',
+  // 2026-10-10: compuestas con scripts/compose-nuevos-octubre.mjs (ver arriba).
+  'emeer-lattafa-hombre', 'uomo-born-in-roma-purple-melancholia-valentino-hombre', 'champagne-blue-bharara-hombre', 'loewe-7-loewe-hombre',
+  'cedrat-boise-mancera-hombre', 'green-irish-tweed-creed-hombre', 'pharaoh-ramesses-i-bharara-hombre', 'paradigme-prada-hombre',
+  'the-most-wanted-azzaro-hombre', 'uomo-born-in-roma-intense-valentino-hombre', 'nitro-red-intensely-dumont-hombre', 'hawas-for-him-rasasi-hombre',
+  'vulcan-baie-french-avenue-mujer', 'yum-boujee-marshmallow-81-kayali-mujer', 'qaed-al-fursan-lattafa-unisex', 'drunk-lovers-born-to-stand-out-unisex',
+  'toxic-desire-korbaj-unisex',
 ])
 
 // `style` = familia olfativa general (Fresco / Dulce / Intenso / Elegante),
@@ -309,17 +326,20 @@ const caballeroAgosto2026 = [
   { title: 'Unstoppable Hong Kong', brand: 'Elivi Parfums', style: 'Intenso', price: 60000, size: null },
   // 2026-10-06: lote de 12 pedido por el cliente en una lista informal (con
   // errores de tipeo). Cada nombre se verificó contra Fragrantica y la marca;
-  // todas con ficha completa en fragranceInfo.js y sin foto propia todavía
-  // (usan `catalog-bottle`). Correcciones y ambigüedades que conviene
-  // recordar:
+  // todas con ficha completa en fragranceInfo.js; foto propia compuesta el
+  // 2026-10-10 (ver PRODUCTS_WITH_OWN_PHOTO). Correcciones y ambigüedades
+  // que conviene recordar:
   // - "Green iris twist" = Creed Green Irish Tweed; "intesly" = Nitro Red
   //   Intensely (Dumont); "melancolía" = Born in Roma Purple Melancholia.
   // - Emeer (Lattafa) y Cedrat Boisé (Mancera) figuran como unisex en
   //   Fragrantica; se dejaron en Caballero como los pidió el cliente.
   // - "Faraón ramses" es ambiguo (Pharaoh Ramesses I o II, ambas 2025): se
-  //   eligió la I por ser la más parecida al texto; confirmar con el frasco.
+  //   eligió la I por ser la más parecida al texto. Confirmado el
+  //   2026-10-10: el recorte del frasco que mandaron dice "PHARAOH RAMESSES I".
   // - "The Most Wanted" se tomó como la Eau de Parfum Intense (2021), que es
   //   la que las tiendas llaman solo así; existen también Parfum y EDT Intense.
+  //   El recorte que mandaron es el barril negro mate, coherente con la EDP
+  //   Intense (el Parfum lleva un degradado ámbar).
   { title: 'Emeer', brand: 'Lattafa', style: 'Fresco' },
   { title: 'Uomo Born in Roma Purple Melancholia', brand: 'Valentino', style: 'Dulce' },
   { title: 'Champagne Blue', brand: 'Bharara', style: 'Fresco' },

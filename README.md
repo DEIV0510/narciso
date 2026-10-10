@@ -37,13 +37,13 @@ Dama", con los nombres, precio ($60.000 COP c/u) y categoría exactos que dio
 el cliente — y se amplió en agosto de 2026 (ver más abajo) con 214
 fragancias adicionales (81 Caballero + 64 Dama + 69 Unisex, incluidos 3
 productos reales que el cruce con la hoja de fichas completas reveló que
-faltaban), mismo precio plano. **261 de los 262 productos tienen su propia
-foto real** (ver "Fotos individuales por producto" más abajo); solo
-`Her Elixir` (Burberry) usa la foto genérica compartida `catalog-bottle.*`
-(`source-material/botella-oficial.png`) — tres tomas distintas del
-proveedor han mostrado el mismo frasco pálido de "Her EDP" en vez del rojo/
-granate real del Elixir, así que se dejó sin foto propia en vez de mostrar
-una marca/color incorrecto (ver "Verificación frasco↔nombre", "Lote
+faltaban), mismo precio plano. **Hoy son 283 productos y los 283 tienen
+foto propia** (ver "Fotos individuales por producto" y "Fotos del lote de
+octubre" más abajo); la foto genérica compartida `catalog-bottle.*`
+(`source-material/botella-oficial.png`) queda solo como respaldo si algún
+día falta un archivo. Her Elixir (Burberry), que estuvo un tiempo sin foto
+porque varias tomas mostraban el frasco equivocado, se resolvió el
+2026-09-05 (ver "Verificación frasco↔nombre", "Lote
 NARCISO_NUEVOS_CABALLEROS", "Correcciones con fotos de referencia" y
 "Lote NARCISO_NUEVOS_DAMAS / UNISEX" más abajo).
 
@@ -684,14 +684,38 @@ dejar de ser perfumería premium.
 ### Lote de 17 fragancias (6 de octubre de 2026)
 
 Lista informal del cliente verificada contra Fragrantica y la web de cada
-marca (6 agentes en paralelo), con ficha completa en `fragranceInfo.js` y
-foto genérica `catalog-bottle` hasta que el cliente mande fotos propias:
+marca (6 agentes en paralelo), con ficha completa en `fragranceInfo.js`:
 12 en Caballero, 2 en Dama y 3 en Unisex (catálogo: 283 productos). "Cloud"
-de Ariana Grande ya existía y no se duplicó. Decisiones a confirmar con el
-cliente: "Faraón ramses" se tomó como Bharara Pharaoh Ramesses **I** (existe
-también la II); "The Most Wanted" como la Eau de Parfum Intense (2021);
-Emeer, Cedrat Boisé y Vulcan Baie figuran como unisex en Fragrantica pero
-se dejaron en la sección que pidió el cliente.
+de Ariana Grande ya existía y no se duplicó. "Faraón ramses" se tomó como
+Bharara Pharaoh Ramesses **I** (existe también la II) y el frasco que mandó
+el cliente lo confirma; "The Most Wanted" como la Eau de Parfum Intense
+(2021), coherente con el frasco negro mate que mandaron. Queda por confirmar
+con el cliente: Emeer, Cedrat Boisé y Vulcan Baie figuran como unisex en
+Fragrantica pero se dejaron en la sección que pidió.
+
+### Fotos del lote de octubre (10 de octubre de 2026)
+
+Hasta esta fecha los 17 usaban la foto genérica. El material que llegó
+(`Downloads\Catalogo Perfumes\Nuevos sin fondo`, versión v2 del 7 de
+octubre) trae el fondo dorado de estudio vacío y un recorte PNG del frasco
+real de cada inspiración, **sin el frasco Narciso**. Como todas las demás
+fotos del catálogo muestran el frasco Narciso nítido adelante a la derecha y
+la inspiración desenfocada atrás, se compusieron así con
+`scripts/compose-nuevos-octubre.mjs`:
+
+- Fondo: `source-material/nuevos-octubre-2026/fondo-limpio.jpg` (mismo
+  fondo y mismo tamaño 1114x1412 que `Desktop\NARCISO\amber.png`, de donde
+  salen las medidas y posiciones).
+- Inspiración (`source-material/nuevos-octubre-2026/<id>.png`): sin el halo
+  claro del recorte (alfa erosionado 2 px), luz cálida con brillo ajustado a
+  lo claro del frasco, desenfoque leve, reflejo en el piso y sombra.
+- Frasco Narciso: el recorte real `source-material/botella-oficial.png` con
+  la luz dorada de la escena (lado izquierdo en sombra, borde derecho
+  iluminado), reflejo y sombra de contacto.
+- Salida con el pipeline de siempre (1100 px; webp q84, avif q58, jpeg q86).
+
+El recorte de "Cloud" que venía en el mismo lote no se usó: ese producto ya
+tenía foto propia del cliente.
 
 ## Estructura
 
